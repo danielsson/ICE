@@ -1,0 +1,8 @@
+.loginwindow {
+	padding: 20px;
+}
+
+.loginwindow input[type=text], .loginwindow input[type=password]{
+
+	width: 308px;
+}

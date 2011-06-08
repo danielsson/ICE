@@ -1,0 +1,133 @@
+/* Reset */
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outline:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+/* BODY */
+body {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size:14px;
+	line-height: 18px;
+	font-weight: normal;
+}
+
+/* General typography */
+h1, h4 {
+	text-transform:uppercase;
+}
+h1 {
+	float:left;
+	font-size:24px;
+	line-height:100px;
+	font-weight:normal;
+	white-space:nowrap;
+}
+h1:first-letter {
+	font-size:34.53px;
+	line-height:100px;
+}
+h2 {
+	font-size:32.46px;
+	line-height:1;
+	font-weight:normal;
+	
+}
+.hl {white-space:nowrap;}
+h4 {
+	margin:20px 0;
+	font-weight:normal;
+	font-size:16px;
+}
+h4.f {margin-bottom:0}
+h4:first-letter {
+	font-size:22px;
+}
+p+p { margin-top:21px;}
+a:visited { color:#000;}
+divg.center {
+	list-style:circle outside;
+}
+ ul {
+	list-style-type: disc;
+	list-style-position: inside;
+	margin: 20px 0;
+}
+ ul li, ol li {
+	margin: 10px 0;
+}
+ol {
+	list-style-type:decimal;
+	list-style-position: inside;
+	margin: 20px 0;
+}
+/* Header */
+
+.header {
+	height: 100px;
+	border-bottom:3px solid #000;
+}
+.center {
+	width:620px;
+	margin:0 auto;
+}
+a.menu {
+	font-size:13px;
+	text-decoration:none;
+	text-transform:uppercase;
+	color:#000;
+	margin: 41px 0 0 0;
+	float:right;
+	border-bottom:1px solid #200
+}
+
+a.menu:hover {
+	color: #333;
+	border-bottom:3px solid #900;
+}
+.divider {
+	height:20px;
+	clear:both;
+	font: 10px/20px Verdana, Geneva, sans-serif;
+	color:#aaa;
+	overflow:hidden;
+}
+
+/* maincontent */
+.textBody {
+	width:380px;
+	float:left;
+}
+.textBody p {
+	line-height:1.5;
+}
+.sidebar {
+	width:220px;
+	float:right;
+}
+.imgtext {
+	font-size:10px;
+	font-family:Verdana, Geneva, sans-serif;
+	line-height:12px;
+}
+sup {
+	vertical-align:super;
+	font-size:8px;
+}
+.sidebar ul {
+	list-style:none;
+	margin: inherit;
+}
+.sidebar ul li {
+	line-height:24px;
+	margin: inherit;
+}
+.mantra {
+	font-size:24px;
+	line-height:1;
+}
+.exp {
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:10px;
+	line-height:24px;
+	width:300px;
+}
+.exp.left {float:left}
+.exp.right {float:right}
+.footer { height:100px; width: 20px;}

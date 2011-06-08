@@ -1,0 +1,5 @@
+ * ICE!
+ *
+ * Copyright (c) 2010 Mattias Danielsson
+ * ICE! is licenced under the zlib/libpng licence
+ * 
