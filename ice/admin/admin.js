@@ -62,7 +62,12 @@ var ice = {
 		  $win.element
 			  .attr('data-win-name', name)
 			  .appendTo(this.windowSandbox)
-			  .css({width: $win.width, left: leftval, zIndex: ice.Manager.maxZindex()})
+			  .css({
+			  	width: $win.width,
+			  	left: leftval,
+			  	zIndex: ice.Manager.maxZindex(),
+			  	top: 200
+			  	})
 			  .draggable({handle: '.winBar', stack: '.window'});
 		  $win.titleBox.html($win.title);
 		  
@@ -164,9 +169,9 @@ var ice = {
 				});
 			}
 		},
-		get: function(fragmentName, window, postData, callback) {
+		get: function(fragmentName, win, postData, callback) {
 			$.post("fragments/" + fragmentName + ".php", postData, function(data) {
-				callback(window, data);
+				callback(win, data);
 			});
 		},
 		addCss: function(filename) {

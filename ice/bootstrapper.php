@@ -12,13 +12,13 @@ if(!$res) {
 	if($config['dev_mode']) {echo $db->error();}
 	else {echo 'DB error';}
 } else {
-	while ($row = mysql_fetch_array($res)) {
+	$row = mysql_fetch_array($res);
+	if(!empty($row['id'])) {
 		define('ICE_PAGE_OVERRIDE', 'dyn_' . $row['id']);
 		require($_SERVER['DOCUMENT_ROOT'] . stripslashes($row['path']));
-		exit(0);
-	}
-	if(!defined(ICE_PAGE_OVERRIDE)) {
+	} else {
 		require('404.php');
 	}
+	
 }
 ?>
