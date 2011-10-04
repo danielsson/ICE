@@ -32,6 +32,9 @@
 		</div>
 	</div>
 	</div>
+	<aside>
+		
+	</aside>
 	<div id="messageField" class="center">
 		
 	</div>
@@ -60,7 +63,7 @@ $(document).ready(function() {
 	ice.fragment.load('login');
 
 <?php } else { ?>
-	ice.fragment.load('dashboard');
+	ice.fragment.load('sidebar');
 
 <?php } ?>
 	if($.browser.msie) {

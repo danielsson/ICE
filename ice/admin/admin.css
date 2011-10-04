@@ -6,11 +6,12 @@ a:LINK, a {text-decoration: none;color: #00aeef;}
 a:VISITED {color: #00aeef;}
 a:HOVER {color: #0099cc;border-bottom: thin dotted #0099cc;}
 body {
-	font-family: Verdana, Arial, sans-serif;
+	font-family: sans-serif;
 	font-size: 12px;
 	font-weight:normal;
 	color: #333;
 	-webkit-font-smoothing: antialiased;
+	background-color: #F0F0F0;
 }
 body.loading {
 	cursor: wait !important;
@@ -29,22 +30,22 @@ thead {
 	font-weight: 800;
 }
 #header {
-	height:100px;
-	background: url('resources/header_02.png');
+	height:49px;
+	background: url('resources/header.png');
 }
 .center {
 	width: 960px;
 	margin: 0 auto;
 }
 #logo {
-	margin: 23px 0;
+	margin: 10px 0;
 	float: left;
 }
 #headerText {
 	float: right;
 	color: #FFF;
 	font-size: 12px;
-	line-height: 75px;
+	line-height: 50px;
 }
 #headerText a {
 	color: #FFF;
@@ -78,6 +79,15 @@ thead {
 	-webkit-border-radius: 2px;
 	border-radius: 2px;
 }
+aside {
+	position:absolute;
+	top:49px;
+	left:0;
+	width:200px;
+	bottom:20px;
+	border-top: thin solid #ffffff;
+}
+
 .borderStyle {
 	padding:3px;
 	background-color: rgba(0,0,0,0.2);
@@ -90,7 +100,7 @@ thead {
 }
 .window {
 	position: absolute;
-	background: rgba(0,0,0,0.1);
+	background: rgba(255,255,255,0.4);
 	overflow: hidden;
 	padding:3px;
 	min-width: 100px;
@@ -109,7 +119,8 @@ thead {
 	overflow:hidden;
 }
 .winBar {
-	background: url('resources/winBar_10.png');
+	background: url('resources/winBar.png');
+	border-bottom:1px solid #B9B9B9;
 	height: 30px;
 	-moz-border-radius: 2px 2px 0 0;
 	-o-border-radius: 2px 2px 0 0;
@@ -117,21 +128,12 @@ thead {
 	border-radius: 2px 2px 0 0;
 	cursor:move;
 }
-.winContent {
-	min-height:100px;
-	min-width: 100px;
-	background: #f4f4f4;
-	background: -webkit-gradient(linear,left bottom,left top, color-stop(0, rgb(229,239,244)), color-stop(1, rgb(255,255,255)));
-	background: -moz-linear-gradient(center bottom, rgb(229,239,244) 0%, rgb(255,255,255) 100%);	
-	-moz-border-radius: 0 0 6px 6px;
-	-webkit-border-radius: 0 0 6px 6px;
-}
 .winTitle {
-	font: 600 12px/28px Verdana, Arial, sans-serif;
-	color: #FFF;
+	font: bold 12px/32px sans-serif;
+	color: #333;
 	padding: 0 25px;
 	float: left;
-	background: url("resources/application_xp.png") 5px  no-repeat;
+	background: url("resources/application_xp.png") 5px 7px no-repeat;
 }
 .winExit {
 	float: right;
@@ -147,6 +149,15 @@ thead {
 	opacity: 1;
 	-moz-box-shadow: 0 0 5px red; 
 }
+.winContent {
+	min-height:100px;
+	min-width: 100px;
+	background: #f4f4f4;
+	background: -webkit-gradient(linear,left bottom,left top, color-stop(0, rgb(229,239,244)), color-stop(1, rgb(255,255,255)));
+	background: -moz-linear-gradient(center bottom, rgb(229,239,244) 0%, rgb(255,255,255) 100%);	
+	-moz-border-radius: 0 0 6px 6px;
+	-webkit-border-radius: 0 0 6px 6px;
+}
 .winMini {
 	float:right;
 	height: 15px;
@@ -159,6 +170,16 @@ thead {
 .winMini:hover {
 	opacity:1;
 }
+#windowSandbox {
+	position: absolute;
+	top:49px;
+	left: 200px;
+	bottom:20px;
+	right:0;
+	background-image: url(resources/black_denim.png);
+	-webkit-box-shadow: 0 0 20px #000 inset;
+}
+
 #taskBar {
 	position: fixed;
 	bottom:0;
@@ -267,4 +288,25 @@ label {
 	left:0;
 	background: rgba(255,255,255,0.5) url('resources/ajax-loader.gif') center center no-repeat;
 	display:none;
+}
+
+.biglist {
+
+}
+.biglist li {
+	padding: 10px 0 15px;
+	border-bottom: 1px solid #DDD;
+	cursor: pointer;
+}
+.biglist li+li {border-top: 1px solid #FFF;}
+.biglist li:hover {
+	background-color:#CCC;
+}
+.biglist h2 {
+	font: bold 14px/26px sans-serif; 
+	padding: 0 20px;
+}
+.biglist p {
+	font-size: 10px;
+	padding: 0 20px;
 }

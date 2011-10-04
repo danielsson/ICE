@@ -116,7 +116,7 @@ if(!empty($_POST['userid'])) {
 					$.post('fragments/logincard.php', {key: key, userid: idFile.userdata.id}, function(d) {
 						if(d.status == "ok") {
 							$('#headerText').html('<a href="#" onclick="ice.logout();"><b>Log out<b></a>');
-							ice.fragment.load('dashboard');
+							ice.fragment.load('sidebar');
 							ice.Manager.removeWindow('CardLogin');
 						} else {
 							alert(d.error);

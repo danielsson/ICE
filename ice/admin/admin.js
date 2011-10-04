@@ -58,7 +58,7 @@ var ice = {
 				$win.element.find('.winMini').remove();
 			}
 			
-			var leftval = ($(window).width() - $win.width) / 2;
+			var leftval = ($(window).width() - $win.width) / 2 - 100;
 		  $win.element
 			  .attr('data-win-name', name)
 			  .appendTo(this.windowSandbox)
@@ -214,6 +214,7 @@ var ice = {
 			this.Manager.flushWindows(function() {
 				$.post("fragments/login.php", {logout: true}, function(data) {
 					$('#headerText').html('Not logged in.');
+					$('aside').html("");
 					ice.fragment.load('login');
 					ice.message("Successfully logged out", 'info');
 				});

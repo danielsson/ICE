@@ -16,7 +16,7 @@
 		if($_SESSION['userlevel'] > 0) { ?>
 				<script type="text/javascript" >
 					function login() {
-						ice.fragment.load("dashboard");
+						ice.fragment.load("sidebar");
 					}
 				</script>
 			<?php 
@@ -50,7 +50,7 @@
 						ice.message('Wrong username/password', 'warning', '#loginError');
 					} else {
 						$('#headerText').html('<a href="#" onclick="ice.logout();"><b>Log out<b></a>');
-						ice.fragment.load('dashboard');
+						ice.fragment.load('sidebar');
 						ice.Manager.removeWindow('LoginWindow');
 					}
 				});
