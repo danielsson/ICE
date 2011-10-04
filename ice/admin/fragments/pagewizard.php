@@ -66,6 +66,7 @@ function pagewizard() {
 				url = $(':text[name=url]', $win.contentBox).val();
 				template = $(':radio[name=tid]:checked', $win.contentBox).val();
 				wizCreatePage(name, url, template, $win.name);
+				$win.beforeClose = function(p){}; //Remove "You sure" dialog
 				return false;
 			}
 			$('.horizSlider', $win.contentBox).animate({marginLeft: nr},500);

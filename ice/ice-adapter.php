@@ -53,7 +53,7 @@ class ICECMS {
 	}
 
 	public function head($include_jquery = true) {
-		return 0;	
+		return 0;
 	}
 	
 	public function e($field_name, $element, $type = "field", $attrs = array()) {  //Inserts an element into the page. Equal to element().

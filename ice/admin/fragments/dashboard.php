@@ -2,6 +2,11 @@
 	define('SYSINIT',true);
 	require '../../lib/auth.class.php';
 	$Auth->init(1);
+	
+	if($_POST['clear']=="true") {
+		foreach(glob('../../cache/*.txt') as $v) {	unlink($v); }
+		die("200");
+	}
 ?>
 
 <script type="text/javascript">
@@ -24,6 +29,10 @@
 					.css({background:'#333', color: '#FFF'})
 					.prev()
 					.css({background:'#333'});
+				g.clearCache = function() {
+					$.post('fragments/dashboard.php', {clear: "true"});
+					ice.message('Cache cleared', 'info');
+				};
 				if(ice.Manager.addWindow(g)) {
 					ice.Manager.getWindow('AdvTools').element.css({left:0, top:100});
 				}
@@ -71,7 +80,7 @@
 <script type="text/template" id="advancedTools">
 	<ul class="nicelist">
 		<li onclick="ice.fragment.load('templatemanager')">Add files</li>
-		<li onclick="ice.fragment.load('and')">Clear Cache</li>
+		<li onclick="ice.Manager.getWindow($(this).inWindow()).clearCache()">Clear Cache</li>
 		<?php if($_SESSION['userlevel'] > 1) { ?>
 		<li onclick="ice.fragment.load('and')">Set options</li>
 		<?php } if($_SESSION['userlevel'] > 2) { ?>

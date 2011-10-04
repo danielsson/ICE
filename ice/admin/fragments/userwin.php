@@ -25,8 +25,7 @@
 	<input type="text" name="username" style="width:90%"/>
 	<p><b>Userlevel</b></p>
 	<input type="text" name="path" style="width:90%"/>
-	<p><b>Relative Url.</b><i> (Relative to the root)I.e. if url to the page is example.com/tmp/a.php, write /tmp/a.php in this box.</i></p>
-	<input type="text" name="url" style="width:90%"/>
+
 	<input type="button" value="Abort" style="float:left"/>
 	<input type="submit" value="Add file" style="float:right" />
 	</form>

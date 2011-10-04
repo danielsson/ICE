@@ -2,8 +2,8 @@ var ice = {
 	Manager: {
 		windowsStorage: [],
 		incrementer: 0,
-		windowSandbox: $(),
-		taskBar: $(),
+		windowSandbox: {},
+		taskBar: {},
 		ready: function() {
 			this.taskBar = $('#taskBar ul');
 			this.windowSandbox =  $('#windowSandbox');
@@ -12,7 +12,7 @@ var ice = {
 
 		getWindow: function(name) {
 			if(name in this.windowsStorage) {
-			return this.windowsStorage[name]; 
+				return this.windowsStorage[name]; 
 			} else {
 				return false;
 			}
@@ -141,14 +141,15 @@ var ice = {
 		this.exitBtn = this.element.find('.winExit');
 		this.titleBox = this.element.find('.winTitle');
 		this.contentBox = this.element.find('.winContent');
+		this.loader = this.element.find('.winloader');
 		this.setContent = function(c) {
 			this.contentBox.html(c);
 		};
 		this.loadingOn = function() {
-			this.element.find('.winLoader').fadeIn();
+			this.loader.fadeIn();
 		};
 		this.loadingOff = function() {
-			this.element.find('.winLoader').stop().fadeOut();
+			this.loader.stop().fadeOut();
 		};
 		this.onOpen = function(winObj){};
 		this.beforeClose = function(winObj){};
