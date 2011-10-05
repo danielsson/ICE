@@ -49,7 +49,7 @@ function pagewizard() {
 			}
 			if($win.data.currentSlide == 3) {
 				$wdr = $('.wizDataReview', $win.contentBox);
-				if($win.contentBox.find('input[name][value=""]').length > 0) {
+				if($win.contentBox.find('input[name]').filter(function() { return $(this).val() == ""; }).length > 0) {
 					ice.message('One or more fields are empty. Please go back and fill it in.', 'warning', $wdr);
 					this.disabled = true;
 				} else {

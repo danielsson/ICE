@@ -223,11 +223,11 @@ var ice = {
 			});
 		});
 		if(!customloc) {
-			l.appendTo('#messageField');
+			l.appendTo(this.Manager.windowSandbox);
 		} else {
 			l.appendTo(customloc);
 		}
-		l.slideDown();
+		l.fadeIn();
 	}, //End message()
 	logout : function() {
 		if(confirm("You sure you want to log out? All windows will be closed and unsaved work will be lost.")) {
