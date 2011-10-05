@@ -1,6 +1,6 @@
 <?php defined('SYSINIT') or die('<b>Error:</b> No direct access allowed');
 
-require_once('/../lib/auth.class.php');
+require_once('../lib/auth.class.php');
 $Auth->init(1); //Userlevel 1 or higher required
 
 class ICECMSEDIT extends ICECMS {
