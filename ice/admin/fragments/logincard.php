@@ -34,11 +34,12 @@ if(!empty($_POST['userid'])) {
 	var idFile;
 	function logincard() {
 		ice.fragment.addCss('logincard.css');
-		var W = new ice.Window;
+		var W = new ice.Window();
 		W.name = "CardLogin";
 		W.title = "Login With WebID";
 		W.width = 342;
 		W.closeable = false;
+		W.element.css('zIndex',99999);
 		W.setContent(document.getElementById('loginCardWindow').innerHTML);
 		W.onOpen = function(win) {
 			var $droptarget = $('#idBox', win.contentBox),
@@ -116,8 +117,9 @@ if(!empty($_POST['userid'])) {
 					$.post('fragments/logincard.php', {key: key, userid: idFile.userdata.id}, function(d) {
 						if(d.status == "ok") {
 							$('#headerText').html('<a href="#" onclick="ice.logout();"><b>Log out<b></a>');
-							ice.fragment.load('sidebar');
+							ice.fragment.load('sidepanel');
 							ice.Manager.removeWindow('CardLogin');
+							ice.curtain.raise(false);
 						} else {
 							alert(d.error);
 						}

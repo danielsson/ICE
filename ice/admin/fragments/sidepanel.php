@@ -10,7 +10,7 @@
 ?>
 
 <script type="text/javascript">
-	function sidebar() {
+	function sidepanel() {
 		var aside = $('aside');
 		aside.html(document.getElementById('sidebarContent').innerHTML);
 		var $list = $('.biglist li', aside);

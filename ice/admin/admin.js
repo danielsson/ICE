@@ -17,7 +17,9 @@ var ice = {
 			}
 		},
 		addWindow : function(window) {//First argument is a windowClass object.
-			if(Object.keys(this.windowsStorage).length == 0) { this.windowSandbox.html("");} //Ensure empty canvas
+			if(Object.keys(this.windowsStorage).length == 0) {
+				this.windowSandbox.html("");
+			}//Ensure empty canvas
 			console.log(Object.keys(this.windowsStorage).length);
 			var name = window.name;
 			if(name.length < 1) {//Anonymous windows
@@ -34,7 +36,6 @@ var ice = {
 			return true;
 		},
 		renderWindow : function(name) {
-			
 			$win = this.getWindow(name);
 			if($win.closeable === false) {
 				$win.exitBtn.remove();
@@ -125,7 +126,9 @@ var ice = {
 		},
 		flushWindows : function(callback) {
 			for(n in this.windowsStorage) {
-				this.removeWindow(n);
+				if(!this.removeWindow(n)) {
+					return false;
+				}
 			}
 			this.windowsStorage = [];
 			//reset, just in case
@@ -239,7 +242,30 @@ var ice = {
 				});
 			});
 		}
-	}//End logout()
+	}, //End logout()
+	curtain : {
+		lower : function(now) {
+			if(now === true) {
+				$('#header').css({height:"100%", zIndex:88888});
+			} else {
+				$('#header').animate({height:"100%"},800).css({zIndex:88888});
+			}
+			$('#header .center').delay(400).animate({marginTop:200}, 400);
+		},
+		raise : function(now) {
+			if(now===true) {
+				$('#header .center').css({marginTop:0});
+				$('#header').css({height : 48})
+					.css('zIndex', 1);
+			} else {
+				$('#header .center').animate({marginTop:0}, 200);
+				$('#header').animate({height : 48}, 500, function() {
+					$(this).css('zIndex', 1);
+				});
+			}
+			
+		}
+	}
 };
 //End ice
 
