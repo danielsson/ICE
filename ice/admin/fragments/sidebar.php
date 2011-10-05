@@ -28,6 +28,13 @@
 					break;
 			}
 		});
+		
+		ice.Manager.windowSandbox.append(
+			$('<div><img src="resources/no_windows.png" /></div>').css({
+				position: "absolute",
+				top:150,
+				left:(ice.Manager.windowSandbox.width() - 169) / 2})
+		);
 	}
 	
 </script>
