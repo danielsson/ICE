@@ -64,6 +64,11 @@ $(document).ready(function() {
 
 <?php } else { ?>
 	ice.fragment.load('sidebar');
+	(function () {
+		var c = $('#header .center'), h = $('#header');
+		c.css({marginTop:0});
+		h.css({height: 48, zIndex:1});
+	})()
 
 <?php } ?>
 	if($.browser.msie) {

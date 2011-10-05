@@ -30,9 +30,14 @@ thead {
 	font-weight: 800;
 }
 #header {
-	height:48px;
+	position:absolute;
+	height:100%;
 	background: #30b6f3;
 	border-bottom: thin solid #88B;
+	top: 0;
+	right: 0;
+	left: 0;
+	z-index: 88888;
 }
 .center {
 	width: 960px;
@@ -194,7 +199,7 @@ aside {
 	font-size: 12px;
 	font-weight: 400;
 	overflow: hidden;
-	z-index: 99999;
+	z-index: 77777;
 
 }
 #taskBar ul { 

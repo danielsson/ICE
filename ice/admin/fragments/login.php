@@ -34,8 +34,10 @@
 		lWin.width = 450;
 		lWin.closeable = false;
 		lWin.minimizeable = false;
-		lWin.icon = "ice-logo_05.png";
+		lWin.icon = " ";
+		lWin.element.css('zIndex', 99999);
 		lWin.onOpen = function(win) {
+			$('#header').css({height:"100%"});
 			win.setContent(document.getElementById('loginWindow').innerHTML);
 			var $t = win.element;
 			$('input[type=submit]', $t).click(function(e) {
@@ -52,6 +54,11 @@
 						$('#headerText').html('<a href="#" onclick="ice.logout();"><b>Log out<b></a>');
 						ice.fragment.load('sidebar');
 						ice.Manager.removeWindow('LoginWindow');
+						
+						$('#header .center').animate({marginTop:0}, 200);
+						$('#header').animate({height: 48},500, function() {
+							$(this).css('zIndex', 1);
+						});
 					}
 				});
 			});
@@ -62,6 +69,8 @@
 		};
 		
 		ice.Manager.addWindow(lWin);
+		
+		$('#header .center').delay(400).animate({marginTop:200}, 400);
 		
 	}
 

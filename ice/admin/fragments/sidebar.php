@@ -35,6 +35,7 @@
 				top:150,
 				left:(ice.Manager.windowSandbox.width() - 169) / 2})
 		);
+		
 	}
 	
 </script>

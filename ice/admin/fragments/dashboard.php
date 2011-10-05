@@ -40,9 +40,13 @@
 			$('#editPagesBtn', $t).click(function() { ice.fragment.load('pagemanager'); });
 			$('#createPageBtn', $t).click(function() { ice.fragment.load('pagewizard'); });
 			$('#manageUsersBtn', $t).click(function() { ice.fragment.load('usermanager'); });
+			
+			
 		};
 		dWin.setContent(document.getElementById('dashboardWindow').innerHTML);
 		ice.Manager.addWindow(dWin);
+		$('#header .center').animate({marginTop:0}, 200);
+		$('#header').animate({height: 48},500);
 	}
 </script>
 
