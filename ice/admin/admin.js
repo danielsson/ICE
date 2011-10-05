@@ -57,16 +57,15 @@ var ice = {
 			} else {
 				$win.element.find('.winMini').remove();
 			}
-			
-			var leftval = ($(window).width() - $win.width) / 2 - 100;
+
 		  $win.element
 			  .attr('data-win-name', name)
 			  .appendTo(this.windowSandbox)
 			  .css({
 			  	width: $win.width,
-			  	left: leftval,
+			  	left: (this.windowSandbox.width() - $win.width) / 2,
 			  	zIndex: ice.Manager.maxZindex(),
-			  	top: 200
+			  	top: (this.windowSandbox.height() - $win.element.height()) / 2
 			  	})
 			  .draggable({handle: '.winBar', stack: '.window'});
 		  $win.titleBox.html($win.title);
