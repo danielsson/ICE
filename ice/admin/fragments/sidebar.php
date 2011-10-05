@@ -3,7 +3,7 @@
 	require '../../lib/auth.class.php';
 	$Auth->init(1);
 	
-	if($_POST['clear']=="true") {
+	if(isset($_POST['clear']) && $_POST['clear'] == "true") {
 		foreach(glob('../../cache/*.txt') as $v) {	unlink($v); }
 		die("200");
 	}
