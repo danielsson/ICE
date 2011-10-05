@@ -73,16 +73,20 @@
 		<div id="loginError"></div>
 		<b>Please log in</b>
 		<form action="#" method="post" >
-			<label for="username">Username</label>
-			<input type="text" id="username" name="username"></input>
-			<br/>
-			<label for="password">Password</label>
-			<input type="password" id="password" name="password"></input
+			<fieldset>
+				<label for="username">Username</label>
+				<input type="text" id="username" name="username"></input>
+			</fieldset>
+			<fieldset>
+				<label for="password">Password</label>
+				<input type="password" id="password" name="password"></input>
+			</fieldset>
 			<br />
+			<a href="#" style="float: left;">Have an WebID?</a>
 			<input type="submit" value="Log in" style="float:right;"></input>
+			
+			<br style="clear: both"/>
 		</form>
-		<a href="#">Have an WebID?</a>
-	<br style="clear: both"/>
 	</div>
 </div>
 </script>

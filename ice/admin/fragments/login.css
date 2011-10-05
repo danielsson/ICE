@@ -3,6 +3,10 @@
 }
 
 .loginwindow input[type=text], .loginwindow input[type=password]{
-
+	float:right;
 	width: 308px;
+}
+.loginwindow label {
+	float: left;
+	line-height: 48px;
 }
