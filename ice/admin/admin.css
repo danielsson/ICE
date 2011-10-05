@@ -30,8 +30,9 @@ thead {
 	font-weight: 800;
 }
 #header {
-	height:49px;
-	background: url('resources/header.png');
+	height:48px;
+	background: #30b6f3;
+	border-bottom: thin solid #88B;
 }
 .center {
 	width: 960px;
@@ -297,10 +298,12 @@ label {
 	padding: 10px 0 15px;
 	border-bottom: 1px solid #DDD;
 	cursor: pointer;
+	background: url('resources/slider.png') -200px 0 repeat-y;
+	-webkit-transition: all 200ms ease;
 }
 .biglist li+li {border-top: 1px solid #FFF;}
 .biglist li:hover {
-	background-color:#CCC;
+	background-position: 0 0;
 }
 .biglist h2 {
 	font: bold 14px/26px sans-serif; 
