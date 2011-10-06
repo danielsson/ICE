@@ -27,38 +27,11 @@ if (isset($_POST['clear']) && $_POST['clear'] == "true") {
 				case 2:
 					ice.fragment.load('usermanager');
 					break;
-				case 3:/*
-					var g = new ice.Window;
-					g.name = "AdvTools";
-					g.title = "Toolbox";
-					g.setContent($('#advancedTools').html());
-					g.width = "auto";
-					g.contentBox.css({
-						background : '#333',
-						color : '#FFF'
-					}).prev().css({
-						background : '#333'
-					});
-					g.clearCache = function() {
-						$.post('fragments/dashboard.php', {
-							clear : "true"
-						});
-						ice.message('Cache cleared', 'info');
-					};
-					if(ice.Manager.addWindow(g)) {
-						ice.Manager.getWindow('AdvTools').element.css({
-							left : 0,
-							top : 100
-						});
-					}*/
-					
+				case 3:
 					$this
 						.fadeOut(function() {
-							$(this).html($('#advancedTools').html());
-							
-							
-							})
-						.fadeIn();
+							$(this).append($('#advancedTools').html()).fadeIn();
+						});
 					$this.unbind(e);
 					break;
 			}
@@ -81,6 +54,7 @@ if (isset($_POST['clear']) && $_POST['clear'] == "true") {
 	</ul>
 </script>
 <script type="text/template" id="advancedTools">
+	<br />
 	<ul class="nicelist">
 		<li onclick="ice.fragment.load('templatemanager')">Add files</li>
 		<li onclick="$.post('fragments/sidepanel.php', {clear : 'true'}); ice.message('Cache cleared', 'info');">Clear Cache</li>
