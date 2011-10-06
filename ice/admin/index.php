@@ -24,7 +24,7 @@
 			</a>
 		</div>
 		<div id="headerText">
-		<?php if($_SESSION['userlevel'] > 0) { ?>
+		<?php if(isset($_SESSION['userlevel']) && $_SESSION['userlevel'] > 0) { ?>
 		<a href="#" onclick="ice.logout();"><b>Log out</b></a>
 		<?php } else {?>
 			Not logged in.
@@ -59,7 +59,7 @@
 $(document).ready(function() {
 	ice.Manager.ready();
 
-<?php if($_SESSION['userlevel'] == 0) {?>
+<?php if(! isset($_SESSION['userlevel']) || $_SESSION['userlevel'] == 0) {?>
 	ice.fragment.load('login');
 
 <?php } else { ?>

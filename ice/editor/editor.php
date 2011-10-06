@@ -1,6 +1,7 @@
 <?php defined('SYSINIT') or die('<b>Error:</b> No direct access allowed');
 
-require_once('../lib/auth.class.php');
+require_once('ice/lib/auth.class.php');
+
 $Auth->init(1); //Userlevel 1 or higher required
 
 class ICECMSEDIT extends ICECMS {
@@ -39,7 +40,7 @@ class ICECMSEDIT extends ICECMS {
 			echo 'Error: fourth argument supplied to element() is not an array.';
 			return false;
 		}
-		if(strlen($attrs['class']) < 1) {
+		if(!isset($attrs['class'])) {
 			$attrs['class'] = '';
 		}
 		$attrs['class'] .= ' iceEditable';
