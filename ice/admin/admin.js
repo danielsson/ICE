@@ -18,7 +18,7 @@ var ice = {
 		},
 		addWindow : function(window) {//First argument is a windowClass object.
 			if(Object.keys(this.windowsStorage).length == 0) {
-				this.windowSandbox.html("");
+				this.windowSandbox.find("div:has(img)").html("");
 			}//Ensure empty canvas
 			console.log(Object.keys(this.windowsStorage).length);
 			var name = window.name;
@@ -247,10 +247,12 @@ var ice = {
 		lower : function(now) {
 			if(now === true) {
 				$('#header').css({height:"100%", zIndex:88888});
+				$('#header .center').css({marginTop:200});
 			} else {
 				$('#header').animate({height:"100%"},800).css({zIndex:88888});
+				$('#header .center').delay(400).animate({marginTop:200}, 400);
 			}
-			$('#header .center').delay(400).animate({marginTop:200}, 400);
+			
 		},
 		raise : function(now) {
 			if(now===true) {

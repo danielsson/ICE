@@ -43,6 +43,7 @@ thead {
 	width: 960px;
 	margin: 0 auto;
 }
+#header .center {margin-top: 200px;}
 #logo {
 	margin: 10px 0;
 	float: left;
