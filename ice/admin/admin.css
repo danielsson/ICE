@@ -132,7 +132,7 @@ aside {
 }
 .winBar {
 	background: url('resources/winBar.png');
-	border-bottom:1px solid #B9B9B9;
+	border-bottom:1px solid #CCC;
 	height: 30px;
 	-moz-border-radius: 2px 2px 0 0;
 	-o-border-radius: 2px 2px 0 0;
