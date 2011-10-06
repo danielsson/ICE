@@ -26,12 +26,18 @@ table tbody tr:nth-child(even) {
 	background: #EEE;
 }
 thead {
-	background: url('resources/header_02.png');
+	background: url('resources/header.png');
 	font-weight: 800;
 }
 #header {
-	height:49px;
-	background: url('resources/header.png');
+	position:absolute;
+	height:100%;
+	background: #30b6f3;
+	border-bottom: thin solid #88B;
+	top: 0;
+	right: 0;
+	left: 0;
+	z-index: 88888;
 }
 .center {
 	width: 960px;
@@ -55,10 +61,15 @@ thead {
 }
 .msg {
 	padding: 10px 20px;
-	font-weight: bold;
-	color: #FFF;
+	color: #333;
 	display:none;
-	margin-bottom: 20px;
+
+}
+#windowSandbox>.msg {
+	float:right;
+	width: 400px;
+	clear: both;
+		margin: 20px 20px 0;
 }
 .msg .winExit {
 	margin: 0;
@@ -70,7 +81,7 @@ thead {
 	border: thin solid #900;
 }
 .msgInfo {
-	background: url('resources/header_02.png') center center;
+	background: #EEE;
 	border: thin solid #CCC;
 }
 .rounded6, .msg, input {
@@ -184,16 +195,17 @@ aside {
 	position: fixed;
 	bottom:0;
 	right: 0;
+	left: 200px;
 	height: 24px;
-	width: 100%;
-	background: url('resources/header_02.png') bottom;
+	background: url('resources/winBar.png') bottom;
 	border-style: solid;
-	border-color: #c1c1c1 #fff #FFFFFF #fff;
-	border-width: 1px 0;
+	border-color: #c1c1c1 #fff #fff #AAA;
+	border-width: 1px 0 0 1px;
 	font-size: 12px;
 	font-weight: 400;
 	overflow: hidden;
-	z-index: 99999;
+	z-index: 77777;
+
 }
 #taskBar ul { 
 	list-style-type: none;
@@ -227,7 +239,7 @@ input[type=text]:focus, input[type=password]:focus  {
 	margin: 9px;
 }
 input[type=submit], input[type=button] {
-	background: url('resources/header_02.png') center center;
+	background: url('resources/header.png') center center;
 	border: 1px solid #fff;
 	padding: 5px;
 	margin:5px;
@@ -279,7 +291,7 @@ label {
 	font-weight: bold;
 }
 .nicelist li {padding: 6px 20px;cursor: pointer;}
-.nicelist li:hover {background: url('resources/header_02.png') center -20px;}
+.nicelist li:hover {background: url('resources/header.png') center -20px;}
 .winLoader {
 	position: absolute;
 	height: 100%;
@@ -293,20 +305,22 @@ label {
 .biglist {
 
 }
-.biglist li {
+.biglist>li {
 	padding: 10px 0 15px;
 	border-bottom: 1px solid #DDD;
 	cursor: pointer;
+	background: url('resources/slider.png') -200px 0 repeat-y;
+	-webkit-transition: all 200ms ease;
 }
-.biglist li+li {border-top: 1px solid #FFF;}
-.biglist li:hover {
-	background-color:#CCC;
+.biglist>li+li {border-top: 1px solid #FFF;}
+.biglist>li:hover {
+	background-position: 0 0;
 }
-.biglist h2 {
+.biglist>li>h2 {
 	font: bold 14px/26px sans-serif; 
 	padding: 0 20px;
 }
-.biglist p {
+.biglist>li>p {
 	font-size: 10px;
 	padding: 0 20px;
 }

@@ -28,14 +28,16 @@
 <script type="text/javascript" >
 	function login() {
 		ice.fragment.addCss('login.css');
-		var lWin = new ice.Window;
+		var lWin = new ice.Window();
 		lWin.name = "LoginWindow";
 		lWin.title = "&nbsp;&nbsp;&nbsp;&nbsp;";
 		lWin.width = 450;
 		lWin.closeable = false;
 		lWin.minimizeable = false;
-		lWin.icon = "ice-logo_05.png";
+		lWin.icon = " ";
+		lWin.element.css('zIndex', 99999);
 		lWin.onOpen = function(win) {
+			ice.curtain.lower(false);
 			win.setContent(document.getElementById('loginWindow').innerHTML);
 			var $t = win.element;
 			$('input[type=submit]', $t).click(function(e) {
@@ -50,8 +52,9 @@
 						ice.message('Wrong username/password', 'warning', '#loginError');
 					} else {
 						$('#headerText').html('<a href="#" onclick="ice.logout();"><b>Log out<b></a>');
-						ice.fragment.load('sidebar');
+						ice.fragment.load('sidepanel');
 						ice.Manager.removeWindow('LoginWindow');
+						ice.curtain.raise();
 					}
 				});
 			});
@@ -73,16 +76,20 @@
 		<div id="loginError"></div>
 		<b>Please log in</b>
 		<form action="#" method="post" >
-			<label for="username">Username</label>
-			<input type="text" id="username" name="username"></input>
-			<br/>
-			<label for="password">Password</label>
-			<input type="password" id="password" name="password"></input
+			<fieldset>
+				<label for="username">Username</label>
+				<input type="text" id="username" name="username"></input>
+			</fieldset>
+			<fieldset>
+				<label for="password">Password</label>
+				<input type="password" id="password" name="password"></input>
+			</fieldset>
 			<br />
+			<a href="#" style="float: left;">Have an WebID?</a>
 			<input type="submit" value="Log in" style="float:right;"></input>
+			
+			<br style="clear: both"/>
 		</form>
-		<a href="#">Have an WebID?</a>
-	<br style="clear: both"/>
 	</div>
 </div>
 </script>

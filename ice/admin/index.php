@@ -63,7 +63,8 @@ $(document).ready(function() {
 	ice.fragment.load('login');
 
 <?php } else { ?>
-	ice.fragment.load('sidebar');
+	ice.curtain.raise(true)
+	ice.fragment.load('sidepanel');
 
 <?php } ?>
 	if($.browser.msie) {
