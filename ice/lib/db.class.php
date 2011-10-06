@@ -13,7 +13,7 @@ final class Database {
 	}
 
 	public function connect() {
-		$this->db = mysql_pconnect($this->db_address,$this->db_username,$this->db_password);
+		$this->db = mysql_pconnect($this->db_host,$this->db_username,$this->db_password);
 		mysql_select_db($this->db_name,$this->db);
 		return $this;
 	}
