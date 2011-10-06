@@ -28,10 +28,7 @@ if (isset($_POST['clear']) && $_POST['clear'] == "true") {
 					ice.fragment.load('usermanager');
 					break;
 				case 3:
-					$this
-						.fadeOut(function() {
-							$(this).append($('#advancedTools').html()).fadeIn();
-						});
+					$this.append($('#advancedTools').html());
 					$this.unbind(e);
 					break;
 			}
