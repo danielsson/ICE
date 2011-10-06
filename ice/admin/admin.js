@@ -62,8 +62,12 @@ var ice = {
 			} else {
 				$win.element.find('.winMini').remove();
 			}
-
-			$win.element.attr('data-win-name', name).appendTo(this.windowSandbox).css({
+			
+			$win.element
+				.attr('data-win-name', name)
+				.appendTo(this.windowSandbox);
+		
+			$win.element.css({
 				width : $win.width,
 				left : (this.windowSandbox.width() - $win.width) / 2,
 				zIndex : ice.Manager.maxZindex(),
