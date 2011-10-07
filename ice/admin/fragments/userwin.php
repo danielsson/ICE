@@ -32,7 +32,9 @@
 			
 			$db->query($sql);
 			echo $db->error;
+			$db->close();
 		}
+		
 		die('{"status":"ok"}');
 	}
 ?>
