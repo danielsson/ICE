@@ -190,6 +190,8 @@ aside {
 	right:0;
 	background-image: url(resources/black_denim.png);
 	-webkit-box-shadow: 0 0 20px #000 inset;
+	-moz-box-shadow: 0 0 20px #000 inset;
+	box-shadow: 0 0 20px #000 inset;
 }
 
 #taskBar {

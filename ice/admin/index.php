@@ -67,7 +67,7 @@ $(document).ready(function() {
 	ice.fragment.load('sidepanel');
 
 <?php } ?>
-	if($.browser.msie) {
+	if($.browser.msie && $.browser.version < 9) {
 		ice.message("You are running Internet Explorer. Upgrading to a better browser will improve your experience.", 'info');
 	}
 });
