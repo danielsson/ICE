@@ -105,6 +105,7 @@ function wizCreatePage(name,url,tid, wName) {
 			$('.wizEditBtn', $win.contentBox).click(function() {
 				ice.fragment.load('browser',{}, {url: data.path, postEdit: true});
 			});
+			ice.Manager.getWindow('IcePM').refresh();
 		} else {
 			alert(data.error);
 		}
