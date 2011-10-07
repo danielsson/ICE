@@ -44,10 +44,15 @@ if (isset($_POST['clear']) && $_POST['clear'] == "true") {
 </script>
 <script type="text/template" id="sidebarContent">
 	<ul class="biglist">
-	<li><h2>Edit Existing Pages</h2><p>and manage them</p></li>
-	<li><h2>Create a New Page</h2><p>based on a template</p></li>
-	<li><h2>Manage Users</h2><p>of your system</p></li>
-	<li><h2>Advanced tools</h2><p>for advanced users</p></li>
+	<li style="background: url(resources/icons.png) 0 0 no-repeat;">
+		<h2>Edit Existing Pages</h2><p>and manage them</p>
+	</li><li style="background: url(resources/icons.png) 0 -60px no-repeat;">
+		<h2>Create a New Page</h2><p>based on a template</p>
+	</li><li style="background: url(resources/icons.png) 0 -120px no-repeat;">
+		<h2>Manage Users</h2><p>of your system</p>
+	</li><li style="background: url(resources/icons.png) 0 -180px no-repeat;">
+			<h2>Advanced tools</h2><p>for advanced users</p>
+	</li>
 	</ul>
 </script>
 <script type="text/template" id="advancedTools">
