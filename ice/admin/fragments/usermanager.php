@@ -5,7 +5,7 @@
 	require '../../lib/auth.class.php';
 	$Auth->init(2);
 	$db->connect();
-
+	if(!isset($_POST['refresh'])) :
 ?>
 
 <script type="text/javascript">
@@ -14,16 +14,23 @@ function usermanager() {
 	W.name = "USRMAN";
 	W.title = "Page File Manager";
 	W.width = 600;
+	W.contentEndpoint = "fragments/usermanager.php";
+	W.allowRefresh = true;
+	W.onContentChange = function(win) {
+		$('tbody tr', W.contentBox).click(function() {
+			var id = parseInt($(this).children().eq(0).text());
+			ice.fragment.load('userwin', {}, {id:id});
+		});
+	};
 	W.setContent(document.getElementById('userManager').innerHTML);
-	$('tbody tr', W.contentBox).click(function() {
-		var id = parseInt($(this).children().eq(0).text());
-		ice.fragment.load('userwin', {}, id);
-	});
 	ice.Manager.addWindow(W);
 }
 
 </script>
 <script type="text/template" id="userManager">
+	
+<?php endif; ?>
+
 <div class="winpadd">
 <p>Click users below to edit.</p>
 <br />
@@ -56,4 +63,4 @@ function usermanager() {
 
 <div style="clear:both"></div>
 </div>
-</script>
+<?php if(!isset($_POST['refresh'])) echo '</script>'; ?>

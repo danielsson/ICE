@@ -179,9 +179,18 @@ aside {
 	cursor: default;
 	opacity: 0.8;
 }
-.winMini:hover {
-	opacity:1;
+.winMini:hover {opacity:1;}
+.winRefresh {
+	float:right;
+	height: 15px;
+	width: 15px;
+	background-image: url('resources/arrow_refresh.png');
+	margin: 6px;
+	cursor: default;
+	opacity: 0.8;
+	display: none;
 }
+.winRefresh:hover { opacity: 1}
 #windowSandbox {
 	position: absolute;
 	top:49px;

@@ -45,6 +45,13 @@ var ice = {
 					ice.Manager.removeWindow(name);
 				});
 			}
+			if($win.allowRefresh) {
+				$win.refreshBtn
+					.css({display:'block'})
+					.click(function() {
+						ice.Manager.getWindow($(this).inWindow()).refresh();
+					});
+			}
 			if($win.icon !== "") {
 				$win.titleBox.css({
 					background : 'url("resources/' + $win.icon + '") 5px  no-repeat'
@@ -158,16 +165,38 @@ var ice = {
 		this.title = "Window title";
 		this.icon = "";
 		this.modal = false;
-		this.element = $('<div class="window rounded6 shadow" />').html('<div class="winBorder rounded6"><div class="winBar"><div class="winTitle"></div><div class="winExit"></div><div class="winMini"></div></div><div class="winContent"></div><div class="winLoader" ></div></div>');
-		this.exitBtn = this.element.find('.winExit');
-		this.titleBox = this.element.find('.winTitle');
-		this.contentBox = this.element.find('.winContent');
-		this.loader = this.element.find('.winloader');
+		this.element = $('<div class="window rounded6 shadow" />').html('<div class="winBorder rounded6"><div class="winBar"><div class="winTitle"></div><div class="winExit"></div><div class="winMini"></div><div class="winRefresh"></div></div><div class="winContent"></div><div class="winLoader" ></div></div>');
+		this.exitBtn = this.element.find('.winExit:eq(0)');
+		this.refreshBtn = this.element.find('.winRefresh:eq(0)');
+		this.titleBox = this.element.find('.winTitle:eq(0)');
+		this.contentBox = this.element.find('.winContent:eq(0)');
+		this.loader = this.element.find('.winLoader');
+		this.contentEndpoint = "";
+		this.allowRefresh = false;
+		this.refresh = function(attrs) {
+			if(this.contentEndpoint === "") {return false;}
+			if(typeof attrs == 'undefined') {
+				attrs = {refresh:true};
+			}
+			var ref = this;
+			this.loadingOn();
+			$.post(this.contentEndpoint, attrs, function(data) {
+				if(data.length === 0 || data == "404") {
+					ice.message('Ajax error');
+				} else {
+					ref.setContent(data);
+					ref.loadingOff();
+				}
+			})
+		}
+		
 		this.setContent = function(c) {
+			this.contentBox.children().remove();
 			this.contentBox.html(c);
+			this.onContentChange(this);
 		};
 		this.loadingOn = function() {
-			this.loader.fadeIn();
+			this.loader.stop().fadeIn();
 		};
 		this.loadingOff = function() {
 			this.loader.stop().fadeOut();
@@ -175,6 +204,8 @@ var ice = {
 		this.onOpen = function(winObj) {
 		};
 		this.beforeClose = function(winObj) {
+		};
+		this.onContentChange = function(winObj) {
 		};
 	},
 	fragment : {
