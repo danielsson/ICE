@@ -46,8 +46,8 @@
 		</div>
 	</div>
 <?php if(strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false && $config['use_gcf'] === true) : ?>
-<!--[if IE]>
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+<!--[if lte IE 8]>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/chrome-frame/1.0.2/CFInstall.min.js"></script>
 	<script>
 		CFInstall.check({
 			mode: "overlay"

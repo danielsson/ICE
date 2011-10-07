@@ -51,10 +51,12 @@
 					if(data !="true") {
 						ice.message('Wrong username/password', 'warning', '#loginError');
 					} else {
+						ice.Manager.displayNoWindowsWarning = true;
 						$('#headerText').html('<a href="#" onclick="ice.logout();"><b>Log out<b></a>');
 						ice.fragment.load('sidepanel');
 						ice.Manager.removeWindow('LoginWindow');
 						ice.curtain.raise();
+						
 					}
 				});
 			});

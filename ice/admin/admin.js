@@ -2,6 +2,7 @@ var ice = {
 	Manager : {
 		windowsStorage : [],
 		incrementer : 0,
+		displayNoWindowsWarning: true,
 		windowSandbox : {},
 		taskBar : {},
 		ready : function() {
@@ -17,10 +18,10 @@ var ice = {
 			}
 		},
 		addWindow : function(window) {//First argument is a windowClass object.
-			if(Object.keys(this.windowsStorage).length == 0) {
+			if(this.displayNoWindowsWarning) {
 				this.windowSandbox.find("div:has(img)").html("");
+				this.displayNoWindowsWarning = false;
 			}//Ensure empty canvas
-			console.log(Object.keys(this.windowsStorage).length);
 			var name = window.name;
 			if(name.length < 1) {//Anonymous windows
 				name = "anon_" + this.incrementer++;

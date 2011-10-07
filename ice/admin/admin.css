@@ -326,3 +326,6 @@ label {
 	font-size: 10px;
 	padding: 0 20px 0 40px;
 }
+.chromeFrameOverlayContent {
+	z-index: 100900;
+}
