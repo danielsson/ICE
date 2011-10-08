@@ -34,6 +34,8 @@
 		$db->close();
 		die();
 	}
+	
+	if(!isset($_POST['refresh'])) :
 ?>
 
 <script type="text/javascript">
@@ -42,54 +44,58 @@ function templatemanager() {
 	W.name = "TMPLMAN";
 	W.title = "Page File Manager";
 	W.width = 600;
-	W.setContent(document.getElementById('pageFileManager').innerHTML);
-	W.contentBox.find('#addFilesBtn').click(function() {
-		var AFW = new ice.Window;
-		AFW.title = "Add File to Icy";
-		AFW.width = 300;
-		AFW.name = "AddFileDialog";
-		AFW.closeable = false;
-		AFW.minimizeable = false;
-		AFW.setContent(document.getElementById('addFilesDialog').innerHTML);
-		AFW.contentBox.find(':submit').click(function(e) {
-			e.preventDefault();
-			var $this = $(this);
-			if($this.siblings('[value=""]').length > 0) { // Detect empty fields
-				ice.message('All fields must be used', 'warning');
+	W.allowRefresh = true;
+	W.contentEndpoint = "fragments/templatemanager.php";
+	W.onContentChange = function(W) {
+		W.contentBox.find('#addFilesBtn').click(function() {
+			var AFW = new ice.Window;
+			AFW.title = "Add File to Icy";
+			AFW.width = 300;
+			AFW.name = "AddFileDialog";
+			AFW.closeable = false;	
+			AFW.minimizeable = false;
+			AFW.setContent(document.getElementById('addFilesDialog').innerHTML);
+			AFW.contentBox.find(':submit').click(function(e) {
+				e.preventDefault();
+				var $this = $(this);
+				if($this.siblings('[value=""]').length > 0) { // Detect empty fields
+					ice.message('All fields must be used', 'warning');
 				return false;
-			}
-			var data = $this.parent().serialize();
-			$this.siblings().andSelf().attr('disabled', 'disabled');
-			$.post('fragments/templatemanager.php', data, function(data) {
-				if(data.length > 0) {
-					ice.message(data, 'warning');
-					$this.siblings().andSelf().removeAttr('disabled');
-				} else {
-					var d = ice.Manager.getWindow("AddFileDialog").contentBox.find('input');
-					ice.message('File has been added', 'info');
-					var strS = '<tr><td>#</td><td>' + d.eq(0).val() + '</td><td>' + d.eq(1).val() + '</td><td>' + d.eq(2).val() + '</td></tr>';
-					var k = ice.Manager.getWindow("TMPLMAN").element.find('tbody');
-					k.html(k.html() + strS);
-					ice.Manager.removeWindow('AddFileDialog');
 				}
+				var data = $this.parent().serialize();
+				$this.siblings().andSelf().attr('disabled', 'disabled');
+				$.post('fragments/templatemanager.php', data, function(data) {
+					if(data.length > 0) {
+						ice.message(data, 'warning');
+						$this.siblings().andSelf().removeAttr('disabled');
+					} else {
+						ice.message('File has been added', 'info');
+						
+						ice.Manager.getWindow("TMPLMAN").refresh();
+						ice.Manager.removeWindow('AddFileDialog');	
+					}
+				});
 			});
+			AFW.contentBox.find('input[type=button]').click(function(){ ice.Manager.removeWindow("AddFileDialog"); });
+			ice.Manager.addWindow(AFW);
 		});
-		AFW.contentBox.find('input[type=button]').click(function(){ ice.Manager.removeWindow("AddFileDialog"); });
-		ice.Manager.addWindow(AFW);
-	});
-	W.contentBox.find('#delFilesBtn').click(function() {
+		W.contentBox.find('#delFilesBtn').click(function() {
 		var res = prompt('Please enter the id of the file You want to remove from the system.', "#");
 		if(res != null && res !="") {
 			$.post("fragments/templatemanager.php", {del: true, id: res});
 			alert('Reload the page to see the changes');
 		}
 			
-	});
+		});
+	}
+	W.setContent(document.getElementById('pageFileManager').innerHTML);
 	ice.Manager.addWindow(W);
 }
 
 </script>
+
 <script type="text/template" id="pageFileManager">
+<?php endif; ?>
 <div class="winpadd">
 <p>Use this interface to add finished files to the cms. (URL)Instructions</p>
 <br />
@@ -134,6 +140,9 @@ function templatemanager() {
 </div>
 <div style="clear:both"></div>
 </div>
+
+<?php if(isset($_POST['refresh'])) {die();} ?>
+
 </script>
 <script type="text/template" id="addFilesDialog">
 <div class="winpadd">
