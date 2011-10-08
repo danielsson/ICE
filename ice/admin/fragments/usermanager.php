@@ -12,7 +12,7 @@
 function usermanager() {	
 	var W = new ice.Window;
 	W.name = "USRMAN";
-	W.title = "Page File Manager";
+	W.title = "User Manager";
 	W.width = 600;
 	W.contentEndpoint = "fragments/usermanager.php";
 	W.allowRefresh = true;
@@ -32,7 +32,10 @@ function usermanager() {
 <?php endif; ?>
 
 <div class="winpadd">
-<p>Click users below to edit.</p>
+	<div class="toolbar">
+		Click users below to edit.
+		<a href="#" style="float:right;" onclick="ice.fragment.load('userwizard');">Create new page</a>
+	</div>
 <br />
 <table class="rounded6" style="cursor:pointer">
 <thead>
