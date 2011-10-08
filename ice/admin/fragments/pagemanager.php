@@ -122,7 +122,7 @@
 </script>
 
 <script type="text/template" id="pageManager1">
-<?php endif; sleep(1);?>
+<?php endif;?>
 
 <div class="pagemanager">
 	<div class="toolbar">
