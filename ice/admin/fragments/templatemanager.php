@@ -82,8 +82,10 @@ function templatemanager() {
 		W.contentBox.find('#delFilesBtn').click(function() {
 		var res = prompt('Please enter the id of the file You want to remove from the system.', "#");
 		if(res != null && res !="") {
-			$.post("fragments/templatemanager.php", {del: true, id: res});
-			alert('Reload the page to see the changes');
+			$.post("fragments/templatemanager.php", {del: true, id: res}, function() {
+				ice.message('File was deleted', 'info');
+				ice.Manager.getWindow('TMPLMAN').refresh();
+			});
 		}
 			
 		});
