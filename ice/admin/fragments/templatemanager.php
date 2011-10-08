@@ -81,7 +81,7 @@ function templatemanager() {
 		});
 		W.contentBox.find('#delFilesBtn').click(function() {
 		var res = prompt('Please enter the id of the file You want to remove from the system.', "#");
-		if(res != null && res !="") {
+		if(res !== null && res !== "" && confirm("This will delete all pages using this template, and all their text.")) {
 			$.post("fragments/templatemanager.php", {del: true, id: res}, function() {
 				ice.message('File was deleted', 'info');
 				ice.Manager.getWindow('TMPLMAN').refresh();

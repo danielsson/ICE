@@ -57,7 +57,6 @@
 					.find('li:eq(0)')
 					.trigger('click');
 			});
-			
 			$('#pageManagerMenu li').click(function() {
 				var $this = $(this), current = $this.parent().parent().attr('data-current'),
 				id = $this.parent().parent().attr('data-id');

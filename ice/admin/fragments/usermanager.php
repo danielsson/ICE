@@ -34,7 +34,7 @@ function usermanager() {
 <div class="winpadd">
 	<div class="toolbar">
 		Click users below to edit.
-		<a href="#" style="float:right;" onclick="ice.fragment.load('userwizard');">Create new page</a>
+		<a href="#" style="float:right;" onclick="ice.fragment.load('userwizard');">Create new user</a>
 	</div>
 <br />
 <table class="rounded6" style="cursor:pointer">
