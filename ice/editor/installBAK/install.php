@@ -119,5 +119,6 @@ if(isset($_POST['host'])) {
 <?php 
 	if($state === 1) {
 		rmdir(dirname(__FILE__));
+		
 	}
 ?>
