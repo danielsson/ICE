@@ -1,4 +1,4 @@
-<?php
+<?php file_exists('LOCK') and die('You must delete the LOCK-file to run the installer again.');
 $error = "";
 $state = 0;
 $config=null;
@@ -31,6 +31,8 @@ if(isset($_POST['host'])) {
 		file_put_contents($cfgpath, $config);
 		file_put_contents($htpath, $htaccess);
 		
+		header("Location: syncdb.php");
+		die();
 	}
 }
 
@@ -76,12 +78,10 @@ if(isset($_POST['host'])) {
 	<body>
 		<div class="fof">ICE</div>
 		<div class="ff">
-			
-			<?php if($state === 0) : ?>
 				
 			<h1>Hi!<br /> Welcome to the installer for ICE! Lets get started.</h1>
 			<p><span>Please notice that when submitted successfully, this installer will self-destruct.</span> <br />
-				First, make sure you have access to your database information.
+			First, make sure you have access to your database information.
 			</p>
 			<?php 
 				if(strlen($error)>0) echo "<p class=err>".$error."</p>"
@@ -105,19 +105,9 @@ if(isset($_POST['host'])) {
 				</fieldset>
 				<input type="submit"/>
 			</form>
-			
-			<?php elseif ($state===1) :
-				echo "<h1>Writing files... [DONE]</h1>";
-			 endif; ?>
 			<br style="clear: both" />
 			
 			<small>ICE! CMS</small>
 		</div>
 	</body>
 </html>
-
-<?php 
-	if($state === 1) {
-		rmdir(dirname(__FILE__));
-	}
-?>
