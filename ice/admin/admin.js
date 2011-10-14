@@ -213,7 +213,7 @@ var ice = {
 		usedCss : [],
 		load : function(fragmentName, postData, fnattrs, callback) {
 			if(eval('window.' + fragmentName)) {
-				eval(fragmentName + '(fnattrs);');
+				window[fragmentName](fnattrs);
 				try {callback(fragmentName, true);
 				} catch(e) {
 				}
@@ -223,7 +223,7 @@ var ice = {
 					var k = $('<div>');
 					k.html(data).appendTo('body');
 					$(document.body).removeClass('loading');
-					eval(fragmentName + '(fnattrs);');
+					window[fragmentName](fnattrs);
 				});
 			}
 		},
