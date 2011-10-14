@@ -82,7 +82,8 @@ var ice = {
 				top : 150
 			}).draggable({
 				handle : '.winBar',
-				stack : '.window'
+				stack : '.window',
+				containment : 'parent'
 			});
 			$win.titleBox.html($win.title);
 
