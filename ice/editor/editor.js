@@ -152,7 +152,7 @@ var iceEditorClass = function() {this.element = $('<div class="ice iceEditor ice
 		}
 	};
 	this.startHTMLeditor = function() {
-		var el = $('<div class="iceFloatWin" id="iceHTMLEditor">').html('<div class="iceRounded" id="iceHtmlEditorTarget"><input type="button" onclick="iceEdit.saveHTML();" value="Done" /></div>').appendTo('body');
+		var el = $('<div class="ice iceFloatWin" id="iceHTMLEditor">').html('<div class="iceRounded" id="iceHtmlEditorTarget"><input type="button" onclick="iceEdit.saveHTML();" value="Done" /></div>').appendTo('body');
 		$('.iceOverlay').fadeIn();
 		if( typeof CodeMirror != "function") {
 			$.getScript(iceBasePath + "lib/codemirror.js", function() {
@@ -206,7 +206,7 @@ var iceEditorClass = function() {this.element = $('<div class="ice iceEditor ice
 		document.execCommand('insertImage', false, u);
 	};
 };
-var iceEdit = new iceEditorClass;
+var iceEdit = new iceEditorClass();
 function renderEditorOnObject($objTarget) {
 	removeEditBubbles();
 	$objTarget.addClass('icemarked');
@@ -244,7 +244,7 @@ $(window).load(function() {
 		$('<div class="iceOverlay" />').appendTo('body');
 		renderEditBubbles();
 		if($.browser.msie) {
-			$.getScript('http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js', function() {
+			$.getScript('http://ajax.googleapis.com/ajax/libs/chrome-frame/1.0.2/CFInstall.min.js', function() {
 				CFInstall.check({
 					mode : "overlay"
 				});
