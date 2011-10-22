@@ -5,7 +5,6 @@
 	
 	require ('queries.php');
 	
-	$arr = explode(";", $sql);
 	$db->connect();
 	
 	foreach ($queries as $key => $val) {
