@@ -164,7 +164,7 @@ function wizCreateUser(formdata, wName) {
 					<p>You have successfully created a new user.</p>
 					<br /> <br /> <br />
 					<div onclick="ice.fragment.load('usermanager')" class="expBtn rounded6">
-						<p class="big">Open Page Manager</p>
+						<p class="big">Open User Manager</p>
 						<p class="small">To get access to more features.</p>
 					</div>
 				</div>
