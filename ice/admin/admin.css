@@ -97,7 +97,6 @@ aside {
 	left:0;
 	width:200px;
 	bottom:20px;
-	border-top: thin solid #ffffff;
 }
 
 .borderStyle {
@@ -191,7 +190,11 @@ aside {
 	left: 200px;
 	bottom:20px;
 	right:0;
-	background-image: url(resources/black_denim.png);
+	background: -moz-radial-gradient(center top, ellipse cover, rgba(0,0,0,0) 0%, rgba(255,255,255,1) 100%),
+  		url(resources/black_denim.png);
+	background: -webkit-gradient(
+  		radial, center top, 400, center top, 1000, from(rgba(0,0,0,00)), to(black)),
+  		url(resources/black_denim.png);
 	-webkit-box-shadow: 0 0 20px #000 inset;
 	-moz-box-shadow: 0 0 20px #000 inset;
 	box-shadow: 0 0 20px #000 inset;
@@ -327,6 +330,7 @@ label {
 .biglist>li>h2 {
 	font: bold 14px/26px sans-serif; 
 	padding: 0 20px 0 40px;
+	text-shadow: 1px 1px 0px #FFF;
 }
 .biglist>li>p {
 	font-size: 10px;
