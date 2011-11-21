@@ -22,6 +22,7 @@
 			} else {
 				$db->close();
 				die('{"status":"ok"}');
+				
 			}
 		} else {
 			die('ERROR - EMPTY STRINGS');

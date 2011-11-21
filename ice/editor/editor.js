@@ -142,15 +142,6 @@ var iceEditorClass = function() {this.element = $('<div class="ice iceEditor ice
 		return;
 	};
 
-	this.ajaxSuccess = function(data) {
-		if(data.status == 'success') {
-			window.status = 'Saved...';
-		} else if(data.status == 'disallowed') {
-			window.status = 'Not authenticated, login in another window and try again.';
-		} else {
-			window.status = 'Unkown error';
-		}
-	};
 	this.startHTMLeditor = function() {
 		var el = $('<div class="ice iceFloatWin" id="iceHTMLEditor">').html('<div class="iceRounded" id="iceHtmlEditorTarget"><input type="button" onclick="iceEdit.saveHTML();" value="Done" /></div>').appendTo('body');
 		$('.iceOverlay').fadeIn();
