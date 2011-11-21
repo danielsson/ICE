@@ -1,6 +1,6 @@
 <?php
 include('ice/ice-adapter.php');
-$icy->load("index", false);
+$ice->load("index", false);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -9,7 +9,7 @@ $icy->load("index", false);
 <title>ICE CMS demo.</title>
 <link href="style.css" rel="stylesheet" type="text/css" />
 
-<?php $icy->head(); ?>
+<?php $ice->head(); ?>
 </head>
 <body>
 <div class="header">
@@ -46,7 +46,7 @@ $icy->load("index", false);
 <div class="footer">
 </div>
 
-<?php if(!$icy->is_editing()) : ?>
+<?php if(!$ice->is_editing()) : ?>
 	<script type="text/javascript" src="ice/lib/jquery.js"></script>
 	<script type="text/javascript" src="main.js"></script>
 <?php endif; ?>

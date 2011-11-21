@@ -11,7 +11,7 @@ require_once('lib/db.class.php');
 $pageContent = array();
 
 //Output buffer callback
-function icyOBcallback($d) {
+function iceOBcallback($d) {
 	global $config;
 	chdir(dirname($_SERVER['SCRIPT_FILENAME']));
 	$c = explode("/", $_SERVER['PHP_SELF']);
@@ -46,7 +46,7 @@ class ICECMS {
 				echo file_get_contents($cfile);
 				die();
 			} else {
-				ob_start("icyOBcallback");	
+				ob_start("iceOBcallback");	
 			}
 		}
 		$this->loadPageData();
@@ -131,18 +131,18 @@ class ICECMS {
 
 if($_POST['edit']=="true") {
 	require_once('editor/editor.php');
-	$icy = new ICECMSEDIT();
-	$icy->in_editor_mode = true;
+	$ice = new ICECMSEDIT();
+	$ice->in_editor_mode = true;
 } else {
-	$icy = new ICECMS();
+	$ice = new ICECMS();
 }
 
 //Shorthand functions below. Enable/disable in config.php
 
 if($config['use_shorthand']===true) {
 	function element($field_name, $element, $type = "field", $attrs = array()) {
-		global $icy;
-		$icy->e($field_name, $element, $type, $attrs);
+		global $ice;
+		$ice->e($field_name, $element, $type, $attrs);
 	}
 }
 
