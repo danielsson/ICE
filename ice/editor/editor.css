@@ -6,6 +6,10 @@
 .ice {
 	margin: 0;
 	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
 }
 .icePointer {
 	font: normal 11px/11px Verdana, Arial, sans-serif;
@@ -184,12 +188,24 @@ a.iceEditorToolbarButton.pressed {
 	right: 0;
 }
 .iceImgLink {
-	width: 100%;
 	padding: 6px 20px;
 	font-family: sans-serif;
 	cursor: pointer;
+	display: block;
+	float: left;
+	opacity: 0.5;
+	width:220px;
 }
 .iceImgLink:hover {
 	text-decoration: underline;
-	text-shadow: 1px 1px 0 #888;
+	opacity: 1;
 }
+.iceImgLink > img {
+	background: #FFF;
+	padding: 3px;
+	border:thin solid #999;
+	box-shadow: 0 0 5px #999;
+	width:80px;
+	vertical-align: middle;
+}
+.iceFloatWin p, .iceFloatWin h4 {padding: 20px;}
