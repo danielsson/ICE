@@ -4,6 +4,7 @@ class IceImage {
 	private $name;
 	private $image;
 	private $type;
+	private $cachepath = '../cache/img_';
 	
 	public function getWidth() {
 		return imagesx($this->image);
@@ -16,7 +17,7 @@ class IceImage {
 		$size = getimagesize($filename);
 		$this->type = $size[2];
 		$this->name = $filename;
-		
+
 		switch ($this->type) {
 			case IMAGETYPE_JPEG:
 				$this->image = imagecreatefromjpeg($filename);
@@ -63,10 +64,8 @@ class IceImage {
 	}
 	
 	public function outputAndCache() {
-		global $config;
-		$path = '../cache/img_' . basename($this->name);
-		imagejpeg($this->image, $path);
-		readfile($path);
+		imagejpeg($this->image, $this->cachepath);
+		readfile($this->cachepath);
 	}
 	
 	public function resize($width, $height) {
@@ -89,4 +88,24 @@ class IceImage {
 		$width = $this->getWidth() * ($height / $this->getHeight());
 		$this->resize($width, $height);
 	}
+	
+	public function setCachePath($pre) {$this->cachepath = $pre; }
+	
+	private function getCachePath() {
+		return $this->cachepath;
+	}
+	
+	public static function getImagePaths($patt='../media/*.*') {
+		global $config;
+		
+		$images = array();
+		$parts = array();
+		foreach(glob($patt) as $v) {
+			$parts = pathinfo($v);
+			if(in_array(strtolower($parts['extension']), $config['allowed_ext'])) {
+				$images[] =  array($v, $parts['basename']);
+			}
+		}
+		return $images;
+	}	
 }
