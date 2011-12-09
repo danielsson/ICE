@@ -43,6 +43,11 @@ thead {
 	width: 960px;
 	margin: 0 auto;
 }
+
+.clearfix:before, .clearfix:after { content: ""; display: table; }
+.clearfix:after { clear: both; }
+.clearfix { zoom: 1; }
+
 #header .center {margin-top: 200px;}
 #logo {
 	margin: 10px 0;
