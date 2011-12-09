@@ -10,7 +10,7 @@ $config['baseurl'] = 'http://www.example.com/';
 *********************************************/
 $config['baseurl']		= 'http://localhost/ice/'; 
 
-// System folder. Default 'icy/'. WITH a trailing slash!
+// System folder. Default 'ice/'. WITH a trailing slash!
 $config['sys_folder']	= 'ice/';
 
 // If enabled, people using Internet explorer will be promted to install
@@ -22,6 +22,10 @@ $config['use_shorthand']= true;
 
 // Enable cache(bool). May be overruled in files. Default false.
 $config['use_cache'] 	= false;
+
+// Set the allowed image extensions on the system. These extensions will
+// be listed in the mediamanager and may be uploaded by authorized users
+$config['allowed_ext'] 	= array('png','gif','jpg','jpeg');
 
 // Dev-mode. When enabled, additional features like on-the-fly element
 // database record creation is activated. Recommended to set it to false
