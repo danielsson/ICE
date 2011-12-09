@@ -1,0 +1,24 @@
+.mediamanager {
+	background: #FFF;
+	padding: 1px;
+	box-shadow: 0 0 50px #000 inset;
+}
+
+.mediamanager .mediaList {
+	
+	height:250px;
+	overflow-x:hidden;
+	overflow-y: scroll;
+
+}
+
+.mediamanager ul { 
+	list-style: none;
+	width: 608px;
+	margin: 20px auto;
+}
+
+.mediamanager ul>li {
+	float:left;
+	padding: 0 2px 1px 0;
+}

@@ -25,9 +25,12 @@ if (isset($_POST['clear']) && $_POST['clear'] == "true") {
 					ice.fragment.load('pagewizard');
 					break;
 				case 2:
-					ice.fragment.load('usermanager');
+					ice.fragment.load('mediamanager');
 					break;
 				case 3:
+					ice.fragment.load('usermanager');
+					break;
+				case 4:
 					$this.append($('#advancedTools').html());
 					$this.unbind(e);
 					break;
@@ -48,6 +51,8 @@ if (isset($_POST['clear']) && $_POST['clear'] == "true") {
 		<h2>Edit Existing Pages</h2><p>and manage them</p>
 	</li><li style="background: url(resources/icons.png) 0 -60px no-repeat;">
 		<h2>Create a New Page</h2><p>based on a template</p>
+	</li><li style="background: url(resources/icons.png) 0 -120px no-repeat;">
+		<h2>Manage media</h2><p>well, the pictures anyway</p>
 	</li><li style="background: url(resources/icons.png) 0 -120px no-repeat;">
 		<h2>Manage Users</h2><p>of your system</p>
 	</li><li style="background: url(resources/icons.png) 0 -180px no-repeat;">
