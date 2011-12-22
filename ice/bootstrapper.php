@@ -3,7 +3,7 @@ define('SYSINIT', true);
 require_once('ice-config.php');
 require_once('lib/db.class.php');
 $url = parse_url($config['baseurl'] . $_REQUEST['path']);
-$url = addslashes($url['path']);
+$url = mysql_real_escape_string($url['path']);
 $sql = "SELECT ice_pages.id, ice_files.path FROM ice_pages INNER JOIN ice_files ON ice_pages.tid=ice_files.id WHERE ice_pages.url = '$url' LIMIT 1;";
 
 $db->connect();
