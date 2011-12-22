@@ -90,7 +90,7 @@
 				<input type="password" id="password" name="password"></input>
 			</fieldset>
 			<br />
-			<a href="#" style="float: left;">Have an WebID?</a>
+			<a href="#" style="float: left;">Have a WebID?</a>
 			<input type="submit" value="Log in" style="float:right;"></input>
 			
 			<br style="clear: both"/>
