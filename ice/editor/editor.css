@@ -164,8 +164,6 @@ a.iceEditorToolbarButton.pressed {
 	z-index: 99999;
 }
 .iceFloatWin > div {
-	background: #FFF;
-	border: thin solid #CCC;
 	width: 800px;
 	height: 450px;
 	margin: 0 auto;
@@ -209,3 +207,23 @@ a.iceEditorToolbarButton.pressed {
 	vertical-align: middle;
 }
 .iceFloatWin p, .iceFloatWin h4 {padding: 20px;}
+.mediaList {
+	height:280px;
+	overflow-x:hidden;
+	overflow-y: scroll;
+
+}
+
+.mediaList ul { 
+	list-style: none;
+	width: 608px;
+	margin: 20px auto;
+}
+
+.mediaList ul>li {
+	float:left;
+	padding: 0 2px 1px 0;
+	height: 113px;
+	width: 150px;
+	
+}

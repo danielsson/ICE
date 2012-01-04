@@ -1,41 +1,68 @@
 <?php
 //TODO: Make this less shitty.
-define('SYSINIT',true);
+define('SYSINIT', true);
 require '../ice-config.php';
 require '../lib/auth.class.php';
 require '../lib/image.class.php';
-$Auth->init(2);
+$Auth -> init(2);
 
-if(isset($_GET['thumb'])) {
+if (isset($_GET['thumb'])) {
 	$path = realpath('../media/' . $_GET['thumb']);
-	$tpath = '../cache/img_' . $_GET['thumb'];
-	if(!file_exists($tpath)) {
+	$tpath = '../cache/thumb_' . $_GET['thumb'];
+	if (!file_exists($tpath)) {
 		$thumb = new IceImage($path);
-		$thumb->setCachePath($tpath);
-		$thumb->resizeWidth(80);
-	
+		$thumb -> setCachePath($tpath);
+		$thumb -> resizeWidth(150);
+
 		header("Content-Type: image/jpeg");
-	
-		$thumb->outputAndCache();
+
+		$thumb -> outputAndCache();
 	} else {
 		header("Content-Type: image/jpeg");
 		readfile($tpath);
 	}
 	die();
-} 
-?>
-<h4>Images in media folder</h4>
-
-<div style="height: 350px; overflow: auto">
-<?php
-foreach(IceImage::getImagePaths('../media/*.*') as $i) { 
-	$url = $config['baseurl'] . str_replace('/','',$config['sys_folder']) . $i[0];
-	$thumb = $config['baseurl'] . $config['sys_folder'] . 'editor/imageexplorer.php?thumb=' . $i[1];
-	echo "<a class=\"iceImgLink\" onclick=\"iceEdit.saveImage('$url');\">
-		<img src=\"$thumb\" />$i[1]</a>\n";
 }
 ?>
+<!DOCTYPE html>
+<html>
+	<head>
+		<link href="../admin/admin.css" rel="stylesheet" type="text/css" />
+		<link href="../admin/fragments/mediamanager.css" rel="stylesheet" type="text/css" />
+		<style>
+			body {
+				background: transparent !important;
+			}
+			img {cursor: pointer;}
+		</style>
+	</head>
+	<body>
+		<div style="height: 350px; overflow: auto">
+			<div class="mediaList rounded6">
+				<ul>
+					<?php
+					$images = IceImage::getImagePaths('../media/*.*');
+					foreach ($images as $key => $value) {
+						echo "<li data-name=\"$value[1]\"><img src=\"imageexplorer.php?thumb=$value[1]\"></li>";
+					}
+					?>
+					<div style="clear: both"/>
+				</ul>
+			</div>
+			<input type="button" onclick="#" value="Insert image by url"/>
+			<input type="button" onclick="document.popup.destroy();" value="Cancel" style="top: 510px"/>
+		</div>
+		<script src="../lib/jquery.js"></script>
+		<script>
+			var mediaRoot = "<?php echo $config['baseurl'], $config['sys_folder'], "media/"; ?>";
+			$('li').click(function() {
+				document.popup.exec(function(u) {
+					this.iceEdit.objTarget.focus();
+					this.document.execCommand('insertImage', false, u);
+				}, mediaRoot + $(this).attr('data-name'));
+				document.popup.destroy();
+			});
 
-</div>
-<input type="button" onclick="iceEdit.saveImage(prompt('Enter the url','http://www.example.com'));" value="Insert image by url"></input>
-<input type="button" onclick="iceEdit.saveImage(null);" value="Cancel" style="top: 510px"></input>
+		</script>
+	</body>
+</html>

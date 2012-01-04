@@ -2,23 +2,41 @@
 	background: #FFF;
 	padding: 1px;
 	box-shadow: 0 0 50px #000 inset;
+	position: relative;
 }
 
 .mediamanager .mediaList {
-	
-	height:250px;
+	height:280px;
 	overflow-x:hidden;
 	overflow-y: scroll;
 
 }
 
-.mediamanager ul { 
+.mediaList ul { 
 	list-style: none;
 	width: 608px;
 	margin: 20px auto;
 }
 
-.mediamanager ul>li {
+.mediaList ul>li {
 	float:left;
 	padding: 0 2px 1px 0;
+	height: 113px;
+	width: 150px;
+	
+}
+#mmToolbar {
+	list-style: none;
+	background-color: rgba(0,0,0,0.5);
+	position:absolute;
+	display:none;
+	font: 10px "Rockwell Condensed", sans-serif;
+	color: #FFF;
+	
+	width: 150px;
+	height:22px;
+}
+#mmToolbar li{
+	float:left;
+	padding: 4px 10px;
 }

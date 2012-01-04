@@ -2,8 +2,42 @@ var bubbles = Array(), $iceMessage;
 // title, url/text, isimage, command, argument, allowedOnField
 var toolbarButtons = [['Bold', '<b>B</b>', false, 'bold', '', true], ['Italic', '<i>I</i>', false, 'italic', '', true], ['Underline', '<u>U</u>', false, 'underline', '', true], ['Strike through', '<del>S</del>', false, 'strikeThrough', '', true], ['Divider', '', false, '', '', false], ['Heading 1', 'text_heading_1.png', true, 'formatBlock', '<H1>', false], ['Heading 2', 'text_heading_2.png', true, 'formatBlock', '<H2>', false], ['Heading 3', 'text_heading_3.png', true, 'formatBlock', '<H3>', false], ['Heading 4', 'text_heading_4.png', true, 'formatBlock', '<H4>', false], ['Divider', '', false, '', '', false], ['Justify left', 'text_align_left.png', true, 'justifyLeft', '', false], ['Justify Center', 'text_align_center.png', true, 'justifyCenter', '', false], ['Justify Right', 'text_align_right.png', true, 'justifyRight', '', false], ['Divider', '', false, '', '', false], ['Undo Ctrl+Z', 'arrow_undo.png', true, 'undo', '', false], ['Redo Ctrl+Y', 'arrow_redo.png', true, 'redo', '', false], ['Br', '', false, '', '', true], ['Insert unordered list', 'text_list_bullets.png', true, 'insertUnorderedList', '', false], ['Insert ordered list', 'text_list_numbers.png', true, 'insertOrderedList', '', false], ['Toggle superscript', 'text_superscript.png', true, 'superscript', '', false], ['Toggle subscript', 'text_subscript.png', true, 'subscript', '', false], ['Divider', '', false, '', '', false], ['Insert Horizontal Rule', '&mdash;', false, 'insertHorizontalRule', '', false], ['Insert Link', 'link_add.png', true, 'createLink', '', false], ['Remove Link', 'link_delete.png', true, 'unLink', '', false], ['Add image', 'image_add.png', true, 'insertImage', '', false], ['Divider', '', false, '', '', false], ['Indent text', 'text_indent.png', true, 'indent', '', false], ['Outdent text', 'text_indent_remove.png', true, 'outdent', '', false], ['Insert blockquote', '"', false, 'formatBlock', 'blockquote', false], ['Divider', '', false, '', '', false], ['Edit HTML', 'html.png', true, 'editHTML', '', false], ['Remove Formatting', 'css_delete.png', true, 'removeFormat', '', false], ['floatRight', '', false, '', '', true], ['Cancel editing', 'cross.png', true, 'cancel', '', true], ['Save', 'page_save.png', true, 'save', '', true], ['endFloat', '', false, '', '', true]];
 
-var iceEditorClass = function() {this.element = $('<div class="ice iceEditor iceRounded iceShadow" id="editor" />').html('<div class="iceEditorHead">ICE</div><div class="iceEditorToolbar"></div><div class="iceEditorToolbarFloat"></div>'), this.objTarget = null;this.head = this.element.children('.iceEditorHead'), this.toolbar = this.element.children('.iceEditorToolbar'), this.oldHTML = "";
+var icePopUp = function(u) {
+	var iFrame,
+		$el
+		url = u
+		win = window;
+	
+	
+	this.create = function() {
+		$('.iceOverlay').fadeIn();
+		$el = $('<div class="iceFloatWin" id>').html('<div class="iceRounded" id="iceImageEditor"><iframe width="800" height="450"></iframe></div>').appendTo('body');
+		iFrame = $el.find('iframe');
+		iFrame.attr("src", iceBasePath + u);
+		var thisPopup = this;
+		iFrame.get()[0].onload = function() {
+			this.contentDocument.popup = thisPopup;
+		};
+		//iFrame.contentDocument.popup = this;
+		
+	};
+	
+	this.destroy = function() {
+		$el.remove();
+		$('.iceOverlay').fadeOut();
+	};
+	
+	this.exec = function(fn,arg) {
+		fn.call(win,arg);
+	}
+	
+}
+
+var iceEditorClass = function() {
+	this.element = $('<div class="ice iceEditor iceRounded iceShadow" id="editor" />').html('<div class="iceEditorHead">ICE</div><div class="iceEditorToolbar"></div><div class="iceEditorToolbarFloat"></div>'), this.objTarget = null;this.head = this.element.children('.iceEditorHead'), this.toolbar = this.element.children('.iceEditorToolbar'), this.oldHTML = "";
 	this.htmlEditor = null;
+	this.popUps = {};
+	
 	this.renderToolbar = function() {
 		var cache = '';
 		for(var i = 0; i < toolbarButtons.length; i++) {
@@ -186,9 +220,11 @@ var iceEditorClass = function() {this.element = $('<div class="ice iceEditor ice
 		return txt.toString();
 	};
 	this.startImageManager = function() {
-		var $el = $('<div class="iceFloatWin" id>').html('<div class="iceRounded" id="iceImageEditor"><input type="button" onclick="iceEdit.saveHTML();" value="Done" /></div>').appendTo('body');
+		/*var $el = $('<div class="iceFloatWin" id>').html('<div class="iceRounded" id="iceImageEditor"><iframe width="800" height="450"></iframe></div>').appendTo('body');
 		$('.iceOverlay').fadeIn();
-		$el.children().load(iceBasePath + 'editor/imageexplorer.php');
+		$el.find('iframe').attr("src", iceBasePath + 'editor/imageexplorer.php');*/
+		var imageManager = new icePopUp('editor/imageexplorer.php');
+		imageManager.create();
 	};
 	this.saveImage = function(u) {
 		$('.iceFloatWin').remove();
