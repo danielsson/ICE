@@ -2,6 +2,8 @@
 *.pyc
 *.pyo
 .settings
+ice/cache/*
+ice/media/*
 
 # Compiled source #
 ###################
