@@ -8,7 +8,7 @@ system folder. WITH a trailing slash.
 Eg.
 $config['baseurl'] = 'http://www.example.com/';
 *********************************************/
-$config['baseurl']		= '%BASE%'; 
+$config['baseurl']		= 'http://localhost/ice/'; 
 
 // System folder. Default 'ice/'. WITH a trailing slash!
 $config['sys_folder']	= 'ice/';
@@ -23,16 +23,20 @@ $config['use_shorthand']= true;
 // Enable cache(bool). May be overruled in files. Default false.
 $config['use_cache'] 	= false;
 
+// Set the allowed image extensions on the system. These extensions will
+// be listed in the mediamanager and may be uploaded by authorized users
+$config['allowed_ext'] 	= array('png','gif','jpg','jpeg');
+
 // Dev-mode. When enabled, additional features like on-the-fly element
 // database record creation is activated. Recommended to set it to false
 // after developement is finished for additional security & performance.
 $config['dev_mode']		= true;
 
 // Database connection information
-$config['db_host']		= '%HOST%';
-$config['db_username']	= '%USER%';
-$config['db_password']	= '%PASS%';
-$config['db_name']		= '%DBNAME%';
+$config['db_host']		= 'localhost';
+$config['db_username']	= 'root';
+$config['db_password']	= '';
+$config['db_name']		= 'ice';
 $config['db_prefix']	= '';
 
 $config['content_table']= $config['db_prefix'] . 'ice_content';
