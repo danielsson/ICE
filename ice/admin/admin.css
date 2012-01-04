@@ -195,6 +195,7 @@ aside {
 	left: 200px;
 	bottom:20px;
 	right:0;
+	background: url(resources/3pxbg.png), #333;
 	background: -moz-radial-gradient(center top, ellipse cover, rgba(0,0,0,0) 0%, rgba(255,255,255,1) 100%),
   		url(resources/3pxbg.png), #333;
 	background: -webkit-gradient(
@@ -281,22 +282,23 @@ label {
 .block190 {width: 190px;}
 .expBtn {
 	padding: 10px;
-	border: 1px solid #63b308;
+	border: 1px solid #CCC;
 	margin-bottom: 20px;
 	cursor: default;
-	background: -webkit-gradient(linear,left bottom,left top, color-stop(0, rgb(104,166,75)),color-stop(1, rgb(166,252,109)));
+	background: -webkit-gradient(
+  		radial, center top, 0, center top, 60, from(#FFF), to(#EEE));
 	background: -moz-linear-gradient(center bottom,rgb(104,166,75) 0%,rgb(166,252,109) 100%);
-	-moz-box-shadow:0 1px 0px #FFF inset;
+	box-shadow:0 1px 0px #FFF;
 }
 
 .expBtn:hover {
-	background: -webkit-gradient(linear,left bottom,left top, color-stop(0, rgb(104,166,75)),color-stop(1, rgba(166,252,109,0.5)));
-	background: -moz-linear-gradient(center bottom,rgb(104,166,75) 0%,rgba(166,252,109,0.5) 100%);
 	border:1px solid #DDD;
 	padding:10px;
+	color:#444;
+	box-shadow: 0 1px 0 #FFF inset;
 }
 .expBtn:active {
-	background: rgb(104,166,75);
+	background: #FFF;
 }
 .expBtn .small {
 	font-size: 9px;
