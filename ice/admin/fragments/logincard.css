@@ -3,15 +3,13 @@
 #loginCard #idBox {
 	height: 166px;
 	background: #FFF;
-	-moz-box-shadow: 0 0 5px #000 inset;
+	box-shadow: 0 0 5px #000 inset;
 	-moz-transition: all 0.2s ease-in;
-	-webkit-box-shadow: 0 0 5px #000;
 	-webkit-transition: all 0.2s ease-in;
 }
 
 #loginCard #idBox.drophover {
-	-moz-box-shadow: 0 0 10px #000 inset;
-	-webkit-box-shadow: 0 0 10px #000;
+	box-shadow: 0 0 10px #000 inset;
 	background: -moz-element(#idBoxBg) center center no-repeat,
 		rgba(0, 0, 0, .1);
 	background: -webkit-element(#idBoxBg) center center no-repeat,
