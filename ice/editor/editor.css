@@ -153,7 +153,7 @@ a.iceEditorToolbarButton.pressed {
 	width: 100%;
 	z-index: 9999;
 	background: #FFF;
-	background: rgba(255,255,255,0.7);
+	background: rgba(255,255,255,0.9);
 	display: none;
 }
 .iceFloatWin {
@@ -185,45 +185,4 @@ a.iceEditorToolbarButton.pressed {
 	top: 470px;
 	right: 0;
 }
-.iceImgLink {
-	padding: 6px 20px;
-	font-family: sans-serif;
-	cursor: pointer;
-	display: block;
-	float: left;
-	opacity: 0.5;
-	width:220px;
-}
-.iceImgLink:hover {
-	text-decoration: underline;
-	opacity: 1;
-}
-.iceImgLink > img {
-	background: #FFF;
-	padding: 3px;
-	border:thin solid #999;
-	box-shadow: 0 0 5px #999;
-	width:80px;
-	vertical-align: middle;
-}
-.iceFloatWin p, .iceFloatWin h4 {padding: 20px;}
-.mediaList {
-	height:280px;
-	overflow-x:hidden;
-	overflow-y: scroll;
 
-}
-
-.mediaList ul { 
-	list-style: none;
-	width: 608px;
-	margin: 20px auto;
-}
-
-.mediaList ul>li {
-	float:left;
-	padding: 0 2px 1px 0;
-	height: 113px;
-	width: 150px;
-	
-}

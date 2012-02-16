@@ -17,7 +17,7 @@ function clean($str) {
 }
 $fieldname = clean($_POST['fieldname']);
 $pagename = clean($_POST['pagename']);
-$content = addslashes($_POST['text']);
+$content = $db->escape($_POST['text']);
 
 if(empty($pagename)) {
 	$data['status'] = "error";

@@ -113,7 +113,7 @@ class ICECMS {
 		
 		if($res) {
 			while($row = mysql_fetch_array($res)) {
-				$pageContent[$row['fieldname']] = stripslashes($row['content']);
+				$pageContent[$row['fieldname']] = $row['content'];
 			}
 		}
 		$db->close();

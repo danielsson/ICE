@@ -18,7 +18,6 @@ var icePopUp = function(u) {
 		iFrame.get()[0].onload = function() {
 			this.contentDocument.popup = thisPopup;
 		};
-		//iFrame.contentDocument.popup = this;
 		
 	};
 	
@@ -167,7 +166,8 @@ var iceEditorClass = function() {
 				arg = prompt('Please enter the desired url for the link:', 'http://');
 				break;
 			case 'insertImage':
-				iceEdit.startImageManager();
+				var imageManager = new icePopUp('editor/imageexplorer.php');
+				imageManager.create();
 				return;
 				break;
 		}
@@ -218,19 +218,6 @@ var iceEditorClass = function() {
 			txt = document.selection.createRange().text;
 		}
 		return txt.toString();
-	};
-	this.startImageManager = function() {
-		/*var $el = $('<div class="iceFloatWin" id>').html('<div class="iceRounded" id="iceImageEditor"><iframe width="800" height="450"></iframe></div>').appendTo('body');
-		$('.iceOverlay').fadeIn();
-		$el.find('iframe').attr("src", iceBasePath + 'editor/imageexplorer.php');*/
-		var imageManager = new icePopUp('editor/imageexplorer.php');
-		imageManager.create();
-	};
-	this.saveImage = function(u) {
-		$('.iceFloatWin').remove();
-		$('.iceOverlay').fadeOut();
-		this.objTarget.focus();
-		document.execCommand('insertImage', false, u);
 	};
 };
 var iceEdit = new iceEditorClass();

@@ -21,6 +21,9 @@ final class Database {
 		mysql_close($this->db);
 		return true;
 	}
+	public function escape($str) {
+		return mysql_real_escape_string($str);
+	}
 	public function query($q){
 		return mysql_query($q, $this->db);
 	}
@@ -28,7 +31,7 @@ final class Database {
 		return mysql_error($this->db);
 	}
 }
-$db = new Database;
+$db = new Database();
 
 
 
