@@ -87,17 +87,18 @@
 	<p><b>UserName</b></p>
 	<input type="hidden" name="id"/>
 	<input type="text" name="username" style="width:90%" disabled="disabled"/>
-	<p><b>Userlevel</b></p>
+	<p><b>Userlevel</b></p><br />
 	<select name="userlevel" disabled="disabled">
 		<option value="1">1</option>
 		<option value="2">2</option>
 		<option value="3">3</option>
 	</select>
+	
 	<br/>
 	<p><b>Password</b></p>
 	<input type="password" name="password" style="width:90%" disabled="disabled"/>
 	<br style="clear: both" />
-	<input type="button" value="Abort" style="float:left"/>
+	<input type="button" value="Abort" style="float:left" onclick="ice.Manager.removeWindow($(this).inWindow())"/>
 	
 	<input type="submit" value="Update" style="float:right" disabled="disabled" />
 	<input type="button" value="Create WebID" style="float:right" />
