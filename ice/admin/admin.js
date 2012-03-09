@@ -60,12 +60,10 @@ var ice = {
 
 			if($win.minimizeable) {
 				$win.element.find('.winBar').dblclick(function() {
-					var d = $(this).closest('.window').attr('data-win-name');
-					ice.Manager.minimizeWindow(d);
+					ice.Manager.minimizeWindow($(this).inWindow());
 				});
 				$win.element.find('.winMini').click(function() {
-					var d = $(this).closest('.window').attr('data-win-name');
-					ice.Manager.minimizeWindow(d);
+					ice.Manager.minimizeWindow($(this).inWindow());
 				});
 			} else {
 				$win.element.find('.winMini').remove();
@@ -74,7 +72,8 @@ var ice = {
 			$win.element
 				.attr('data-win-name', name)
 				.appendTo(this.windowSandbox);
-		
+				
+				
 			$win.element.css({
 				width : $win.width,
 				left : (this.windowSandbox.width() - $win.width) / 2,
@@ -85,6 +84,10 @@ var ice = {
 				stack : '.window',
 				containment : 'parent'
 			});
+			$win.contentBox.blurjs({
+				draggable:true,
+				overlay: 'rgba(255,255,255,0.3)'
+			})
 			$win.titleBox.html($win.title);
 
 			var taskItem = $('<li>');

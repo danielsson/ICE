@@ -164,9 +164,9 @@ aside {
 .winContent {
 	min-height:100px;
 	min-width: 100px;
-	background: #f4f4f4;
-	background: -webkit-gradient(linear,left bottom,left top, color-stop(0, rgb(229,239,244)), color-stop(1, rgb(255,255,255)));
-	background: -moz-linear-gradient(center bottom, rgb(229,239,244) 0%, rgb(255,255,255) 100%);	
+	dbackground: #f4f4f4;
+	dbackground: -webkit-gradient(linear,left bottom,left top, color-stop(0, rgb(229,239,244)), color-stop(1, rgb(255,255,255)));
+	dbackground: -moz-linear-gradient(center bottom, rgb(229,239,244) 0%, rgb(255,255,255) 100%);	
 }
 .winMini {
 	float:right;
