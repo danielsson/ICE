@@ -116,7 +116,7 @@ function wizCreatePage(name,url,tid, wName) {
 
 <script type="text/template" id="pageWizContent">
 
-<div class="winpadd pageWiz">
+<div class="winpadd pageWiz" style="max-height: 500px;">
 	<div class="viewPort rounded6">
 	<form method="post" action="fragments/pagewizard.php">
 		<ul class="horizSlider">
