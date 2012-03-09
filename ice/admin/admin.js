@@ -84,10 +84,7 @@ var ice = {
 				stack : '.window',
 				containment : 'parent'
 			});
-			$win.contentBox.blurjs({
-				draggable:true,
-				overlay: 'rgba(255,255,255,0.3)'
-			})
+
 			$win.titleBox.html($win.title);
 
 			var taskItem = $('<li>');
