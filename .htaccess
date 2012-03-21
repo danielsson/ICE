@@ -1,8 +1,0 @@
-#ICE!
-<IfModule mod_rewrite.c>
-RewriteEngine On
-#RewriteBase unused
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule (.*) /ice/ice/bootstrapper.php?path=$1 [L]
-</IfModule>
