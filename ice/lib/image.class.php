@@ -94,18 +94,21 @@ class IceImage {
 	private function getCachePath() {
 		return $this->cachepath;
 	}
-	
-	public static function getImagePaths($patt='../media/*.*') {
+	public static function isAllowedType($path) {
 		global $config;
 		
+		$parts = pathinfo($path);
+		return in_array(strtolower($parts['extension']), $config['allowed_ext']);
+	}
+	public static function getImagePaths($patt='../media/*.*') {
+		
 		$images = array();
-		$parts = array();
 		foreach(glob($patt) as $v) {
-			$parts = pathinfo($v);
-			if(in_array(strtolower($parts['extension']), $config['allowed_ext'])) {
-				$images[] =  array($v, $parts['basename']);
+			if(IceImage::isAllowedType($v)) {
+				$images[] = basename($v);
 			}
 		}
 		return $images;
-	}	
+	}
+
 }

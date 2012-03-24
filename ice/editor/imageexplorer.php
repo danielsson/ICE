@@ -43,7 +43,7 @@ if (isset($_GET['thumb'])) {
 					<?php
 					$images = IceImage::getImagePaths('../media/*.*');
 					foreach ($images as $key => $value) {
-						echo "<li data-name=\"$value[1]\"><img src=\"imageexplorer.php?thumb=$value[1]\"></li>";
+						echo "<li data-name=\"$value\"><img src=\"imageexplorer.php?thumb=$value\"></li>";
 					}
 					?>
 					<div style="clear: both"/>
