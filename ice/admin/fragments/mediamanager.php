@@ -80,7 +80,10 @@ if(!isset($_POST['refresh'])) :
 		
 		W.setContent(document.getElementById('mediaManager').innerHTML);
 		ice.Manager.addWindow(W);
-
+		
+		W.contentBox.find(".mediaList li").hide().each(function(index, el) {
+			$(el).delay(index * 200).fadeIn(500);
+		});
 	}
 	
 </script>
