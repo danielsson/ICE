@@ -12,7 +12,7 @@
 <script type="text/javascript" src="../lib/jquery.js"></script>
 <script type="text/javascript" src="../lib/jquery_ui_custom.js"></script>
 <script type="text/javascript" src="admin.js"></script>
-<script type="text/javascript" src="blur.js"></script>
+<script type="text/javascript" src="../lib/ajaxupload.js"></script>
 <link href="admin.css" rel="stylesheet" type="text/css" />
 
 </head>

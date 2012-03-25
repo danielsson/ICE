@@ -32,6 +32,25 @@
 		}
 		die();
 	}
+	if(!empty($_FILES)) {
+		require_once "../../lib/image.class.php";
+		$targetFile =  realpath('../../media/') . DIRECTORY_SEPARATOR . basename($_FILES['userfile']['name']);
+		echo $targetFile;
+		if (IceImage::isAllowedType($targetFile)) {
+			if(move_uploaded_file($_FILES['userfile']['tmp_name'],$targetFile)) {
+				header("Image created", true, 201);
+				echo json_encode(array('status' => 201, "error" => NULL));
+			} else {
+				header("Moving the file failed", true, 500);
+				echo json_encode(array('status' => 500, "error" => "Failed to move the file. Try changing its name."));
+			}
+		} else {
+			header("Filetype not allowed", true, 415);
+			echo json_encode(array('status' => 415, "error" => "Filetype not allowed"));
+		}
+		die();
+		
+	}
 	
 if(!isset($_POST['refresh'])) :
 ?>
@@ -41,7 +60,7 @@ if(!isset($_POST['refresh'])) :
 		ice.fragment.addCss('mediamanager.css');
 		var W = new ice.Window();
 		W.name = "MedMAN";
-		W.title = "Media Manager";
+		W.title = 'Media Manager - <a href="#" id="newImage">Upload</a>';
 		W.loader.css("display","block");
 		W.width = 671;
 		
@@ -50,6 +69,19 @@ if(!isset($_POST['refresh'])) :
 		
 		W.onOpen = function(W) {
 			W.loadingOff();
+					
+			new AjaxUpload('newImage', {
+				action: 'fragments/mediamanager.php',
+				responseType: "json",
+				onComplete: function(file, response) {
+					alert('asd');
+					if(response.status && response.status == 201) {
+						ice.Manager.getWindow('MedMAN').refresh();
+					} else {
+						alert(response.error);
+					}
+				}
+			});
 		};
 		W.onContentChange = function(W) {
 			W.toolbar = W.contentBox.find("#mmToolbar");
@@ -75,15 +107,14 @@ if(!isset($_POST['refresh'])) :
 				}
 			});
 			
-			$
+			W.contentBox.find(".mediaList li img").slice(0,12).hide().each(function(index, el) {
+				$(el).delay(index * 200).fadeIn(500);
+			});
 		};
 		
 		W.setContent(document.getElementById('mediaManager').innerHTML);
 		ice.Manager.addWindow(W);
 		
-		W.contentBox.find(".mediaList li img").slice(0,12).hide().each(function(index, el) {
-			$(el).delay(index * 200).fadeIn(500);
-		});
 	}
 	
 </script>
