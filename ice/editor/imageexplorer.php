@@ -37,7 +37,7 @@ if (isset($_GET['thumb'])) {
 		</style>
 	</head>
 	<body>
-		<div style="height: 350px; overflow: auto">
+		<div style="overflow: auto">
 			<div class="mediaList rounded6">
 				<ul>
 					<?php
@@ -62,6 +62,9 @@ if (isset($_GET['thumb'])) {
 					this.document.execCommand('insertImage', false, u);
 				}, mediaRoot + $(this).attr('data-name'));
 				document.popup.destroy();
+			});
+			$("li img").slice(0,12).hide().each(function(index, el) {
+				$(el).delay(index * 200).fadeIn(500);
 			});
 
 		</script>

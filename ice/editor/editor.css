@@ -160,14 +160,18 @@ a.iceEditorToolbarButton.pressed {
 	position: fixed;
 	top: 100px;
 	left: 0;
-	width: 100%;
+	bottom: 0;
+	right:0;
 	z-index: 99999;
 }
 .iceFloatWin > div {
 	width: 800px;
-	height: 450px;
 	margin: 0 auto;
 	position: relative;
+	height: 99%;
+}
+.iceFloatWin iframe {
+	height: 100%;
 }
 .CodeMirror-line-numbers {
 	width: 2.2em;
