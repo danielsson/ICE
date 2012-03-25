@@ -8,7 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=encoding">
 <meta http-equiv="X-UA-Compatible" content="chrome=1">
-<title>Administer Icy-cms PRE-ALPHA</title>
+<title>Administer ICE! PRE-ALPHA</title>
 <script type="text/javascript" src="../lib/jquery.js"></script>
 <script type="text/javascript" src="../lib/jquery_ui_custom.js"></script>
 <script type="text/javascript" src="admin.js"></script>
