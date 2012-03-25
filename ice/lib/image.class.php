@@ -77,6 +77,8 @@ class IceImage {
 			$height,
 			$this->getWidth(),
 			$this->getHeight());
+		
+		imagedestroy($this -> image);
 		$this->image = $new;
 	}
 	
@@ -87,6 +89,43 @@ class IceImage {
 	public function resizeHeight($height) {
 		$width = $this->getWidth() * ($height / $this->getHeight());
 		$this->resize($width, $height);
+	}
+	
+	public function resizeToFit($targetWidth, $targetHeight) {
+		$sourceWidth = $this->getWidth();
+		$sourceHeight = $this->getHeight();
+		
+		$sourceAR = $sourceWidth / $sourceHeight;
+		$targetAR = $targetWidth / $targetHeight;
+		$height = 0; $width = 0;
+		
+		if($sourceAR > $targetAR) {
+			$height = $targetHeight;
+			$width = (int) ($targetHeight * $sourceAR);
+		} else {
+			$width = $targetWidth;
+			$height = (int) ( $targetWidth / $sourceAR);
+		}
+		
+		$tmp = imagecreatetruecolor($width, $height);
+		imagecopyresampled(
+			$tmp, $this->image,
+			0, 0, 0, 0,
+			$width, $height,
+			$sourceWidth, $sourceHeight);
+		
+		$x0 = ( $width - $targetWidth ) / 2;
+		$y0 = ( $height - $targetHeight ) / 2;
+		
+		$result = imagecreatetruecolor($targetWidth, $targetHeight);
+		imagecopy(
+			$result, $tmp,
+			0, 0, $x0, $y0,
+			$targetWidth, $targetHeight);
+		
+		imagedestroy($tmp);
+		imagedestroy($this->image);
+		$this->image = $result;
 	}
 	
 	public function setCachePath($pre) {$this->cachepath = $pre; }
@@ -110,5 +149,7 @@ class IceImage {
 		}
 		return $images;
 	}
+	
+	
 
 }

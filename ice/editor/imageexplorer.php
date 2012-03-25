@@ -12,7 +12,7 @@ if (isset($_GET['thumb'])) {
 	if (!file_exists($tpath)) {
 		$thumb = new IceImage($path);
 		$thumb -> setCachePath($tpath);
-		$thumb -> resizeWidth(150);
+		$thumb -> resizeToFit(150,112);
 
 		header("Content-Type: image/jpeg");
 
