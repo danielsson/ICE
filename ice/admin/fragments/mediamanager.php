@@ -81,7 +81,7 @@ if(!isset($_POST['refresh'])) :
 		W.setContent(document.getElementById('mediaManager').innerHTML);
 		ice.Manager.addWindow(W);
 		
-		W.contentBox.find(".mediaList li").hide().each(function(index, el) {
+		W.contentBox.find(".mediaList li img").slice(0,12).hide().each(function(index, el) {
 			$(el).delay(index * 200).fadeIn(500);
 		});
 	}
@@ -105,7 +105,7 @@ if(!isset($_POST['refresh'])) :
 			<?php
 			$images = IceImage::getImagePaths('../../media/*.*');
 			foreach ($images as $key => $value) {
-				echo "<li data-name=\"$value[1]\"><img src=\"fragments/mediamanager.php?thumb=$value[1]\"></li>";
+				echo "<li data-name=\"$value\"><img src=\"fragments/mediamanager.php?thumb=$value\"></li>";
 			}
 
 			?>
