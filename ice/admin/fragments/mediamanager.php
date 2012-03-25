@@ -74,6 +74,7 @@ if(!isset($_POST['refresh'])) :
 				action: 'fragments/mediamanager.php',
 				responseType: "json",
 				onComplete: function(file, response) {
+					//TODO: This doesnt fire
 					alert('asd');
 					if(response.status && response.status == 201) {
 						ice.Manager.getWindow('MedMAN').refresh();
