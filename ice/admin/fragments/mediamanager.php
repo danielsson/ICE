@@ -61,6 +61,7 @@ if(!isset($_POST['refresh'])) :
 		var W = new ice.Window();
 		W.name = "MedMAN";
 		W.title = 'Media Manager - <a href="#" id="newImage">Upload</a>';
+		W.icon = "../../editor/res/image_edit.png";
 		W.loader.css("display","block");
 		W.width = 671;
 		

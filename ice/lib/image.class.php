@@ -149,7 +149,4 @@ class IceImage {
 		}
 		return $images;
 	}
-	
-	
-
 }
