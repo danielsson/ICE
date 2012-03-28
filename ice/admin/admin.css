@@ -196,7 +196,7 @@ aside {
 	bottom:20px;
 	right:0;
 	background: url(resources/3pxbg.png), #333;
-	background: -moz-radial-gradient(center top, ellipse cover, rgba(0,0,0,0) 0%, rgba(255,255,255,1) 100%),
+	background: -moz-radial-gradient(center top, ellipse cover, rgba(0,0,0,0) 0%, #000 100%),
   		url(resources/3pxbg.png), #333;
 	background: -webkit-gradient(
   		radial, center top, 400, center top, 1000, from(rgba(0,0,0,00)), to(black)),
@@ -326,7 +326,6 @@ label {
 	padding: 10px 0 15px;
 	border-bottom: 1px solid #DDD;
 	cursor: pointer;
-	abackground: url('resources/slider.png') -200px 0 repeat-y;
 	-webkit-transition: background-color 200ms ease;
 	background-color: transparent;
 }

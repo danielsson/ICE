@@ -28,6 +28,7 @@
 <script type="text/javascript" >
 	function login() {
 		ice.fragment.addCss('login.css');
+		
 		var lWin = new ice.Window();
 		lWin.name = "LoginWindow";
 		lWin.title = "&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -38,6 +39,7 @@
 		lWin.element.css('zIndex', 99999);
 		lWin.onOpen = function(win) {
 			ice.curtain.lower(false);
+			
 			win.setContent(document.getElementById('loginWindow').innerHTML);
 			var $t = win.element;
 			$('input[type=submit]', $t).click(function(e) {
@@ -67,6 +69,8 @@
 			if(window.innerHeight > 600) {
 				win.element.css({top:320});
 			}
+			$t.css({left: parseInt($t.css('left')) - 100});
+			console.log($t.css('left'));
 		};
 		
 		ice.Manager.addWindow(lWin);
