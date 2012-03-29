@@ -8,7 +8,7 @@ system folder. WITH a trailing slash.
 Eg.
 $config['baseurl'] = 'http://www.example.com/';
 *********************************************/
-$config['baseurl']		= 'http://localhost/ice/'; 
+$config['baseurl']		= '%BASE%'; 
 
 // System folder. Default 'ice/'. WITH a trailing slash!
 $config['sys_folder']	= 'ice/';
@@ -33,10 +33,10 @@ $config['allowed_ext'] 	= array('png','gif','jpg','jpeg');
 $config['dev_mode']		= true;
 
 // Database connection information
-$config['db_host']		= 'localhost';
-$config['db_username']	= 'root';
-$config['db_password']	= '';
-$config['db_name']		= 'ice';
+$config['db_host']		= '%HOST%';
+$config['db_username']	= '%USER%';
+$config['db_password']	= '%PASS%';
+$config['db_name']		= '%DBNAME%';
 $config['db_prefix']	= '';
 
 $config['content_table']= $config['db_prefix'] . 'ice_content';
