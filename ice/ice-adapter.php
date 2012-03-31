@@ -24,12 +24,6 @@ class ICECMS {
 	public $in_editor_mode = false;
 	private $currentPage = "";
 	
-	function __construct() {
-		if($_REQUEST['edit']=="true") {
-			$this->in_editor_mode = true;
-		}
-	}
-	
 	public function load($page_name, $cache = 'n', $lifetime = 0) {
 		global $config, $db, $pageContent;
 		if($cache==='n') { $cache = (boolean) $config['use_cache']; }
@@ -129,7 +123,7 @@ class ICECMS {
 	
 }
 
-if($_POST['edit']=="true") {
+if(isset($_POST['edit']) && $_POST['edit']=="true") {
 	require_once('editor/editor.php');
 	$ice = new ICECMSEDIT();
 	$ice->in_editor_mode = true;

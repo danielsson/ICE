@@ -34,9 +34,9 @@ $config['dev_mode']		= true;
 
 // Database connection information
 $config['db_host']		= 'localhost';
-$config['db_username']	= 'root';
-$config['db_password']	= '';
-$config['db_name']		= 'ice';
+$config['db_username']	= 'default';
+$config['db_password']	= 'default';
+$config['db_name']		= 'default';
 $config['db_prefix']	= '';
 
 $config['content_table']= $config['db_prefix'] . 'ice_content';

@@ -1,9 +1,15 @@
-*.class
-*.pyc
-*.pyo
+.project
+.buildpath
+.htaccess
 .settings
 ice/cache/*
 ice/media/*
+ice/install/LOCK
+
+
+*.class
+*.pyc
+*.pyo
 
 # Compiled source #
 ###################
@@ -39,6 +45,3 @@ ice/media/*
 ehthumbs.db
 Icon?
 Thumbs.db
-.project
-.buildpath
-.htaccess
