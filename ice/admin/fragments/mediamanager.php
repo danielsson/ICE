@@ -122,7 +122,7 @@ if(!isset($_POST['refresh'])) :
 </script>
 
 <script type="text/template" id="mediaManager">
-<?php endif; sleep(1); ?>
+<?php endif; ?>
 
 <div class="mediamanager">
 	<ul id="mmToolbar">

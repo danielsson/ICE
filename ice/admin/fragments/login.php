@@ -13,7 +13,7 @@
 		die();
 	} else {
 		session_start();
-		if($_SESSION['userlevel'] > 0) { ?>
+		if(isset($_SESSION['userlevel']) && $_SESSION['userlevel'] > 0) { ?>
 				<script type="text/javascript" >
 					function login() {
 						ice.fragment.load("sidebar");
