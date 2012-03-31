@@ -35,7 +35,7 @@
 	if(!empty($_FILES)) {
 		require_once "../../lib/image.class.php";
 		$targetFile =  realpath('../../media/') . DIRECTORY_SEPARATOR . basename($_FILES['userfile']['name']);
-		echo $targetFile;
+
 		if (IceImage::isAllowedType($targetFile)) {
 			if(move_uploaded_file($_FILES['userfile']['tmp_name'],$targetFile)) {
 				header("Image created", true, 201);
@@ -75,8 +75,6 @@ if(!isset($_POST['refresh'])) :
 				action: 'fragments/mediamanager.php',
 				responseType: "json",
 				onComplete: function(file, response) {
-					//TODO: This doesnt fire
-					alert('asd');
 					if(response.status && response.status == 201) {
 						ice.Manager.getWindow('MedMAN').refresh();
 					} else {
@@ -101,11 +99,23 @@ if(!isset($_POST['refresh'])) :
 				
 			});
 
-			$buttons.eq(0).click(function() {
-				var W = ice.Manager.getWindow('MedMAN');
-				if(confirm("You sure?")) {
-					$.post('fragments/mediamanager.php', {del:W.toolbar.target.attr('data-name')});
-					W.toolbar.target.animate({width:0}, 500).add(W.toolbar).fadeOut(0);
+			$buttons.click(function() {
+				
+				var $this = $(this),
+					index = $this.index(),
+					W = ice.Manager.getWindow('MedMAN');
+					
+				switch(index) {
+				case 0: //Delete
+					if(confirm("You sure?")) {
+						$.post('fragments/mediamanager.php', {del:W.toolbar.target.attr('data-name')});
+						W.toolbar.target.animate({width:0}, 500).add(W.toolbar).fadeOut(0);
+					}
+					break;
+				case 1: //View
+					window.open("../media/" + W.toolbar.target.attr('data-name'),"Hoopöa");
+					
+					
 				}
 			});
 			
