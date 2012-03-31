@@ -5,7 +5,7 @@
 	require '../../lib/auth.class.php';
 	$Auth->init(1);
 	$db->connect();
-	if($_POST['del'] == "true") {
+	if(isset($_POST['del']) && $_POST['del'] == "true") {
 		if($_SESSION['userlevel'] < 2) {
 			die('You are not allowed to perform this action');
 		}
@@ -13,7 +13,7 @@
 		$pagename = 'dyn_' . intval($_POST['id']);
 		$db->query("DELETE FROM ice_content WHERE pagename = '$pagename';");
 		die('true');
-	} elseif ($_POST['rename'] == "true") {
+	} elseif (isset($_POST['rename']) && $_POST['rename'] == "true") {
 		if($_SESSION['userlevel'] < 2) {
 			die('You are not allowed to perform this action');
 		}
