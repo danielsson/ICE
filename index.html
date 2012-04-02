@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>ICE! by mattenrone</title>
+    
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>ICE!</h1>
+        <p>CMS with In Content Editing.</p>
+        <p class="view"><a href="https://github.com/mattenrone/ICE">View the Project on GitHub <small>mattenrone/ICE</small></a></p>
+        <ul>
+          <li><a href="https://github.com/mattenrone/ICE/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/mattenrone/ICE/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/mattenrone/ICE">Fork On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h3>An easy to use CMS with In Content Editing skills</h3>
+
+<p>ICE includes a revolutionary new <em>CMS</em> that plugs directly into your site. Essentially, the <em>CMS</em> puts the editor right there in your design, right by the content. The user is editing right in your page, seeing changes in real time.</p>
+
+<p>ICE is made to be easy to use, and fast to set up. Designers and developers can use their existing workflow to design the site using regular web technologies, because you only need three lines to transform a HTML-file into a template.</p>
+
+<pre><code>&lt;?php
+include 'ice/ice-adapter-php';
+$ice-&gt;load('pagename'); ?&gt;
+...
+
+&lt;head&gt;
+&lt;?php $ice-&gt;head(); ?&gt;
+&lt;/head&gt;
+
+&lt;!-- To create a editable div, with the class "big" --&gt;
+&lt;?php element("id", "tag", "type", array("class"=&gt;"big")); ?&gt; 
+</code></pre>
+
+<h3>How do I get it?</h3>
+
+<ol>
+<li>Clone git://github.com/mattenrone/ICE.git</li>
+<li>Place the "ice" folder in the root of your project.</li>
+<li>Browse to the installer in root/ice/install/ and follow the instructions.</li>
+<li>Log in to the administration and add the templates using "add files" under the advanced menu.</li>
+<li>Done.</li>
+</ol><h3>Be aware that ICE is in the pre-alpha stage.</h3>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/mattenrone">mattenrone</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+  </body>
+</html>
