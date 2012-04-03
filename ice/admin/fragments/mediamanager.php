@@ -113,9 +113,7 @@ if(!isset($_POST['refresh'])) :
 					}
 					break;
 				case 1: //View
-					window.open("../media/" + W.toolbar.target.attr('data-name'),"Hoopöa");
-					
-					
+					window.open("../media/" + W.toolbar.target.attr('data-name'));
 				}
 			});
 			
