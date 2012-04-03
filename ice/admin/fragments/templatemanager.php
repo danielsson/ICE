@@ -29,8 +29,8 @@
 		$_POST = $Auth->sanitize($_POST);
 		$sql = "DELETE FROM ice_files WHERE id = '" . intval($_POST['id']) . "'; ";
 		$db->query($sql);
-		$sql = "DELETE FROM ice_pages WHERE tid = '" . intval($_POST['id']) . "'; ";
-		$db->query($sql);
+		//$sql = "DELETE FROM ice_pages WHERE tid = '" . intval($_POST['id']) . "'; ";
+		//$db->query($sql);
 		$db->close();
 		die();
 	}

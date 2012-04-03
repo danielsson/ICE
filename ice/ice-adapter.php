@@ -3,7 +3,7 @@
 This is the ICE! cms adapter. Include this file
 on all pages with editable content.
 **********************************************/
-define('SYSINIT', true);
+defined('SYSINIT') or define('SYSINIT', true);
 require_once('ice-config.php');
 require_once('lib/db.class.php');
 
@@ -37,7 +37,7 @@ class ICECMS {
 		if($cache==true && $this->in_editor_mode!=true) {
 			$cfile = $config['sys_folder']."cache/".crc32(ICE_CURRENT_PAGE).".txt";
 			if(file_exists($cfile) && time() - filemtime($cfile) < $lifetime*60) {
-				echo file_get_contents($cfile);
+				readfile($cfile);
 				die();
 			} else {
 				ob_start("iceOBcallback");	
@@ -92,7 +92,7 @@ class ICECMS {
 		$db->connect();
 		$r = $db->query($sql);
 		if(!$r) {
-			echo 'Database Error';
+			echo 'Database Error ';
 		}
 		echo "Empty element";
 		return true;
