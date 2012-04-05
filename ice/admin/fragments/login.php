@@ -31,12 +31,12 @@
 		
 		var lWin = new ice.Window();
 		lWin.name = "LoginWindow";
-		lWin.title = "&nbsp;&nbsp;&nbsp;&nbsp;";
+		lWin.title = "Please log in:";
 		lWin.width = 450;
 		lWin.closeable = false;
 		lWin.minimizeable = false;
 		lWin.icon = " ";
-		lWin.element.css('zIndex', 99999);
+		lWin.element.css({zIndex: 99999, boxShadow:'none'});
 		lWin.onOpen = function(win) {
 			ice.curtain.lower(false);
 			
@@ -70,7 +70,6 @@
 				win.element.css({top:320});
 			}
 			$t.css({left: parseInt($t.css('left')) - 100});
-			console.log($t.css('left'));
 		};
 		
 		ice.Manager.addWindow(lWin);
@@ -83,7 +82,6 @@
 <div class="loginwindow">
 	<div class="loginForm">
 		<div id="loginError"></div>
-		<b>Please log in</b>
 		<form action="#" method="post" >
 			<fieldset>
 				<label for="username">Username</label>

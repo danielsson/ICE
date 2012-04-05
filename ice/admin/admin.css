@@ -90,7 +90,7 @@ thead {
 	background: #EEE;
 	border: thin solid #CCC;
 }
-.rounded6, .msg, input {
+.rounded6, .msg, input[type=button], input[type=submit] {
 	-moz-border-radius: 2px;
 	-o-border-radius: 2px;
 	-webkit-border-radius: 2px;
@@ -98,10 +98,10 @@ thead {
 }
 aside {
 	position:absolute;
-	top:49px;
-	left:0;
-	width:200px;
-	bottom:20px;
+	top:100px;
+	left:50px;
+	width:194px;
+	z-index: 2;
 }
 
 .borderStyle {
@@ -110,33 +110,29 @@ aside {
 }
 .winpadd {padding: 20px;}
 .shadow, #taskBar ul li:hover {
-	-moz-box-shadow: 0 0 5px #000;
-	-webkit-box-shadow: 0 0 5px #000;
-	box-shadow: 0 0 5px #000;
+	#-moz-box-shadow: 0 0 5px #000;
+	#-webkit-box-shadow: 0 0 5px #000;
+	#box-shadow: 0 0 5px #000;
 }
 .window {
 	position: absolute;
-	background: rgba(255,255,255,0.4);
+	background: #EEEEEE;
 	overflow: hidden;
-	padding:3px;
 	min-width: 100px;
 	min-height: 100px;
 	font-weight: 400;
-	border: 1px solid rgba(255, 255, 255, 0.7);
+	box-shadow: 0 3px 10px #000;
 }
 .window.ui-draggable-dragging {
 	-moz-box-shadow: none;
 	-webkit-box-shadow: none;
 	box-shadow: none;
-	background: #888;
 }
 .winBorder {
-	border: 1px solid #c1c1c1; 
+	border: 1px solid rgba(255,255,255,0.5); 
 	overflow:hidden;
 }
 .winBar {
-	background: url('resources/winBar.png');
-	border-bottom:1px solid #CCC;
 	height: 30px;
 	cursor:move;
 }
@@ -164,9 +160,7 @@ aside {
 .winContent {
 	min-height:100px;
 	min-width: 100px;
-	background: #f4f4f4;
-	background: -webkit-gradient(linear,left bottom,left top, color-stop(0, rgb(229,239,244)), color-stop(1, rgb(255,255,255)));
-	background: -moz-linear-gradient(center bottom, rgb(229,239,244) 0%, rgb(255,255,255) 100%);	
+	clear: both;
 }
 .winMini {
 	float:right;
@@ -192,7 +186,7 @@ aside {
 #windowSandbox {
 	position: absolute;
 	top:49px;
-	left: 200px;
+	left: 0;
 	bottom:20px;
 	right:0;
 	background: url(resources/3pxbg.png), #333;
@@ -204,14 +198,13 @@ aside {
 	-webkit-box-shadow: 0 0 20px #000 inset;
 	-moz-box-shadow: 0 0 20px #000 inset;
 	box-shadow: 0 0 20px #000 inset;
-	border-left: 1px solid #FFF;
 }
 
 #taskBar {
 	position: fixed;
 	bottom:0;
 	right: 0;
-	left: 200px;
+	left: 0;
 	height: 24px;
 	background: url('resources/winBar.png') bottom;
 	border-style: solid;
@@ -243,39 +236,33 @@ aside {
 }
 input[type=text], input[type=password] {
 	background: #fff;
-	background:-moz-linear-gradient(center bottom,rgb(255,255,255) 0%,rgb(240,240,240) 100%);
-	background: -webkit-gradient(linear,left bottom,left top,color-stop(0, rgb(255,255,255)),color-stop(1, rgb(240,240,240)));
-	border: 1px solid #ccc;
-	padding: 5px;
+	box-shadow: 0 1px 1px #AEAEAE;
+	border: none;
+ 	padding: 5px;
 	margin: 10px;
 }
 input[type=text]:focus, input[type=password]:focus  {
-	border-color: #99CC00;
-	border-width: 2px;
-	margin: 9px;
+/* Something here perhaps */
 }
 input[type=submit], input[type=button] {
-	background: url('resources/header.png') center center;
-	border: 1px solid #fff;
-	padding: 5px;
+	background-image: -webkit-linear-gradient(bottom, #9b9b9b 100%, #828282 0%);
+	padding: 7px 14px;
 	margin:5px;
 	color: #FFF;
+	text-shadow: 0 1px 0px #666;
+	font-weight: bold;
+	border:none;
+	box-shadow: 0 2px 0px #525252;
+	
 }
-input[type=submit], input[type=button] {
-	-moz-box-shadow: 0 0 2px #000;
-	-webkit-box-shadow: 0 0 2px #000;
-	box-shadow: 0 0 2px #000;
-}
-
 input[type=submit]:hover, input[type=button]:hover {
-	-moz-box-shadow: 0 0 5px #000;
-	-webkit-box-shadow: 0 0 5px #000;
-	box-shadow: 0 0 5px #000;
+	background: #BBB;
 }
 input[type=submit]:active, input[type=button]:active {
-	background-position: center top;
+	box-shadow: none;
+	margin: 7px 5px 3px 5px;
 }
-input[type=submit][disabled], input[type=button][disabled] {background: gray; -moz-box-shadow: none;}
+input[type=submit][disabled], input[type=button][disabled] {background: #DDD; box-shadow: none;text-shadow: none}
 label {
 	color: #555;
 }
@@ -318,29 +305,18 @@ label {
 	background: rgba(255,255,255,0.5) url('resources/ajax-loader.gif') center center no-repeat;
 	display:none;
 }
-
-.biglist {
-
+#big_grid>li{
+	width: 96px;
+	height: 96px;
+	float: left;
+	margin-bottom: 2px;
+	margin-right: 2px;
+	background: url(resources/menu.png) no-repeat;
+	-webkit-transition: opacity 250ms ease;
 }
-.biglist>li {
-	padding: 10px 0 15px;
-	border-bottom: 1px solid #DDD;
-	cursor: pointer;
-	-webkit-transition: background-color 200ms ease;
-	background-color: transparent;
-}
-.biglist>li+li {border-top: 1px solid #FFF;}
-.biglist>li:hover {
-	background-color: #FFF !important;
-}
-.biglist>li>h2 {
-	font: bold 14px/26px sans-serif; 
-	padding: 0 20px 0 40px;
-	text-shadow: 1px 1px 0px #FFF;
-}
-.biglist>li>p {
-	font-size: 10px;
-	padding: 0 20px 0 40px;
+#big_grid>li.end {margin-right: 0;}
+#big_grid>li:hover{
+	opacity: 0.5;
 }
 .chromeFrameOverlayContent {
 	z-index: 100900;

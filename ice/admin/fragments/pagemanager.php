@@ -30,6 +30,7 @@
 		var W = new ice.Window();
 		W.name = "IcePM";
 		W.title = "Manage pages";
+		W.icon = " ";
 		W.width = 800;
 		W.beforeClose = function(win) {
 			$('#pageManagerMenu').attr('current', 'none').fadeOut();

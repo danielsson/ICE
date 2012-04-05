@@ -1,6 +1,6 @@
 .loginwindow {
 	position:relative;
-	padding: 20px;
+	padding: 25px;
 }
 
 .loginwindow input[type=text], .loginwindow input[type=password]{
@@ -10,4 +10,6 @@
 .loginwindow label {
 	float: left;
 	line-height: 48px;
+	font-weight: bold;
+	color: #888;
 }
