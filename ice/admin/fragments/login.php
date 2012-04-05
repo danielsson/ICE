@@ -69,7 +69,6 @@
 			if(window.innerHeight > 600) {
 				win.element.css({top:320});
 			}
-			$t.css({left: parseInt($t.css('left')) - 100});
 		};
 		
 		ice.Manager.addWindow(lWin);
