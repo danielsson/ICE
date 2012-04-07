@@ -21,7 +21,7 @@
 	<div class="center">
 		<div id="logo">
 			<a href="./">
-				<img alt="" src="resources/ice-logo_05.png" />
+				<img alt="" src="resources/ice_logo.png" />
 			</a>
 		</div>
 		<div id="headerText">
