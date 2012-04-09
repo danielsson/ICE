@@ -34,7 +34,7 @@ $Auth -> init(1);
 </script>
 
 <script type="text/x-template" id="sidepaneltemplate">
-	<ul id="big_grid">
+	<ul class="big_grid" id="main_menu">
 		<li style="width: 194px"></li>
 		<li style="background-position: 0 -98px" ></li>
 		<li style="background-position: -98px -98px" class="end"></li>
