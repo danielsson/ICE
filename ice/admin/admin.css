@@ -26,7 +26,7 @@ table tbody tr:nth-child(even) {
 	background: #EEE;
 }
 thead {
-	background: url('resources/header.png');
+	background-color: #30b6f3;
 	font-weight: 800;
 }
 #header {
@@ -294,7 +294,7 @@ label {
 	font-weight: bold;
 }
 .nicelist li {padding: 6px 20px;cursor: pointer;}
-.nicelist li:hover {background: url('resources/header.png') center -20px;}
+.nicelist li:hover {background-color: #30b6f3;}
 .winLoader {
 	position: absolute;
 	height: 100%;
@@ -304,18 +304,29 @@ label {
 	background: rgba(255,255,255,0.5) url('resources/ajax-loader.gif') center center no-repeat;
 	display:none;
 }
-#big_grid>li{
+.big_grid>li{
 	width: 96px;
 	height: 96px;
 	float: left;
 	margin-bottom: 2px;
 	margin-right: 2px;
-	background: url(resources/menu.png) no-repeat;
 	-webkit-transition: opacity 250ms ease;
+	position: relative;
+	background: #80d2f8;
 }
-#big_grid>li.end {margin-right: 0;}
-#big_grid>li:hover{
+.big_grid>li.end {margin-right: 0;}
+.big_grid>li:hover{
 	opacity: 0.5;
+}
+.big_grid>li>h3 {
+	bottom:0;
+	position: absolute;
+	padding: 10px;
+	font: normal 13px Verdana, sans-serif;
+}
+
+#main_menu>li {
+	background: url(resources/menu.png) no-repeat;
 }
 .chromeFrameOverlayContent {
 	z-index: 100900;
