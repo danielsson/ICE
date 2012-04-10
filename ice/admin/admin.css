@@ -23,7 +23,7 @@ table {
 table td { padding: 6px;}
 tbody { color: #333; }
 table tbody tr:nth-child(even) {
-	background: #EEE;
+	background: #FFF;
 }
 thead {
 	background-color: #30b6f3;
@@ -90,10 +90,10 @@ thead {
 	border: thin solid #CCC;
 }
 .rounded6, .msg, input[type=button], input[type=submit] {
-	-moz-border-radius: 2px;
-	-o-border-radius: 2px;
-	-webkit-border-radius: 2px;
-	border-radius: 2px;
+	-moz-border-radius: 1px;
+	-o-border-radius: 1px;
+	-webkit-border-radius: 1px;
+	border-radius: 1px;
 }
 aside {
 	position:absolute;
@@ -102,7 +102,6 @@ aside {
 	width:194px;
 	z-index: 2;
 }
-
 .borderStyle {
 	padding:3px;
 	background-color: rgba(0,0,0,0.2);
@@ -239,27 +238,28 @@ input[type=text], input[type=password] {
 	border: none;
  	padding: 5px;
 	margin: 10px;
+	-webkit-transition: box-shadow 500ms ease;
 }
 input[type=text]:focus, input[type=password]:focus  {
-/* Something here perhaps */
+	box-shadow: 0 1px 1px #30b6f3;
 }
 input[type=submit], input[type=button] {
-	background-image: -webkit-linear-gradient(bottom, #9b9b9b 100%, #828282 0%);
+	background-image: -webkit-linear-gradient(bottom, #EEE 0%, #FFF 100%);
 	padding: 7px 14px;
 	margin:5px;
-	color: #FFF;
-	text-shadow: 0 1px 0px #666;
+	color: #333;
+	text-shadow: 0 1px 0px #FFF;
 	font-weight: bold;
 	border:none;
-	box-shadow: 0 2px 0px #525252;
+	box-shadow: 0 1px 1px #CCC;
 	
 }
 input[type=submit]:hover, input[type=button]:hover {
-	background: #BBB;
+	background: #FFF;
 }
 input[type=submit]:active, input[type=button]:active {
-	box-shadow: none;
-	margin: 7px 5px 3px 5px;
+	color: #888;
+	box-shadow: 0 0 1px #CCC;
 }
 input[type=submit][disabled], input[type=button][disabled] {background: #DDD; box-shadow: none;text-shadow: none}
 label {

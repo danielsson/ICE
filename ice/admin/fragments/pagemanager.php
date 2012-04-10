@@ -39,6 +39,25 @@
 		W.allowRefresh = true;
 		W.contentEndpoint = "fragments/pagemanager.php";
 		
+		W.onOpen = function(win) {
+			$s = $('<input id="schPages" type="text" style="float: right; margin:0" placeholder="Search" />');
+			win.element.find('.winBar').append($s);
+			$s.keyup((function() {
+				var targets, $this;
+				return function() {
+					if(targets === undefined) {
+						var W = ice.Manager.getWindow("IcePM");
+						targets = $(".big_grid>li", W.element);
+						$this = $(this);
+					}
+					targets.show()
+					targets.not(":contains(" + $this.val() + ")").hide();
+					
+				}
+			})());
+		}
+		
+		
 		W.onContentChange = function(W) {
 			$('.big_grid>li', W.contentBox).bind("contextmenu", function() {
 				var $this = $(this), off = $this.offset(), pm = $('#pageManagerMenu');
@@ -101,7 +120,7 @@
 						if(confirm('This action will delete the page and all accociated data. Continue?')) {
 							$.post('fragments/pagemanager.php', {del:true, id: id}, function(data) {
 								if(data == 'true') {
-									ice.Manager.getWindow('IcyPM').refresh();
+									ice.Manager.getWindow('IcePM').refresh();
 								} else {
 									ice.message(data, 'warning');
 								}
@@ -127,6 +146,7 @@
 	<div class="toolbar">
 		Click on a page to edit, right click for options.
 		<a href="#" style="float:right;" onclick="ice.fragment.load('pagewizard');">Create new page</a>
+		
 	</div>
 <br />
 	<div style="clear:both;"></div>
