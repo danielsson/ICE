@@ -8,6 +8,7 @@ var icePopUp = function(u) {
 		url = u
 		win = window;
 	
+	this.payload = {}; //For sending params to iframe
 	
 	this.create = function() {
 		$('.iceOverlay').fadeIn();
@@ -17,6 +18,7 @@ var icePopUp = function(u) {
 		var thisPopup = this;
 		iFrame.get()[0].onload = function() {
 			this.contentDocument.popup = thisPopup;
+			this.contentDocument._ready();
 		};
 		
 	};
@@ -154,9 +156,12 @@ var iceEditorClass = function() {
 				return;
 				break;
 			case 'editHTML':
-				iceEdit.startHTMLeditor();
+				var htmlEditor = new icePopUp('editor/htmleditor.php');
+				
+				htmlEditor.payload.html = iceEdit.objTarget.html();
+				
+				htmlEditor.create();
 				return;
-				break;
 			case 'createLink':
 				iceEdit.getSelection()
 				if(iceEdit.getSelection().length < 1) {
@@ -174,39 +179,6 @@ var iceEditorClass = function() {
 		document.execCommand(cmd, false, arg);
 		iceEdit.objTarget.focus();
 		return;
-	};
-
-	this.startHTMLeditor = function() {
-		var el = $('<div class="ice iceFloatWin" id="iceHTMLEditor">').html('<div class="iceRounded" id="iceHtmlEditorTarget"><input type="button" onclick="iceEdit.saveHTML();" value="Done" /></div>').appendTo('body');
-		$('.iceOverlay').fadeIn();
-		if( typeof CodeMirror != "function") {
-			$.getScript(iceBasePath + "lib/codemirror.js", function() {
-				iceEdit.htmlEditor = new CodeMirror(document.getElementById("iceHtmlEditorTarget"), {
-					path : iceBasePath + "lib/",
-					basefiles : ["codemirror_base.js"],
-					parserfile : ["css_parser.js", "js_parser.js", "xml_parser.js", "htmlmix_parser.js"],
-					lineNumbers : true,
-					stylesheet : iceBasePath + "lib/cm_colors.css",
-					content : iceEdit.objTarget.html(),
-					height : "450px"
-				});
-			});
-		} else {
-			iceEdit.htmlEditor = new CodeMirror(document.getElementById("iceHtmlEditorTarget"), {
-				path : iceBasePath + "lib/",
-				basefiles : ["codemirror_base.js"],
-				parserfile : ["css_parser.js", "js_parser.js", "xml_parser.js", "htmlmix_parser.js"],
-				lineNumbers : true,
-				stylesheet : iceBasePath + "lib/cm_colors.css",
-				content : iceEdit.objTarget.html(),
-				height : "450px"
-			});
-		}
-	};
-	this.saveHTML = function() {
-		this.objTarget.html(this.htmlEditor.getCode());
-		$('#iceHTMLEditor').remove();
-		$('.iceOverlay').fadeOut();
 	};
 	this.getSelection = function() {
 		var txt = '';
