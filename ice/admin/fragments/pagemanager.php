@@ -31,7 +31,7 @@
 		W.name = "IcePM";
 		W.title = "Manage pages";
 		W.icon = " ";
-		W.width = 800;
+		W.width = 745;
 		W.beforeClose = function(win) {
 			$('#pageManagerMenu').attr('current', 'none').fadeOut();
 		};
