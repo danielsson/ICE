@@ -63,8 +63,7 @@ if (isset($_GET['thumb'])) {
 				if(document.popup.payload.isTypeImage) {
 					document.popup.exec(function(u) {
 						this.iceEdit.objTarget.attr('src', u);
-						this.iceEdit.save()
-						//this.renderEditBubbles();
+						this.iceEdit.save(u)
 					}, mediaRoot + $(this).attr('data-name'))
 				} else {
 					document.popup.exec(function(u) {

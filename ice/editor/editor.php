@@ -71,6 +71,7 @@ class ICECMSEDIT extends ICECMS {
 			$attrs['class'] = "";
 		}
 		$attrs['class'] .= ' iceEditable iceImage';
+		$attrs['data-ice-fieldname'] = $field_name;
 		
 		parent::img($field_name, $width, $height, $attrs);
 

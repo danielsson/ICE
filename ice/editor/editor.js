@@ -113,14 +113,14 @@ var iceEditorClass = function() {
 			});
 		}
 	};
-	this.save = function() {
+	this.save = function(q) {
 		this.element.animate({
 			opacity : 0
 		}, 300, function() {
 			$(this).remove();
 		});
 		iceEdit.objTarget.attr('contentEditable', false).removeClass('icemarked');
-		var text = iceEdit.objTarget.html();
+		var text = q || iceEdit.objTarget.html();
 		var fieldname = iceEdit.objTarget.attr('data-ice-fieldname');
 		$.post(iceBasePath + 'editor/endpoint.php', {
 			text : text,

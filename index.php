@@ -21,7 +21,6 @@ $ice->load("index", false);
 <div class="center">
 	<div class="divider" id="scroller"></div>
     <?php image('titleimg', 619, 258, array('alt'=>'cityscape')); ?>
-    <img src="cityscape.jpg" alt="cityscape" />
     <div class="divider"></div>
     <div class="textBody">
     	<?php element('h2_h1', 'h2','field',array('class'=>'h1')); ?>
