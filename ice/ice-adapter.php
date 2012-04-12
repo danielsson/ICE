@@ -64,7 +64,7 @@ class ICECMS {
 		}
 		$field_name = $this->sanitize($field_name);
 		echo '<', $element, ' ';
-		if(is_array($attrs) && count($attrs) > 0) {
+		if(!empty($attrs)) {
 			foreach($attrs as $key => $val) {
 				echo "$key=\"$val\" ";
 			}
@@ -79,10 +79,32 @@ class ICECMS {
 	}
 	
 	public function img($field_name, $height=0, $width=0, $attrs = array()) {
+		global $config, $pageContent;
+
+		if($height != 0){
+			$attrs['height'] = $height;
+		}
+		if($width != 0){
+			$attrs['width'] = $width;
+		}
+		$field_name = $this->sanitize($field_name);
+
+		if(!isset($pageContent[$field_name])) {
+			$this->createDBrecord($field_name, 'img');
+		}
+
+		$attrs['src'] = $pageContent[$field_name];
+
+		echo '<img ';
+		foreach($attrs as $key => $val) {
+			echo "$key=\"$val\" ";
+		}
+		echo '/>';
 		
+
 	}
 	public function createDBrecord($field_name, $type) {
-		global $config, $db;
+		global $config, $db, $pageContent;
 		$cp = $this->currentPage;
 		if($config['dev_mode']==false) {
 			echo 'Dev-mode off -- Record creation failed';
@@ -94,7 +116,7 @@ class ICECMS {
 		if(!$r) {
 			echo 'Database Error ';
 		}
-		echo "Empty element";
+		$pageContent[$field_name] = "Empty element";
 		return true;
 	}
 	
@@ -137,6 +159,10 @@ if($config['use_shorthand']===true) {
 	function element($field_name, $element, $type = "field", $attrs = array()) {
 		global $ice;
 		$ice->e($field_name, $element, $type, $attrs);
+	}
+	function image($field_name, $height=0, $width=0, $attrs = array()) {
+		global $ice;
+		$ice->img($field_name, $height, $width, $attrs);
 	}
 }
 

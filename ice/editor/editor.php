@@ -21,6 +21,8 @@ class ICECMSEDIT extends ICECMS {
 	}
 	
 	public function e($field_name, $element, $type = 'field', $attrs = array()) {  //Inserts an element into the page. Equal to element().
+
+		//TODO: Why does this not call parent::e?
 		global $config, $pageContent;
 		switch($type) {
 			case 'field':
@@ -60,6 +62,18 @@ class ICECMSEDIT extends ICECMS {
 			echo $pageContent[$field_name];
 		}
 		echo "</", $element, ">";
+	}
+
+	public function img($field_name, $height=0, $width=0, $attrs = array()) {
+		
+		$attrs = array_change_key_case($attrs);
+		if(!isset($attrs['class'])) {
+			$attrs['class'] = "";
+		}
+		$attrs['class'] .= ' iceEditable iceImage';
+		
+		parent::img($field_name, $height, $width, $attrs);
+
 	}
 	
 }
