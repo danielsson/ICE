@@ -48,8 +48,10 @@ if (isset($_GET['thumb'])) {
 					?>
 					<div style="clear: both"/>
 				</ul>
-				<input type="button" onclick="#" value="Insert image by url"/>
-				<input type="button" onclick="document.popup.destroy();" value="Cancel" style="top: 510px"/>
+				<div class="center" style="width: 620px">
+					<input type="button" onclick="document.popup.destroy();" value="Cancel" style="top: 510px;float:right"/>
+					<input type="button" onclick="#" value="Insert image by url" style="float:right"/>
+				</div>
 			</div>
 			
 		</div>

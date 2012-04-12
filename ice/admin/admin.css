@@ -40,14 +40,14 @@ thead {
 	z-index: 88888;
 }
 .center {
-	margin:0 45px;
+	margin: 0 auto;
 }
 
 .clearfix:before, .clearfix:after { content: ""; display: table; }
 .clearfix:after { clear: both; }
 .clearfix { zoom: 1; }
 
-#header .center {margin-top: 200px;}
+#header .center {margin-top: 200px;margin:0 45px;}
 #logo {
 	margin: 9px 0;
 	float: left;
