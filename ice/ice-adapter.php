@@ -78,7 +78,7 @@ class ICECMS {
 		echo "</", $element, ">";
 	}
 	
-	public function img($field_name, $height=0, $width=0, $attrs = array()) {
+	public function img($field_name, $width=0, $height=0, $attrs = array()) {
 		global $config, $pageContent;
 
 		if($height != 0){
@@ -100,7 +100,7 @@ class ICECMS {
 			echo "$key=\"$val\" ";
 		}
 		echo '/>';
-		
+
 
 	}
 	public function createDBrecord($field_name, $type) {
@@ -160,9 +160,9 @@ if($config['use_shorthand']===true) {
 		global $ice;
 		$ice->e($field_name, $element, $type, $attrs);
 	}
-	function image($field_name, $height=0, $width=0, $attrs = array()) {
+	function image($field_name, $width=0, $height=0, $attrs = array()) {
 		global $ice;
-		$ice->img($field_name, $height, $width, $attrs);
+		$ice->img($field_name, $width, $height, $attrs);
 	}
 }
 

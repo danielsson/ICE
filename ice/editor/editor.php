@@ -64,7 +64,7 @@ class ICECMSEDIT extends ICECMS {
 		echo "</", $element, ">";
 	}
 
-	public function img($field_name, $height=0, $width=0, $attrs = array()) {
+	public function img($field_name, $width=0, $height=0, $attrs = array()) {
 		
 		$attrs = array_change_key_case($attrs);
 		if(!isset($attrs['class'])) {
@@ -72,7 +72,7 @@ class ICECMSEDIT extends ICECMS {
 		}
 		$attrs['class'] .= ' iceEditable iceImage';
 		
-		parent::img($field_name, $height, $width, $attrs);
+		parent::img($field_name, $width, $height, $attrs);
 
 	}
 	

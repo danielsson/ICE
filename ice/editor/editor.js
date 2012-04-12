@@ -40,10 +40,13 @@ var iceEditorClass = function() {
 	this.popUps = {};
 	
 	this.renderToolbar = function() {
-		var cache = '';
+		var cache = '',
+			isField = this.objTarget.hasClass('iceArea');
+
 		for(var i = 0; i < toolbarButtons.length; i++) {
 			var k, btn = toolbarButtons[i];
-			if(btn[5] == false && this.objTarget.hasClass('iceArea') == false) {
+			if(btn[5] == false
+				&& isField == false) { //If this is a field, skip area controllers
 				continue;
 			}
 			switch (btn[0]) {
@@ -75,6 +78,14 @@ var iceEditorClass = function() {
 	};
 
 	this.render = function() {
+
+		if(this.objTarget.hasClass('iceImage')) { //If this is an image element, dont render toolbar 
+			var mediaManager = new icePopUp('editor/imageexplorer.php');
+			mediaManager.payload.isTypeImage = true;
+			mediaManager.create();
+			return;
+		}
+		
 		var off = this.objTarget.offset();
 		this.oldHTML = this.objTarget.html();
 		this.head.html('ICE! <span>- editing ' + this.objTarget.attr('data-ice-fieldname') + '</span>');
