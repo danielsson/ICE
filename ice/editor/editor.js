@@ -137,7 +137,34 @@ var iceEditorClass = function() {
 		}, 'json');
 		renderEditBubbles();
 		iceEdit = null;
-		iceEdit = new iceEditorClass;
+		iceEdit = new iceEditorClass();
+	};
+	this.saveImage = function(url) {
+		var fieldname = iceEdit.objTarget.attr('data-ice-fieldname'),
+			w = iceEdit.objTarget.attr('width'),
+			h = iceEdit.objTarget.attr('height');
+
+		$.post(iceBasePath + 'editor/endpoint.php', {
+			url:url,
+			fieldname: fieldname,
+			pagename: icePageName,
+			h: h,
+			w: w
+		}, function(data){
+			if(data.status != 'success') {
+				if(data.error == "auth") {
+					alert('You are not authenticated. Please login in a new window then try to save the element again.')
+				} else {
+					alert(data.error);
+				}
+			} else {
+				iceEdit.objTarget.attr('src', data.url);
+			}
+			renderEditBubbles();
+			iceEdit = null;
+			iceEdit = new iceEditorClass();
+		}, 'json');
+
 	};
 	this.cancel = function() {
 		this.element.animate({
