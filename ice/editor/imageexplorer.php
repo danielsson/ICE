@@ -59,10 +59,18 @@ if (isset($_GET['thumb'])) {
 		<script>
 			var mediaRoot = "<?php echo $config['baseurl'], $config['sys_folder'], "media/"; ?>";
 			$('li').click(function() {
-				document.popup.exec(function(u) {
-					this.iceEdit.objTarget.focus();
-					this.document.execCommand('insertImage', false, u);
-				}, mediaRoot + $(this).attr('data-name'));
+				console.log
+				if(document.popup.payload.isTypeImage) {
+					document.popup.exec(function(u) {
+						this.iceEdit.objTarget.attr('src', u);
+						this.iceEdit.saveImage(u)
+					}, mediaRoot + $(this).attr('data-name'))
+				} else {
+					document.popup.exec(function(u) {
+						this.iceEdit.objTarget.focus();
+						this.document.execCommand('insertImage', false, u);
+					}, mediaRoot + $(this).attr('data-name'));
+				}
 				document.popup.destroy();
 			});
 			$("li img").slice(0,12).hide().each(function(index, el) {

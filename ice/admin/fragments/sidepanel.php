@@ -44,6 +44,7 @@ $Auth -> init(1);
 	<ul style="display: none;">
 		<li>
 			<a onclick="ice.fragment.load('templatemanager')"><b>Add files</b></a>
+			<a onclick="ice.fragment.load('testing')"><b>Start testing</b></a>
 		</li>
 	</ul>
 </script>

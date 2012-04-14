@@ -5,7 +5,7 @@ $queries = array(
  `fieldname` varchar(64) NOT NULL,
  `content` text,
  `pagename` varchar(64) NOT NULL,
- `fieldtype` enum('field','area') NOT NULL DEFAULT 'field',
+ `fieldtype` enum('field','area', 'img') NOT NULL DEFAULT 'field',
  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;",
 

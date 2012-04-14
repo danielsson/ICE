@@ -64,8 +64,29 @@ class IceImage {
 	}
 	
 	public function outputAndCache() {
-		imagejpeg($this->image, $this->cachepath);
+		$this->cache();
 		readfile($this->cachepath);
+	}
+
+	public function cache() {
+		switch ($this->type) {
+			case IMAGETYPE_JPEG:
+				imagejpeg($this->image, $this->cachepath);
+				break;
+			
+			case IMAGETYPE_GIF:
+				imagegif($this->image, $this->cachepath);
+				break;
+			
+			case IMAGETYPE_PNG:
+				imagegif($this->image, $this->cachepath);
+				break;
+				
+			default:
+				throw new Exception("Unrecognized file type",1);
+				break;
+		}
+		return 0;
 	}
 	
 	public function resize($width, $height) {
@@ -130,7 +151,7 @@ class IceImage {
 	
 	public function setCachePath($pre) {$this->cachepath = $pre; }
 	
-	private function getCachePath() {
+	public function getCachePath() {
 		return $this->cachepath;
 	}
 	public static function isAllowedType($path) {
