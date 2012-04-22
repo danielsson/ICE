@@ -72,9 +72,9 @@ class ICECMS {
 		echo ">";
 		if(!isset($pageContent[$field_name])) {
 			$this->createDBrecord($field_name, $type);
-		} else {
-			echo $pageContent[$field_name];
 		}
+		echo $pageContent[$field_name];
+		
 		echo "</", $element, ">";
 	}
 	
