@@ -263,7 +263,11 @@ var ice = {
 		});
 		
 		//Only display identical messages once
-		if($(":contains('" + message + "')", target).size()) {return;}
+		var duplicate = $(":contains('" + message + "')", target);
+		if(duplicate.size()) {
+			duplicate.fadeOut(100).fadeIn(200);
+			return;
+		}
 
 		l.appendTo(target);
 		l.fadeIn();
