@@ -249,8 +249,8 @@ var ice = {
 		}
 	}, //End Fragment
 	message : function(message, type, customloc) {
-		var l;
-		if(type == "warning" || type === undefined) {
+		var l, target = (typeof customloc === 'undefined') ? this.Manager.windowSandbox:customloc;
+		if(type == "warning" || type === 'undefined') {
 			l = $('<div class="msg msgWarning"> <div class="winExit"></div> </div>');
 		} else if(type == "info") {
 			l = $('<div class="msg msgInfo"> <div class="winExit"></div> </div>');
@@ -261,11 +261,11 @@ var ice = {
 				$(this).remove();
 			});
 		});
-		if(!customloc) {
-			l.appendTo(this.Manager.windowSandbox);
-		} else {
-			l.appendTo(customloc);
-		}
+		
+		//Only display identical messages once
+		if($(":contains('" + message + "')", target).size()) {return;}
+
+		l.appendTo(target);
 		l.fadeIn();
 	}, //End message()
 	logout : function() {
