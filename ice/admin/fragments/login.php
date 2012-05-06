@@ -44,7 +44,7 @@
 			var $t = win.element;
 			$('input[type=submit]', $t).click(function(e) {
 				e.preventDefault();
-				if($('input:text', $t).val() == "" || $('input:password', $t).val() =="") {
+				if($('input:text', $t).val() == "" || $('input:password', $t).val() == "") {
 					ice.message('All fields are required!', 'warning', '#loginError');
 					return true;
 				}
@@ -52,6 +52,7 @@
 				$.post('fragments/login.php?xhr=true', formData, function(data) {
 					if(data !="true") {
 						ice.message('Wrong username/password', 'warning', '#loginError');
+						win.element.effect('shake', 100);
 					} else {
 						ice.Manager.displayNoWindowsWarning = true;
 						$('#headerText').html('<a href="#" onclick="ice.logout();"><b>Log out<b></a>');
