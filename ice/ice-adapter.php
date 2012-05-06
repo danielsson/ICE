@@ -71,7 +71,7 @@ class ICECMS {
 		}
 		echo ">";
 		if(!isset($pageContent[$field_name])) {
-			$this->createDBrecord($field_name, $type);
+			$this->createDBrecord($field_name, $type, "Empty element");
 		}
 		echo $pageContent[$field_name];
 		
@@ -90,7 +90,7 @@ class ICECMS {
 		$field_name = $this->sanitize($field_name);
 
 		if(!isset($pageContent[$field_name])) {
-			$this->createDBrecord($field_name, 'img');
+			$this->createDBrecord($field_name, 'img', '//placehold.it/' . $width . "x$height");
 		}
 
 		$attrs['src'] = $pageContent[$field_name];
@@ -103,20 +103,20 @@ class ICECMS {
 
 
 	}
-	public function createDBrecord($field_name, $type) {
+	public function createDBrecord($field_name, $type, $placeholder) {
 		global $config, $db, $pageContent;
 		$cp = $this->currentPage;
 		if($config['dev_mode']==false) {
 			echo 'Dev-mode off -- Record creation failed';
 			return false;
 		}
-		$sql = 'INSERT IGNORE INTO ' . $config['content_table'] . " (fieldname, content, pagename, fieldtype) VALUES ('$field_name', 'Empty element', '$cp', '$type');";
+		$sql = 'INSERT IGNORE INTO ' . $config['content_table'] . " (fieldname, content, pagename, fieldtype) VALUES ('$field_name', '$placeholder', '$cp', '$type');";
 		$db->connect();
 		$r = $db->query($sql);
 		if(!$r) {
 			echo 'Database Error ';
 		}
-		$pageContent[$field_name] = "Empty element";
+		$pageContent[$field_name] = $placeholder;
 		return true;
 	}
 	
