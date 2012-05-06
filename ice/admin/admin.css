@@ -11,7 +11,6 @@ body {
 	font-weight:normal;
 	color: #333;
 	-webkit-font-smoothing: antialiased;
-	background-color: #F0F0F0;
 }
 body.loading {
 	cursor: wait !important;
@@ -23,10 +22,10 @@ table {
 table td { padding: 6px;}
 tbody { color: #333; }
 table tbody tr:nth-child(even) {
-	background: #EEE;
+	background: #FFF;
 }
 thead {
-	background: url('resources/header.png');
+	background-color: #30b6f3;
 	font-weight: 800;
 }
 #header {
@@ -40,7 +39,6 @@ thead {
 	z-index: 88888;
 }
 .center {
-	width: 960px;
 	margin: 0 auto;
 }
 
@@ -48,9 +46,9 @@ thead {
 .clearfix:after { clear: both; }
 .clearfix { zoom: 1; }
 
-#header .center {margin-top: 200px;}
+#header .center {margin-top: 200px;margin:0 45px;}
 #logo {
-	margin: 10px 0;
+	margin: 9px 0;
 	float: left;
 }
 #headerText {
@@ -90,53 +88,48 @@ thead {
 	background: #EEE;
 	border: thin solid #CCC;
 }
-.rounded6, .msg, input {
-	-moz-border-radius: 2px;
-	-o-border-radius: 2px;
-	-webkit-border-radius: 2px;
-	border-radius: 2px;
+.rounded6, .msg, input[type=button], input[type=submit] {
+	-moz-border-radius: 1px;
+	-o-border-radius: 1px;
+	-webkit-border-radius: 1px;
+	border-radius: 1px;
 }
 aside {
 	position:absolute;
-	top:49px;
-	left:0;
-	width:200px;
-	bottom:20px;
+	top:100px;
+	left:50px;
+	width:194px;
+	z-index: 2;
 }
-
 .borderStyle {
 	padding:3px;
 	background-color: rgba(0,0,0,0.2);
 }
 .winpadd {padding: 20px;}
 .shadow, #taskBar ul li:hover {
-	-moz-box-shadow: 0 0 5px #000;
-	-webkit-box-shadow: 0 0 5px #000;
-	box-shadow: 0 0 5px #000;
+	#-moz-box-shadow: 0 0 5px #000;
+	#-webkit-box-shadow: 0 0 5px #000;
+	#box-shadow: 0 0 5px #000;
 }
 .window {
 	position: absolute;
-	background: rgba(255,255,255,0.4);
+	background: #EEEEEE;
 	overflow: hidden;
-	padding:3px;
 	min-width: 100px;
 	min-height: 100px;
 	font-weight: 400;
-	border: 1px solid rgba(255, 255, 255, 0.7);
+	box-shadow: 0 3px 10px #000;
 }
 .window.ui-draggable-dragging {
 	-moz-box-shadow: none;
 	-webkit-box-shadow: none;
 	box-shadow: none;
-	background: #888;
 }
 .winBorder {
-	border: 1px solid #c1c1c1; 
+	border: 1px solid rgba(255,255,255,0.5); 
 	overflow:hidden;
 }
 .winBar {
-	background: url('resources/winBar.png');
-	border-bottom:1px solid #CCC;
 	height: 30px;
 	cursor:move;
 }
@@ -164,9 +157,10 @@ aside {
 .winContent {
 	min-height:100px;
 	min-width: 100px;
-	background: #f4f4f4;
-	background: -webkit-gradient(linear,left bottom,left top, color-stop(0, rgb(229,239,244)), color-stop(1, rgb(255,255,255)));
-	background: -moz-linear-gradient(center bottom, rgb(229,239,244) 0%, rgb(255,255,255) 100%);	
+	max-height: 500px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	clear: both;
 }
 .winMini {
 	float:right;
@@ -192,11 +186,11 @@ aside {
 #windowSandbox {
 	position: absolute;
 	top:49px;
-	left: 200px;
+	left: 0;
 	bottom:20px;
 	right:0;
 	background: url(resources/3pxbg.png), #333;
-	background: -moz-radial-gradient(center top, ellipse cover, rgba(0,0,0,0) 0%, rgba(255,255,255,1) 100%),
+	background: -moz-radial-gradient(center top, ellipse cover, rgba(0,0,0,0) 0%, #000 100%),
   		url(resources/3pxbg.png), #333;
 	background: -webkit-gradient(
   		radial, center top, 400, center top, 1000, from(rgba(0,0,0,00)), to(black)),
@@ -204,14 +198,13 @@ aside {
 	-webkit-box-shadow: 0 0 20px #000 inset;
 	-moz-box-shadow: 0 0 20px #000 inset;
 	box-shadow: 0 0 20px #000 inset;
-	border-left: 1px solid #FFF;
 }
 
 #taskBar {
 	position: fixed;
 	bottom:0;
 	right: 0;
-	left: 200px;
+	left: 0;
 	height: 24px;
 	background: url('resources/winBar.png') bottom;
 	border-style: solid;
@@ -243,39 +236,34 @@ aside {
 }
 input[type=text], input[type=password] {
 	background: #fff;
-	background:-moz-linear-gradient(center bottom,rgb(255,255,255) 0%,rgb(240,240,240) 100%);
-	background: -webkit-gradient(linear,left bottom,left top,color-stop(0, rgb(255,255,255)),color-stop(1, rgb(240,240,240)));
-	border: 1px solid #ccc;
-	padding: 5px;
+	box-shadow: 0 1px 1px #AEAEAE;
+	border: none;
+ 	padding: 5px;
 	margin: 10px;
+	-webkit-transition: box-shadow 500ms ease;
 }
 input[type=text]:focus, input[type=password]:focus  {
-	border-color: #99CC00;
-	border-width: 2px;
-	margin: 9px;
+	box-shadow: 0 1px 1px #30b6f3;
 }
 input[type=submit], input[type=button] {
-	background: url('resources/header.png') center center;
-	border: 1px solid #fff;
-	padding: 5px;
+	background-image: -webkit-linear-gradient(bottom, #EEE 0%, #FFF 100%);
+	padding: 7px 14px;
 	margin:5px;
-	color: #FFF;
+	color: #333;
+	text-shadow: 0 1px 0px #FFF;
+	font-weight: bold;
+	border:none;
+	box-shadow: 0 1px 1px #CCC;
+	
 }
-input[type=submit], input[type=button] {
-	-moz-box-shadow: 0 0 2px #000;
-	-webkit-box-shadow: 0 0 2px #000;
-	box-shadow: 0 0 2px #000;
-}
-
 input[type=submit]:hover, input[type=button]:hover {
-	-moz-box-shadow: 0 0 5px #000;
-	-webkit-box-shadow: 0 0 5px #000;
-	box-shadow: 0 0 5px #000;
+	background: #FFF;
 }
 input[type=submit]:active, input[type=button]:active {
-	background-position: center top;
+	color: #888;
+	box-shadow: 0 0 1px #CCC;
 }
-input[type=submit][disabled], input[type=button][disabled] {background: gray; -moz-box-shadow: none;}
+input[type=submit][disabled], input[type=button][disabled] {background: #DDD; box-shadow: none;text-shadow: none}
 label {
 	color: #555;
 }
@@ -308,7 +296,7 @@ label {
 	font-weight: bold;
 }
 .nicelist li {padding: 6px 20px;cursor: pointer;}
-.nicelist li:hover {background: url('resources/header.png') center -20px;}
+.nicelist li:hover {background-color: #30b6f3;}
 .winLoader {
 	position: absolute;
 	height: 100%;
@@ -318,30 +306,29 @@ label {
 	background: rgba(255,255,255,0.5) url('resources/ajax-loader.gif') center center no-repeat;
 	display:none;
 }
+.big_grid>li{
+	width: 96px;
+	height: 96px;
+	float: left;
+	margin-bottom: 2px;
+	margin-right: 2px;
+	-webkit-transition: opacity 250ms ease;
+	position: relative;
+	background: #80d2f8;
+}
+.big_grid>li.end {margin-right: 0;}
+.big_grid>li:hover{
+	opacity: 0.5;
+}
+.big_grid>li>h3 {
+	bottom:0;
+	position: absolute;
+	padding: 10px;
+	font: normal 13px Verdana, sans-serif;
+}
 
-.biglist {
-
-}
-.biglist>li {
-	padding: 10px 0 15px;
-	border-bottom: 1px solid #DDD;
-	cursor: pointer;
-	abackground: url('resources/slider.png') -200px 0 repeat-y;
-	-webkit-transition: background-color 200ms ease;
-	background-color: transparent;
-}
-.biglist>li+li {border-top: 1px solid #FFF;}
-.biglist>li:hover {
-	background-color: #FFF !important;
-}
-.biglist>li>h2 {
-	font: bold 14px/26px sans-serif; 
-	padding: 0 20px 0 40px;
-	text-shadow: 1px 1px 0px #FFF;
-}
-.biglist>li>p {
-	font-size: 10px;
-	padding: 0 20px 0 40px;
+#main_menu>li {
+	background: url(resources/menu.png) no-repeat;
 }
 .chromeFrameOverlayContent {
 	z-index: 100900;

@@ -21,45 +21,36 @@ class ICECMSEDIT extends ICECMS {
 	}
 	
 	public function e($field_name, $element, $type = 'field', $attrs = array()) {  //Inserts an element into the page. Equal to element().
-		global $config, $pageContent;
-		switch($type) {
-			case 'field':
-				$type = 'field'; break;
-			case 'area':
-				$type = 'area'; break;
-			default:
-				echo 'Error: Invalid type.';
-				return false;
-				break;
-		}
-		$field_name = $this->sanitize($field_name);
-		echo '<', $element, ' ';
+
+		global $config;
 
 		$attrs = array_change_key_case($attrs);
-		if(!is_array($attrs)) {
-			echo 'Error: fourth argument supplied to element() is not an array.';
-			return false;
-		}
 		if(!isset($attrs['class'])) {
 			$attrs['class'] = '';
 		}
+
+		$attrs['data-ice-fieldname'] = $field_name;
 		$attrs['class'] .= ' iceEditable';
 		if($type == 'field') {
 			$attrs['class'] .= ' iceField';
 		} else {
 			$attrs['class'] .= ' iceArea';
 		}
+
+		parent::e($field_name, $element, $type, $attrs);
+	}
+
+	public function img($field_name, $width=0, $height=0, $attrs = array()) {
+		
+		$attrs = array_change_key_case($attrs);
+		if(!isset($attrs['class'])) {
+			$attrs['class'] = "";
+		}
+		$attrs['class'] .= ' iceEditable iceImage';
 		$attrs['data-ice-fieldname'] = $field_name;
-		foreach($attrs as $key => $val) {
-			echo "$key=\"$val\" ";
-		}
-		echo ">";
-		if(!isset($pageContent[$field_name])) {
-			$this->createDBrecord($field_name, $type);
-		} else {
-			echo $pageContent[$field_name];
-		}
-		echo "</", $element, ">";
+		
+		parent::img($field_name, $width, $height, $attrs);
+
 	}
 	
 }

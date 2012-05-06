@@ -3,7 +3,7 @@
 This is the ICE! cms adapter. Include this file
 on all pages with editable content.
 **********************************************/
-define('SYSINIT', true);
+defined('SYSINIT') or define('SYSINIT', true);
 require_once('ice-config.php');
 require_once('lib/db.class.php');
 
@@ -37,7 +37,7 @@ class ICECMS {
 		if($cache==true && $this->in_editor_mode!=true) {
 			$cfile = $config['sys_folder']."cache/".crc32(ICE_CURRENT_PAGE).".txt";
 			if(file_exists($cfile) && time() - filemtime($cfile) < $lifetime*60) {
-				echo file_get_contents($cfile);
+				readfile($cfile);
 				die();
 			} else {
 				ob_start("iceOBcallback");	
@@ -64,37 +64,59 @@ class ICECMS {
 		}
 		$field_name = $this->sanitize($field_name);
 		echo '<', $element, ' ';
-		if(is_array($attrs) && count($attrs) > 0) {
+		if(!empty($attrs)) {
 			foreach($attrs as $key => $val) {
 				echo "$key=\"$val\" ";
 			}
 		}
 		echo ">";
 		if(!isset($pageContent[$field_name])) {
-			$this->createDBrecord($field_name, $type);
-		} else {
-			echo $pageContent[$field_name];
+			$this->createDBrecord($field_name, $type, "Empty element");
 		}
+		echo $pageContent[$field_name];
+		
 		echo "</", $element, ">";
 	}
 	
-	public function img($field_name, $height=0, $width=0, $attrs = array()) {
-		
+	public function img($field_name, $width=0, $height=0, $attrs = array()) {
+		global $config, $pageContent;
+
+		if($height != 0){
+			$attrs['height'] = $height;
+		}
+		if($width != 0){
+			$attrs['width'] = $width;
+		}
+		$field_name = $this->sanitize($field_name);
+
+		if(!isset($pageContent[$field_name])) {
+			$this->createDBrecord($field_name, 'img', '//placehold.it/' . $width . "x$height");
+		}
+
+		$attrs['src'] = $pageContent[$field_name];
+
+		echo '<img ';
+		foreach($attrs as $key => $val) {
+			echo "$key=\"$val\" ";
+		}
+		echo '/>';
+
+
 	}
-	public function createDBrecord($field_name, $type) {
-		global $config, $db;
+	public function createDBrecord($field_name, $type, $placeholder) {
+		global $config, $db, $pageContent;
 		$cp = $this->currentPage;
 		if($config['dev_mode']==false) {
 			echo 'Dev-mode off -- Record creation failed';
 			return false;
 		}
-		$sql = 'INSERT IGNORE INTO ' . $config['content_table'] . " (fieldname, content, pagename, fieldtype) VALUES ('$field_name', 'Empty element', '$cp', '$type');";
+		$sql = 'INSERT IGNORE INTO ' . $config['content_table'] . " (fieldname, content, pagename, fieldtype) VALUES ('$field_name', '$placeholder', '$cp', '$type');";
 		$db->connect();
 		$r = $db->query($sql);
 		if(!$r) {
-			echo 'Database Error';
+			echo 'Database Error ';
 		}
-		echo "Empty element";
+		$pageContent[$field_name] = $placeholder;
 		return true;
 	}
 	
@@ -137,6 +159,10 @@ if($config['use_shorthand']===true) {
 	function element($field_name, $element, $type = "field", $attrs = array()) {
 		global $ice;
 		$ice->e($field_name, $element, $type, $attrs);
+	}
+	function image($field_name, $width=0, $height=0, $attrs = array()) {
+		global $ice;
+		$ice->img($field_name, $width, $height, $attrs);
 	}
 }
 

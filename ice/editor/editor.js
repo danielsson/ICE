@@ -8,6 +8,7 @@ var icePopUp = function(u) {
 		url = u
 		win = window;
 	
+	this.payload = {}; //For sending params to iframe
 	
 	this.create = function() {
 		$('.iceOverlay').fadeIn();
@@ -17,6 +18,7 @@ var icePopUp = function(u) {
 		var thisPopup = this;
 		iFrame.get()[0].onload = function() {
 			this.contentDocument.popup = thisPopup;
+			this.contentDocument._ready();
 		};
 		
 	};
@@ -38,10 +40,13 @@ var iceEditorClass = function() {
 	this.popUps = {};
 	
 	this.renderToolbar = function() {
-		var cache = '';
+		var cache = '',
+			isField = this.objTarget.hasClass('iceArea');
+
 		for(var i = 0; i < toolbarButtons.length; i++) {
 			var k, btn = toolbarButtons[i];
-			if(btn[5] == false && this.objTarget.hasClass('iceArea') == false) {
+			if(btn[5] == false
+				&& isField == false) { //If this is a field, skip area controllers
 				continue;
 			}
 			switch (btn[0]) {
@@ -73,6 +78,14 @@ var iceEditorClass = function() {
 	};
 
 	this.render = function() {
+
+		if(this.objTarget.hasClass('iceImage')) { //If this is an image element, dont render toolbar 
+			var mediaManager = new icePopUp('editor/imageexplorer.php');
+			mediaManager.payload.isTypeImage = true;
+			mediaManager.create();
+			return;
+		}
+		
 		var off = this.objTarget.offset();
 		this.oldHTML = this.objTarget.html();
 		this.head.html('ICE! <span>- editing ' + this.objTarget.attr('data-ice-fieldname') + '</span>');
@@ -100,14 +113,14 @@ var iceEditorClass = function() {
 			});
 		}
 	};
-	this.save = function() {
+	this.save = function(q) {
 		this.element.animate({
 			opacity : 0
 		}, 300, function() {
 			$(this).remove();
 		});
 		iceEdit.objTarget.attr('contentEditable', false).removeClass('icemarked');
-		var text = iceEdit.objTarget.html();
+		var text = q || iceEdit.objTarget.html();
 		var fieldname = iceEdit.objTarget.attr('data-ice-fieldname');
 		$.post(iceBasePath + 'editor/endpoint.php', {
 			text : text,
@@ -124,7 +137,34 @@ var iceEditorClass = function() {
 		}, 'json');
 		renderEditBubbles();
 		iceEdit = null;
-		iceEdit = new iceEditorClass;
+		iceEdit = new iceEditorClass();
+	};
+	this.saveImage = function(url) {
+		var fieldname = iceEdit.objTarget.attr('data-ice-fieldname'),
+			w = iceEdit.objTarget.attr('width'),
+			h = iceEdit.objTarget.attr('height');
+
+		$.post(iceBasePath + 'editor/endpoint.php', {
+			url:url,
+			fieldname: fieldname,
+			pagename: icePageName,
+			h: h,
+			w: w
+		}, function(data){
+			if(data.status != 'success') {
+				if(data.error == "auth") {
+					alert('You are not authenticated. Please login in a new window then try to save the element again.')
+				} else {
+					alert(data.error);
+				}
+			} else {
+				iceEdit.objTarget.attr('src', data.url);
+			}
+			renderEditBubbles();
+			iceEdit = null;
+			iceEdit = new iceEditorClass();
+		}, 'json');
+
 	};
 	this.cancel = function() {
 		this.element.animate({
@@ -154,9 +194,12 @@ var iceEditorClass = function() {
 				return;
 				break;
 			case 'editHTML':
-				iceEdit.startHTMLeditor();
+				var htmlEditor = new icePopUp('editor/htmleditor.php');
+				
+				htmlEditor.payload.html = iceEdit.objTarget.html();
+				
+				htmlEditor.create();
 				return;
-				break;
 			case 'createLink':
 				iceEdit.getSelection()
 				if(iceEdit.getSelection().length < 1) {
@@ -174,39 +217,6 @@ var iceEditorClass = function() {
 		document.execCommand(cmd, false, arg);
 		iceEdit.objTarget.focus();
 		return;
-	};
-
-	this.startHTMLeditor = function() {
-		var el = $('<div class="ice iceFloatWin" id="iceHTMLEditor">').html('<div class="iceRounded" id="iceHtmlEditorTarget"><input type="button" onclick="iceEdit.saveHTML();" value="Done" /></div>').appendTo('body');
-		$('.iceOverlay').fadeIn();
-		if( typeof CodeMirror != "function") {
-			$.getScript(iceBasePath + "lib/codemirror.js", function() {
-				iceEdit.htmlEditor = new CodeMirror(document.getElementById("iceHtmlEditorTarget"), {
-					path : iceBasePath + "lib/",
-					basefiles : ["codemirror_base.js"],
-					parserfile : ["css_parser.js", "js_parser.js", "xml_parser.js", "htmlmix_parser.js"],
-					lineNumbers : true,
-					stylesheet : iceBasePath + "lib/cm_colors.css",
-					content : iceEdit.objTarget.html(),
-					height : "450px"
-				});
-			});
-		} else {
-			iceEdit.htmlEditor = new CodeMirror(document.getElementById("iceHtmlEditorTarget"), {
-				path : iceBasePath + "lib/",
-				basefiles : ["codemirror_base.js"],
-				parserfile : ["css_parser.js", "js_parser.js", "xml_parser.js", "htmlmix_parser.js"],
-				lineNumbers : true,
-				stylesheet : iceBasePath + "lib/cm_colors.css",
-				content : iceEdit.objTarget.html(),
-				height : "450px"
-			});
-		}
-	};
-	this.saveHTML = function() {
-		this.objTarget.html(this.htmlEditor.getCode());
-		$('#iceHTMLEditor').remove();
-		$('.iceOverlay').fadeOut();
 	};
 	this.getSelection = function() {
 		var txt = '';

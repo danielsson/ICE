@@ -64,8 +64,29 @@ class IceImage {
 	}
 	
 	public function outputAndCache() {
-		imagejpeg($this->image, $this->cachepath);
+		$this->cache();
 		readfile($this->cachepath);
+	}
+
+	public function cache() {
+		switch ($this->type) {
+			case IMAGETYPE_JPEG:
+				imagejpeg($this->image, $this->cachepath);
+				break;
+			
+			case IMAGETYPE_GIF:
+				imagegif($this->image, $this->cachepath);
+				break;
+			
+			case IMAGETYPE_PNG:
+				imagegif($this->image, $this->cachepath);
+				break;
+				
+			default:
+				throw new Exception("Unrecognized file type",1);
+				break;
+		}
+		return 0;
 	}
 	
 	public function resize($width, $height) {
@@ -77,6 +98,8 @@ class IceImage {
 			$height,
 			$this->getWidth(),
 			$this->getHeight());
+		
+		imagedestroy($this -> image);
 		$this->image = $new;
 	}
 	
@@ -89,23 +112,62 @@ class IceImage {
 		$this->resize($width, $height);
 	}
 	
-	public function setCachePath($pre) {$this->cachepath = $pre; }
-	
-	private function getCachePath() {
-		return $this->cachepath;
+	public function resizeToFit($targetWidth, $targetHeight) {
+		$sourceWidth = $this->getWidth();
+		$sourceHeight = $this->getHeight();
+		
+		$sourceAR = $sourceWidth / $sourceHeight;
+		$targetAR = $targetWidth / $targetHeight;
+		$height = 0; $width = 0;
+		
+		if($sourceAR > $targetAR) {
+			$height = $targetHeight;
+			$width = (int) ($targetHeight * $sourceAR);
+		} else {
+			$width = $targetWidth;
+			$height = (int) ( $targetWidth / $sourceAR);
+		}
+		
+		$tmp = imagecreatetruecolor($width, $height);
+		imagecopyresampled(
+			$tmp, $this->image,
+			0, 0, 0, 0,
+			$width, $height,
+			$sourceWidth, $sourceHeight);
+		
+		$x0 = ( $width - $targetWidth ) / 2;
+		$y0 = ( $height - $targetHeight ) / 2;
+		
+		$result = imagecreatetruecolor($targetWidth, $targetHeight);
+		imagecopy(
+			$result, $tmp,
+			0, 0, $x0, $y0,
+			$targetWidth, $targetHeight);
+		
+		imagedestroy($tmp);
+		imagedestroy($this->image);
+		$this->image = $result;
 	}
 	
-	public static function getImagePaths($patt='../media/*.*') {
+	public function setCachePath($pre) {$this->cachepath = $pre; }
+	
+	public function getCachePath() {
+		return $this->cachepath;
+	}
+	public static function isAllowedType($path) {
 		global $config;
 		
+		$parts = pathinfo($path);
+		return in_array(strtolower($parts['extension']), $config['allowed_ext']);
+	}
+	public static function getImagePaths($patt='../media/*.*') {
+		
 		$images = array();
-		$parts = array();
 		foreach(glob($patt) as $v) {
-			$parts = pathinfo($v);
-			if(in_array(strtolower($parts['extension']), $config['allowed_ext'])) {
-				$images[] =  array($v, $parts['basename']);
+			if(IceImage::isAllowedType($v)) {
+				$images[] = basename($v);
 			}
 		}
 		return $images;
-	}	
+	}
 }

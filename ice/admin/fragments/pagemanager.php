@@ -30,7 +30,8 @@
 		var W = new ice.Window();
 		W.name = "IcePM";
 		W.title = "Manage pages";
-		W.width = 800;
+		W.icon = " ";
+		W.width = 745;
 		W.beforeClose = function(win) {
 			$('#pageManagerMenu').attr('current', 'none').fadeOut();
 		};
@@ -38,8 +39,27 @@
 		W.allowRefresh = true;
 		W.contentEndpoint = "fragments/pagemanager.php";
 		
+		W.onOpen = function(win) {
+			$s = $('<input id="schPages" type="text" style="float: right; margin:0" placeholder="Search" />');
+			win.element.find('.winBar').append($s);
+			$s.keyup((function() {
+				var targets, $this;
+				return function() {
+					if(targets === undefined) {
+						var W = ice.Manager.getWindow("IcePM");
+						targets = $(".big_grid>li", W.element);
+						$this = $(this);
+					}
+					targets.show()
+					targets.not(":contains(" + $this.val() + ")").hide();
+					
+				}
+			})());
+		}
+		
+		
 		W.onContentChange = function(W) {
-			$('.pageBtn', W.contentBox).bind("contextmenu", function() {
+			$('.big_grid>li', W.contentBox).bind("contextmenu", function() {
 				var $this = $(this), off = $this.offset(), pm = $('#pageManagerMenu');
 				pm
 					.attr({
@@ -100,8 +120,7 @@
 						if(confirm('This action will delete the page and all accociated data. Continue?')) {
 							$.post('fragments/pagemanager.php', {del:true, id: id}, function(data) {
 								if(data == 'true') {
-									$w = ice.Manager.getWindow('IcyPM');
-									$('.pageBtn[data-page-id="' + id + '"]').remove();
+									ice.Manager.getWindow('IcePM').refresh();
 								} else {
 									ice.message(data, 'warning');
 								}
@@ -127,24 +146,26 @@
 	<div class="toolbar">
 		Click on a page to edit, right click for options.
 		<a href="#" style="float:right;" onclick="ice.fragment.load('pagewizard');">Create new page</a>
+		
 	</div>
 <br />
 	<div style="clear:both;"></div>
-	<div class="pagesList rounded6">
+	<ul class="big_grid">
 		<?php
 			$sql = "SELECT name, url, id FROM ice_pages";
 			$res = $db->query($sql);
 			if($res) {
 				while($row = mysql_fetch_array($res)) {
-					echo '<div class="pageBtn" data-page-trac="', $row['url'], '" data-page-id="',$row['id'] , '" ><span>', stripslashes($row['name']), '</span></div>';
+					echo '<li data-page-trac="', $row['url'], '" data-page-id="',$row['id'] , '" ><h3>', stripslashes($row['name']), '</h3></li>';
 				}
 			} else {
 				echo $db->error();
 			}
 			$db->close();
 		?>
-		<div style="clear:both;"></div>
-	</div>
+
+	</ul>
+	<div style="clear:both;"></div>
 </div>
 <?php if(isset($_POST['refresh'])) { die(); } ?>
 </script>

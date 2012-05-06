@@ -8,11 +8,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=encoding">
 <meta http-equiv="X-UA-Compatible" content="chrome=1">
-<title>Administer Icy-cms PRE-ALPHA</title>
+<title>Administer ICE! PRE-ALPHA</title>
 <script type="text/javascript" src="../lib/jquery.js"></script>
 <script type="text/javascript" src="../lib/jquery_ui_custom.js"></script>
 <script type="text/javascript" src="admin.js"></script>
-<script type="text/javascript" src="blur.js"></script>
+<script type="text/javascript" src="../lib/ajaxupload.js"></script>
 <link href="admin.css" rel="stylesheet" type="text/css" />
 
 </head>
@@ -21,7 +21,7 @@
 	<div class="center">
 		<div id="logo">
 			<a href="./">
-				<img alt="" src="resources/ice-logo_05.png" />
+				<img alt="" src="resources/ice_logo.png" />
 			</a>
 		</div>
 		<div id="headerText">

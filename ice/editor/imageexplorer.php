@@ -12,7 +12,7 @@ if (isset($_GET['thumb'])) {
 	if (!file_exists($tpath)) {
 		$thumb = new IceImage($path);
 		$thumb -> setCachePath($tpath);
-		$thumb -> resizeWidth(150);
+		$thumb -> resizeToFit(150,112);
 
 		header("Content-Type: image/jpeg");
 
@@ -37,19 +37,21 @@ if (isset($_GET['thumb'])) {
 		</style>
 	</head>
 	<body>
-		<div style="height: 350px; overflow: auto">
+		<div style="overflow: auto">
 			<div class="mediaList rounded6">
 				<ul>
 					<?php
 					$images = IceImage::getImagePaths('../media/*.*');
 					foreach ($images as $key => $value) {
-						echo "<li data-name=\"$value[1]\"><img src=\"imageexplorer.php?thumb=$value[1]\"></li>";
+						echo "<li data-name=\"$value\"><img src=\"imageexplorer.php?thumb=$value\"></li>";
 					}
 					?>
 					<div style="clear: both"/>
 				</ul>
-				<input type="button" onclick="#" value="Insert image by url"/>
-				<input type="button" onclick="document.popup.destroy();" value="Cancel" style="top: 510px"/>
+				<div class="center" style="width: 620px">
+					<input type="button" onclick="document.popup.destroy();" value="Cancel" style="top: 510px;float:right"/>
+					<input type="button" onclick="#" value="Insert image by url" style="float:right"/>
+				</div>
 			</div>
 			
 		</div>
@@ -57,11 +59,22 @@ if (isset($_GET['thumb'])) {
 		<script>
 			var mediaRoot = "<?php echo $config['baseurl'], $config['sys_folder'], "media/"; ?>";
 			$('li').click(function() {
-				document.popup.exec(function(u) {
-					this.iceEdit.objTarget.focus();
-					this.document.execCommand('insertImage', false, u);
-				}, mediaRoot + $(this).attr('data-name'));
+				console.log
+				if(document.popup.payload.isTypeImage) {
+					document.popup.exec(function(u) {
+						this.iceEdit.objTarget.attr('src', u);
+						this.iceEdit.saveImage(u)
+					}, mediaRoot + $(this).attr('data-name'))
+				} else {
+					document.popup.exec(function(u) {
+						this.iceEdit.objTarget.focus();
+						this.document.execCommand('insertImage', false, u);
+					}, mediaRoot + $(this).attr('data-name'));
+				}
 				document.popup.destroy();
+			});
+			$("li img").slice(0,12).hide().each(function(index, el) {
+				$(el).delay(index * 200).fadeIn(500);
 			});
 
 		</script>

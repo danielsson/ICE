@@ -13,8 +13,8 @@ if(isset($_POST['host'])) {
 	} else {
 		$state = 1;
 		
-		$htaccess = file_get_contents("ha.txt");
-		$config = file_get_contents("cfg.txt");
+		$htaccess = file_get_contents("htaccess.txt");
+		$config = file_get_contents("config.txt");
 		
 		$config = str_replace("%HOST%", $_POST['host'], $config);
 		$config = str_replace("%USER%", $_POST['user'], $config);

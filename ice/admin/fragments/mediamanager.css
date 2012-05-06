@@ -1,7 +1,5 @@
 .mediamanager {
-	background: #FFF;
 	padding: 1px;
-	box-shadow: 0 0 50px #000 inset;
 	position: relative;
 }
 
@@ -23,7 +21,6 @@
 	padding: 0 2px 1px 0;
 	height: 113px;
 	width: 150px;
-	
 }
 #mmToolbar {
 	list-style: none;

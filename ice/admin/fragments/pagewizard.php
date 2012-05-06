@@ -39,15 +39,15 @@ function pagewizard() {
 		$(':button:eq(0)', win.contentBox).click(function(e) {
 			var $this = $(this), $win = ice.Manager.getWindow($this.inWindow()), $backBtn = $(':button:eq(1)', $win.contentBox);
 			$win.data.currentSlide = $win.data.currentSlide+1;
-			$win.titleBox.text('New page wizard - Step ' + ($win.data.currentSlide + 1) + ' of 5');
+			$win.titleBox.text('New page wizard - Step ' + ($win.data.currentSlide + 1) + ' of 4');
 			var nr = 0 - ($win.data.currentSlide * 418);
-			if($win.data.currentSlide != 4)  {
+			if($win.data.currentSlide != 3)  {
 				$backBtn.removeAttr('disabled');
 				this.disabled = false;
 			} else {
 				this.disabled = true;
 			}
-			if($win.data.currentSlide == 3) {
+			if($win.data.currentSlide == 2) {
 				$wdr = $('.wizDataReview', $win.contentBox);
 				if($win.contentBox.find('input[name]').filter(function() { return $(this).val() == ""; }).length > 0) {
 					ice.message('One or more fields are empty. Please go back and fill it in.', 'warning', $wdr);
@@ -58,7 +58,7 @@ function pagewizard() {
 					template = $(':radio[name=tid]:checked', $win.contentBox).val();
 					$wdr.html('<b>Name:</b> ' + name + '<br /><b>Url:</b> <?php echo $config['baseurl']; ?>' + url + '<br /><b>Template ID:</b> ' + template);
 				}
-			} else if($win.data.currentSlide == 4) {
+			} else if($win.data.currentSlide == 3) {
 				this.disabled = true;
 				$backBtn.attr('disabled', 'disabled');
 				$win.loadingOn();
@@ -66,7 +66,7 @@ function pagewizard() {
 				url = $(':text[name=url]', $win.contentBox).val();
 				template = $(':radio[name=tid]:checked', $win.contentBox).val();
 				wizCreatePage(name, url, template, $win.name);
-				$win.beforeClose = function(p){}; //Remove "You sure" dialog
+				$win.beforeClose = function(){}; //Remove "You sure" dialog
 				return false;
 			}
 			$('.horizSlider', $win.contentBox).animate({marginLeft: nr},500);
@@ -75,7 +75,7 @@ function pagewizard() {
 		$(':button:eq(1)', win.contentBox).click(function(e) {
 			var $this = $(this), $win = ice.Manager.getWindow($this.inWindow()),$nextBtn = $(':button:eq(0)', $win.contentBox);
 			$win.data.currentSlide = $win.data.currentSlide-1;
-			$win.titleBox.text('New page wizard - Step ' + ($win.data.currentSlide + 1) + ' of 5');
+			$win.titleBox.text('New page wizard - Step ' + ($win.data.currentSlide + 1) + ' of 4');
 			var nr = 0 - ($win.data.currentSlide * 418);
 			if($win.data.currentSlide !== 0)  {
 				$nextBtn.removeAttr('disabled');
@@ -96,12 +96,13 @@ function pagewizard() {
 	};
 	ice.Manager.addWindow(W);
 }
+
 function wizCreatePage(name,url,tid, wName) {
 	$.post('fragments/pagewizard.php', {name: name, url:url, tid:tid}, function(data) {
 		if(data.status == "ok") {
 			$win = ice.Manager.getWindow(wName);
 			$win.loadingOff();
-			$('.horizSlider', $win.contentBox).animate({marginLeft: 0-(4*418)},500);
+			$('.horizSlider', $win.contentBox).animate({marginLeft: 0-(3*418)},500);
 			$('.wizEditBtn', $win.contentBox).click(function() {
 				ice.fragment.load('browser',{}, {url: data.path, postEdit: true});
 			});
@@ -157,13 +158,12 @@ function wizCreatePage(name,url,tid, wName) {
 			<li class="horizSlide">
 				<div class="winpadd">
 					<p>Please choose an appropriate name for this page. The name is used backend to help you distinguish between different pages.</p><br /> <br />
-					<label for="name">Name <input name="name" type="text" style="width: 285px;" /> </label>
+					<label for="name">Name: <input name="name" type="text" style="width: 285px;" /> </label>
 				</div>
-			</li>
-			<li class="horizSlide">
 				<div class="winpadd">
 					<p> Complete the url to the page below. This will be the url used to navigate to the page.</p><br /> <br />
-					<label for="url"><?php echo $config['baseurl']; ?> <input name="url" type="text" style="width:320px;"/> </label>
+					<label for="url"><?php echo $config['baseurl']; ?><br />
+					<input name="url" type="text" style="width: 285px; margin-left: 45px"/> </label>
 				</div>
 			</li>
 			<li class="horizSlide">

@@ -212,7 +212,7 @@ var ice = {
 	fragment : {
 		usedCss : [],
 		load : function(fragmentName, postData, fnattrs, callback) {
-			if(eval('window.' + fragmentName)) {
+			if(fragmentName in window) {
 				window[fragmentName](fnattrs);
 				try {callback(fragmentName, true);
 				} catch(e) {
@@ -224,6 +224,8 @@ var ice = {
 					k.html(data).appendTo('body');
 					$(document.body).removeClass('loading');
 					window[fragmentName](fnattrs);
+					try {callback(fragmentName, true);
+					} catch(e) {}
 				});
 			}
 		},
@@ -247,8 +249,8 @@ var ice = {
 		}
 	}, //End Fragment
 	message : function(message, type, customloc) {
-		var l;
-		if(type == "warning" || type === undefined) {
+		var l, target = (typeof customloc === 'undefined') ? this.Manager.windowSandbox:customloc;
+		if(type == "warning" || type === 'undefined') {
 			l = $('<div class="msg msgWarning"> <div class="winExit"></div> </div>');
 		} else if(type == "info") {
 			l = $('<div class="msg msgInfo"> <div class="winExit"></div> </div>');
@@ -259,11 +261,15 @@ var ice = {
 				$(this).remove();
 			});
 		});
-		if(!customloc) {
-			l.appendTo(this.Manager.windowSandbox);
-		} else {
-			l.appendTo(customloc);
+		
+		//Only display identical messages once
+		var duplicate = $(":contains('" + message + "')", target);
+		if(duplicate.size()) {
+			duplicate.fadeOut(100).fadeIn(200);
+			return;
 		}
+
+		l.appendTo(target);
 		l.fadeIn();
 	}, //End message()
 	logout : function() {
