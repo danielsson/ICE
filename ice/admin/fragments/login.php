@@ -67,9 +67,8 @@
 				ice.fragment.load('logincard');
 				ice.Manager.removeWindow("LoginWindow");
 			});
-			if(window.innerHeight > 600) {
-				win.element.css({top:320});
-			}
+
+			win.element.css({top:(window.innerHeight - 332) / 2});
 		};
 		
 		ice.Manager.addWindow(lWin);

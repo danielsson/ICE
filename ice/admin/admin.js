@@ -290,10 +290,10 @@ var ice = {
 		lower : function(now) {
 			if(now === true) {
 				$('#header').css({height:"100%", zIndex:88888});
-				$('#header .center').css({marginTop:200});
+				$('#header .center').css({marginTop:100});
 			} else {
 				$('#header').animate({height:"100%"},800).css({zIndex:88888});
-				$('#header .center').delay(400).animate({marginTop:200}, 400);
+				$('#header .center').delay(400).animate({marginTop:100}, 400);
 			}
 			
 		},
