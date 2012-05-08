@@ -78,7 +78,7 @@ var ice = {
 				width : $win.width,
 				left : (this.windowSandbox.width() - $win.width) / 2,
 				zIndex : ice.Manager.maxZindex(),
-				top : 150
+				top : 51
 			}).draggable({
 				handle : '.winBar',
 				stack : '.window',
