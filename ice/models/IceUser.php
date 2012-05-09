@@ -2,8 +2,7 @@
 
 require_once 'IceModel.php';
 
-
-class User extends IceModel {
+class IceUser extends IceModel {
 	private $id = 0;
 	private $userlevel = 0;
 	private $username = "";
@@ -63,12 +62,13 @@ class User extends IceModel {
 		return static::querySingle($db, $sql);
 	}
 
-	private static function fromArray($arr){
+	public static function fromArray($arr, $new=false){
 		return new static(
 				$arr['id'],
 				$arr['userlevel'],
 				$arr['username'],
-				$arr['password']
+				$arr['password'],
+				$new
 			);
 	}
 
@@ -82,7 +82,7 @@ class User extends IceModel {
 			$sql = "INSERT INTO ice_users (username,password,userlevel) VALUES 
 			({$this->username}','{$this->passwordhash}','{$this->userlevel}');";
 		} else {
-			$sql = "UPDATE ice_users SET username = '{$this->username}', password = {$this->passwordhash}, userlevel = {$this->userlevel}
+			$sql = "UPDATE ice_users SET username = '{$this->username}', password = '{$this->passwordhash}', userlevel = '{$this->userlevel}'
 			WHERE id='{$this->id}';";
 		}
 

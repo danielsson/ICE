@@ -1,23 +1,24 @@
 <?php defined('SYSINIT') or die('<b>Error:</b> No direct access allowed');
 
 abstract class IceModel {
-	private $id;
+	protected $id;
 
-	private $newItem = true;
+	protected $newItem = true;
 
-	public getId() {
+	public function getId() {
 		return $this->id;
 	}
 	
 	public static function byJSON($json) {
-		return static::fromArray($json);
+		return static::fromArray($json, true);
 	}
 
 	/* HELPERS */
-	private static function querySingle($db, $sql){
+	protected static function querySingle($db, $sql){
 		$res = $db->query($sql);
 
 		if(!$res) {
+			throw new Exception("sql yielded no results: " . $sql . $db->error(), 1);
 			return NULL;
 		} else {
 			$usr = mysql_fetch_array($res);
@@ -26,7 +27,7 @@ abstract class IceModel {
 		}
 	}
 
-	private static function queryMultiple($db, $sql) {
+	protected static function queryMultiple($db, $sql) {
 		$res = $db->query($sql);
 		if(!$res) {
 			return NULL;
@@ -36,10 +37,11 @@ abstract class IceModel {
 				$ret[] = static::fromArray($row);
 			}
 			return $ret;
+
 		}
 	}
 
-	static function fromArray($arr) {
+	public static function fromArray($arr, $new=false) {
 		return NULL;
 	}
 }

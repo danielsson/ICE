@@ -1,6 +1,6 @@
 <?php defined('SYSINIT') or die('<b>Error:</b> No direct access allowed');
 
-class ContentSet {
+class IceContentSet {
 	private $content;
 	private $delta = array();
 
@@ -20,7 +20,7 @@ class ContentSet {
 	}
 
 	/* FINDERS */
-	public static byPageName($db, $name) {
+	public static function byPageName($db, $name) {
 		global $config;
 		$sql = "SELECT content, fieldname FROM ". $config['content_table'] ." WHERE pagename = '$name'";
 		$res = $db->query($sql);
