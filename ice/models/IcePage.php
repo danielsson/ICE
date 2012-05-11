@@ -80,7 +80,7 @@ class IcePage extends IceModel {
 	public function save($db) {
 		if($this->newItem){
 			$sql = "INSERT INTO ice_pages (name,tid,url) VALUES 
-			({$this->name}','{$this->tid}','{$this->url}');";
+			('{$this->name}','{$this->tid}','{$this->url}');";
 		} else {
 			$sql = "UPDATE ice_pages SET name = '{$this->name}', tid = '{$this->tid}', url = '{$this->url}'
 			WHERE id='{$this->id}';";
