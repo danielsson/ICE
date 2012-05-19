@@ -1,37 +1,39 @@
 <?php
 	define('SYSINIT',true);
-	require '../../ice-config.php';
-	require '../../lib/db.class.php';
-	require '../../lib/auth.class.php';
+	require_once '../../ice-config.php';
+	require_once '../../lib/db.class.php';
+	require_once '../../lib/auth.class.php';
+	require_once '../../models/IceUser.php';
 	$Auth->init(3);
 	
 	if(isset($_POST['id']) && !isset($_POST['username'])) {
 		$db->connect();
 		$id = (int) $_POST['id'];
-		$sql = "SELECT username, userlevel FROM ice_users WHERE id = $id;";
 		
-		$res = $db->query($sql);
-		if($row = mysql_fetch_assoc($res)) {
-			die(json_encode($row));
+		$user = IceUser::byId($db, $id);
+		
+		if($user != NULL) {
+			die(json_encode($user->getArray()));
 		} else {
-			die("404");
+			die ('error');
 		}
-		
 	} elseif (isset($_POST['username'])){
 		if(!empty($_POST['username']) && !empty($_POST['id'])) {
 			$db->connect();
 			$uid = (int) $_POST['id'];
 			$ulvl = (int) $_POST['userlevel'];
 			$uname = $Auth->sanitize($_POST['username']);
-			if(!empty($_POST['password'])) {
-				$pwd = md5($_POST['password']);
-				$sql = "UPDATE ice_users SET username = '$uname', password = '$pwd', userlevel = '$ulvl' WHERE id = $uid LIMIT 1;";
-			} else {
-				$sql = "UPDATE ice_users SET username = '$uname', userlevel = '$ulvl' WHERE id = $uid LIMIT 1;";
-			}
+
+			$user = IceUser::byId($db,$uid);
 			
-			$db->query($sql);
-			echo $db->error;
+			$user->setUserLevel($ulvl);
+			$user->setUsername($uname);
+
+			if(!empty($_POST['password'])) {
+				$user->setPassword($_POST['password']);
+			}
+
+			$user->save($db);
 			$db->close();
 		}
 		

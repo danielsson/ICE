@@ -1,8 +1,10 @@
 <?php
 	define('SYSINIT',true);
-	require '../../ice-config.php';
-	require '../../lib/db.class.php';
-	require '../../lib/auth.class.php';
+	require_once '../../ice-config.php';
+	require_once '../../lib/db.class.php';
+	require_once '../../lib/auth.class.php';
+	require_once '../../models/IceUser.php';
+
 	$Auth->init(3);
 	
 	if(isset($_POST['username'])) {
@@ -12,18 +14,14 @@
 			$lvl = (int) $_POST['userlevel'];
 			
 			$db->connect();
-			$sql = "INSERT INTO ice_users (username,password,userlevel) VALUES ('$uname','$pass','$lvl');";
-			$db->query($sql);
-			if($db->error()) {
-				
-				echo $db->error();
-				$db->close();
-				die();
-			} else {
-				$db->close();
-				die('{"status":"ok"}');
-				
-			}
+
+			$user = new IceUser(0,$lvl,$uname,$pass);
+
+			$user->save($db);
+
+			$db->close();
+			die('{"status":"ok"}');
+
 		} else {
 			die('ERROR - EMPTY STRINGS');
 		}
