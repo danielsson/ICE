@@ -3,23 +3,29 @@
 	require '../../ice-config.php';
 	require '../../lib/db.class.php';
 	require '../../lib/auth.class.php';
+	require '../../models/IcePage.php';
+
 	$Auth->init(1);
 	$db->connect();
 	if(isset($_POST['del']) && $_POST['del'] == "true") {
 		if($_SESSION['userlevel'] < 2) {
 			die('You are not allowed to perform this action');
 		}
-		$db->query("DELETE FROM ice_pages WHERE id = '" . intval($_POST['id']) . "';");
-		$pagename = 'dyn_' . intval($_POST['id']);
-		$db->query("DELETE FROM ice_content WHERE pagename = '$pagename';");
+
+		$page = IcePage::byId($db,intval($_POST['id']));
+
+		$page->delete($db);
+		
 		die('true');
 	} elseif (isset($_POST['rename']) && $_POST['rename'] == "true") {
 		if($_SESSION['userlevel'] < 2) {
 			die('You are not allowed to perform this action');
 		}
-		$name = mysql_real_escape_string($_POST['name']);
-		$id = intval($_POST['id']);
-		$db->query("UPDATE ice_pages SET name = '$name' WHERE id = '$id';");
+
+		$page = IcePage::byId($db,intval($_POST['id']));
+		$page->setName($db->escape($_POST['name']));
+		$page->save($db);
+
 		die('true');
 	}
 	if(!isset($_POST['refresh'])) :
@@ -59,6 +65,7 @@
 		
 		
 		W.onContentChange = function(W) {
+			if("console" in window) {console.log('Ran onContentChange')}
 			$('.big_grid>li', W.contentBox).bind("contextmenu", function() {
 				var $this = $(this), off = $this.offset(), pm = $('#pageManagerMenu');
 				pm
@@ -101,11 +108,11 @@
 						$('#pageManagerMenu').attr('current', 'none').fadeOut();
 						break;
 					case 'rename':
-						r = prompt('Please enter the new name');
+						var r = prompt('Please enter the new name');
 						if(r != null && r !="") {
 							$.post('fragments/pagemanager.php', {rename:true, id: id, name: r}, function(data) {
+								ice.Manager.getWindow('IcePM').refresh();
 								if(data=="true") {
-									$w = ice.Manager.getWindow('IcyPM');
 									$('.pageBtn[data-page-id="' + id + '"] span').text(r);
 									ice.message('Name changed', 'info');
 								} else {
@@ -152,16 +159,18 @@
 	<div style="clear:both;"></div>
 	<ul class="big_grid">
 		<?php
-			$sql = "SELECT name, url, id FROM ice_pages";
-			$res = $db->query($sql);
-			if($res) {
-				while($row = mysql_fetch_array($res)) {
-					echo '<li data-page-trac="', $row['url'], '" data-page-id="',$row['id'] , '" ><h3>', stripslashes($row['name']), '</h3></li>';
+
+			$pages = IcePage::findAll($db);
+
+			if ($pages) {
+				foreach ($pages as $i => $page) {
+					echo '<li data-page-trac="', $page->getUrl(), '" data-page-id="',$page->getId() , '" ><h3>', $page->getName(), '</h3></li>';
 				}
 			} else {
-				echo $db->error();
+				echo 'This was awkward.';
 			}
 			$db->close();
+
 		?>
 
 	</ul>

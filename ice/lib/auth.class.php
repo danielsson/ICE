@@ -28,7 +28,7 @@ class Authentication {
 			$_POST = $this->sanitize($_POST);
 			if(strlen($_POST['username']) < 1 || strlen($_POST['password']) < 1) { die('No password and/or username given'); }
 			$db->connect();
-			$sql = "SELECT username, password, userlevel FROM ice_users WHERE username='".$_POST['username']."' LIMIT 1";
+			$sql = "SELECT id, username, password, userlevel FROM ice_users WHERE username='".$_POST['username']."' LIMIT 1";
 			$result = $db->query($sql);
 			
 			if(!$result) {if($_GET['xhr']=="true"){die(0);} return; }
@@ -37,6 +37,7 @@ class Authentication {
 			  {
 			  	
 				if($row['password']==md5($_POST['password'])) {
+					$_SESSION['uid']=$row['id'];
 					$_SESSION['username']=$row['username'];
 					$_SESSION['userlevel'] = $row['userlevel'];
 					if($_GET['xhr']==true){die('true');}

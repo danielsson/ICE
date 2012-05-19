@@ -3,22 +3,26 @@
 	require '../../ice-config.php';
 	require '../../lib/db.class.php';
 	require '../../lib/auth.class.php';
+	require '../../models/IcePage.php';
 	$Auth->init(2);
 	$db->connect();
 	if(!empty($_POST['name'])) {
 		$data = Array('status'=>'ok', 'error'=>'none');
 		$_POST = $Auth->sanitize($_POST);
-		$name = addslashes($_POST['name']);
-		$tid = intval($_POST['tid']);
+
 		$tmp = parse_url($config['baseurl'] . $_POST['url']);
-		$url = addslashes($tmp['path']);
-		$sql = "INSERT INTO ice_pages (name,tid,url) VALUES ('$name', '$tid', '$url');";
-		$db->query($sql);
-		if($db->error() != "") {
-			$data = Array('status'=>'error', 'error'=>$db->error());
-		}
+		$url = $db->escape($tmp['path']);
+
+		$page = new IcePage(
+				0,
+				$db->escape($_POST['name']),
+				intval($_POST['tid']),
+				$url
+			);
+
+		$page->save($db);
 		$db->close();
-		$data['path'] = $tmp['path'];
+
 		die(json_encode($data));
 	}
 ?>

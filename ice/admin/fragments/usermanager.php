@@ -1,8 +1,9 @@
 <?php
 	define('SYSINIT',true);
-	require '../../ice-config.php';
-	require '../../lib/db.class.php';
-	require '../../lib/auth.class.php';
+	require_once '../../ice-config.php';
+	require_once '../../lib/db.class.php';
+	require_once '../../lib/auth.class.php';
+	require_once '../../models/IceUser.php';
 	$Auth->init(2);
 	$db->connect();
 	if(!isset($_POST['refresh'])) :
@@ -49,15 +50,15 @@ function usermanager() {
 <tbody>
 
 	<?php 
-	$sql = "SELECT id, username, userlevel, keyCardHash FROM ice_users";
-	$res = $db->query($sql);
-	if(!$res) {
-		echo "No pages";
-	} else {
-		while ($row = mysql_fetch_array($res)) {
-			echo '<tr><td>', $row['id'], '</td><td>', $row['username'], '</td><td>', $row['userlevel'], '</td><td>', empty($row['keyCardHash']) ? "No":"Yes" , '</td>';
-		}
+	$users = IceUser::findAll($db);
+
+	foreach($users as $i => $user) {
+		echo '<tr><td>', $user->getId(), '</td><td>',
+			$user->getUsername(), '</td><td>',
+			$user->getUserLevel(), '</td><td>',
+			$user->hasKeyCard() ? "Yes":"No" , '</td>';
 	}
+
 	$db->close();
 	?>
 
