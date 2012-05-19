@@ -65,6 +65,7 @@
 		
 		
 		W.onContentChange = function(W) {
+			if("console" in window) {console.log('Ran onContentChange')}
 			$('.big_grid>li', W.contentBox).bind("contextmenu", function() {
 				var $this = $(this), off = $this.offset(), pm = $('#pageManagerMenu');
 				pm
@@ -107,11 +108,11 @@
 						$('#pageManagerMenu').attr('current', 'none').fadeOut();
 						break;
 					case 'rename':
-						r = prompt('Please enter the new name');
+						var r = prompt('Please enter the new name');
 						if(r != null && r !="") {
 							$.post('fragments/pagemanager.php', {rename:true, id: id, name: r}, function(data) {
+								ice.Manager.getWindow('IcePM').refresh();
 								if(data=="true") {
-									$w = ice.Manager.getWindow('IcyPM');
 									$('.pageBtn[data-page-id="' + id + '"] span').text(r);
 									ice.message('Name changed', 'info');
 								} else {
