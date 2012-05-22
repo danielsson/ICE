@@ -49,7 +49,7 @@ function templatemanager() {
 	W.onContentChange = function(W) {
 		W.contentBox.find('#addFilesBtn').click(function() {
 			var AFW = new ice.Window;
-			AFW.title = "Add File to Icy";
+			AFW.title = "Add File to ICE.";
 			AFW.width = 300;
 			AFW.name = "AddFileDialog";
 			AFW.closeable = false;	
@@ -131,13 +131,13 @@ function templatemanager() {
 <div class="block190" style="float:left">
 	<div id="delFilesBtn" class="expBtn rounded6" style="margin:0;">
 		<p class="big">Remove a File</p>
-		<p class="small">from Icy cms</p>
+		<p class="small">from ICE!</p>
 	</div>
 </div>
 <div class="block190" style="float:right">
 	<div id="addFilesBtn" class="expBtn rounded6" style="margin:0;">
 		<p class="big">Add a File</p>
-		<p class="small">to Icy cms</p>
+		<p class="small">to ICE!</p>
 	</div>
 </div>
 <div style="clear:both"></div>
