@@ -103,7 +103,7 @@ if(isset($_POST['host'])) {
 					<p>The absolute path is the path to the ice folder from the document root.</p>
 					<label for="path">Absolute path</label><input type="text" id="txtPath" name="path" value="/rootdir/"/>
 				</fieldset>
-				<input type="submit"/>
+				<input type="submit" value="Install"/>
 			</form>
 			<br style="clear: both" />
 			
