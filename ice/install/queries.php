@@ -36,17 +36,17 @@ $queries = array(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;",
 
 "ALTER TABLE `ice_content`
- ADD CONSTRAINT FK_content
+ ADD CONSTRAINT FK_content IF NOT EXISTS
  FOREIGN KEY (`pagename`) REFERENCES ice_pages(`name`)
  ON UPDATE CASCADE
  ON DELETE CASCADE;",
 
 "ALTER TABLE `ice_pages`
- ADD CONSTRAINT FK_pages
+ ADD CONSTRAINT FK_pages IF NOT EXISTS
  FOREIGN KEY (`tid`) REFERENCES ice_files(`id`)
  ON UPDATE CASCADE
  ON DELETE CASCADE;",
 
-"INSERT INTO ice_users (username,password,userlevel) VALUES ('admin','21232f297a57a5a743894a0e4a801fc3','3');");
+"INSERT IGNORE INTO ice_users (username,password,userlevel) VALUES ('admin','21232f297a57a5a743894a0e4a801fc3','3');");
 
 ?>
