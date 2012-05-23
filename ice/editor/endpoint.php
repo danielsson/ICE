@@ -11,7 +11,7 @@ require_once('../lib/image.class.php');
 
 if($_SESSION['userlevel'] < 1) {
 	$data['status'] = 'error';
-	$data['error'] = "auth";
+	$data['error'] = 'auth';
 	die(json_encode($data));
 }
 function clean($str) {
