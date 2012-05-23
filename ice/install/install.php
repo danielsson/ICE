@@ -69,7 +69,7 @@ if(isset($_POST['host'])) {
 				text-align: center;
 			}
 			
-			label { width: 100px; float:left; line-height: 25px;}
+			label { width: 100px; float:left; line-height: 25px; clear:left;}
 			input { float: right;clear: right; width: 250px}
 			.err {color:red}
 		</style>
@@ -98,10 +98,10 @@ if(isset($_POST['host'])) {
 				<fieldset>
 					<b>Path settings</b><br />
 					<p>Base url is the url to the folder which house the ice(system) folder.</p>
-					<label for="base">Baseurl</label><input type="text" name="base" value="http://example.com/rootdir/"/>
+					<label for="base">Baseurl</label><input type="text" id="txtBase" name="base" value="http://example.com/rootdir/"/>
 					<br/>
 					<p>The absolute path is the path to the ice folder from the document root.</p>
-					<label for="path">Absolute path</label><input type="text" name="path" value="/rootdir/"/>
+					<label for="path">Absolute path</label><input type="text" id="txtPath" name="path" value="/rootdir/"/>
 				</fieldset>
 				<input type="submit"/>
 			</form>
@@ -109,5 +109,17 @@ if(isset($_POST['host'])) {
 			
 			<small>ICE! CMS</small>
 		</div>
+	<script type="text/javascript">
+		window.onload = function() {
+			var 
+				txtBase = document.getElementById('txtBase'),
+				txtPath = document.getElementById('txtPath'),
+				base = document.location.href.replace('ice/install/install.php',''),
+				path = document.location.pathname.replace('ice/install/install.php','');
+
+			txtBase.value = base;
+			txtPath.value = path;
+		};
+	</script>
 	</body>
 </html>
