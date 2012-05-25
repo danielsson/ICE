@@ -1,6 +1,6 @@
 var ice = {
 	Manager : {
-		windowsStorage : [],
+		windowsStorage : {},
 		incrementer : 0,
 		displayNoWindowsWarning: true,
 		windowSandbox : {},
@@ -17,18 +17,20 @@ var ice = {
 				return false;
 			}
 		},
-		addWindow : function(window) {//First argument is a windowClass object.
+		getall: function() {return this.windowsStorage},
+		addWindow : function(win) {//First argument is a windowClass object.
 			if(this.displayNoWindowsWarning) {
 				this.windowSandbox.find("div:has(img)").html("");
 				this.displayNoWindowsWarning = false;
 			}//Ensure empty canvas
-			var name = window.name;
+			var name = win.name;
 			if(name.length < 1) {//Anonymous windows
 				name = "anon_" + this.incrementer++;
 				window.name = name;
 			}
 			if( name in this.windowsStorage === false) {//Prevent duplicates.
-				this.windowsStorage[name] = window;
+				console.log(name);
+				this.windowsStorage[name] = win;
 			} else {
 				return false;
 			}
@@ -121,6 +123,8 @@ var ice = {
 				opacity : 0
 			}, 300, function() {
 				$(this).remove();
+				delete $win;
+
 			});
 			var tmp = $('li[data-win-name=' + name + ']', this.taskBar);
 			tmp.css({
@@ -310,6 +314,38 @@ var ice = {
 			}
 			
 		}
+	}, //End curtain
+	
+	decodeKey : function(str, pin) {
+
+		var pinChars = pin.split(""),
+			pinNums = [],
+			out = [],
+			pinPos = 0,
+			i = 0,
+			strlen = str.length,
+			pinlen = pinChars.length;
+
+		for(i = 0; i < pinlen; i++) {
+			pinNums[i] = parseInt(pinChars[i], 10);
+			if(i > 0) {
+				pinNums[i] = pinNums[i] + (i * pinNums[i-1]);
+			}
+		}
+
+		for(i = 0; i < strlen; i++) {
+			if(pinPos===pinlen) {pinPos=0;}
+
+			out.push(
+				String.fromCharCode(
+					str.charCodeAt(i) + pinNums[pinPos]
+				) 
+			);
+			pinPos++;
+		}
+
+		return out.join("");
+
 	}
 };
 //End ice
