@@ -80,14 +80,18 @@ class IceUser extends IceModel {
 				$new
 			);
 	}
-
-	/* METHODS */
-	public function comparePassword($pass) {
-		return ($this->passwordhash == md5($pass));
+	public static function hash($str) {
+		//Highly temporary
+		return md5($str);
 	}
 
-	public function compareKeyCardHash($hash) {
-		return $this->hasKeyCard() and $this->keycardhash === $hash;
+	/* METHODS */
+	public function passwordEquals($pass) {
+		return ($this->passwordhash == self::hash($pass));
+	}
+
+	public function keyCardHashEquals($key) {
+		return $this->hasKeyCard() and $this->keycardhash === self::hash($key);
 	}
 
 	public function hasKeyCard() {
