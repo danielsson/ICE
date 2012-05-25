@@ -25,7 +25,7 @@ class IceUser extends IceModel {
 	public function setUserLevel($l) {$this->userlevel = $l;}
 
 	public function getUsername() {return $this->username;}
-	public function setUserName($n) {$this->username = $n;}
+	public function setUsername($n) {$this->username = $n;}
 
 	public function setPassword($pass) {
 		$this->passwordhash = md5($pass);

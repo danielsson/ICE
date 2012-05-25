@@ -1,7 +1,6 @@
 @CHARSET "UTF-8";
 
 #loginCard #idBox {
-	height: 166px;
 	background: #FFF;
 	box-shadow: 0 0 5px #000 inset;
 	-moz-transition: all 0.2s ease-in;
@@ -10,58 +9,28 @@
 
 #loginCard #idBox.drophover {
 	box-shadow: 0 0 10px #000 inset;
-	background: -moz-element(#idBoxBg) center center no-repeat,
-		rgba(0, 0, 0, .1);
-	background: -webkit-element(#idBoxBg) center center no-repeat,
-		rgba(0, 0, 0, .1);
+	background-color: #FFF;
 }
 
 #loginCard .idCard {
-	background: #e0ecf6;
 	padding: 10px;
-	height: 144px;
+	height: 40px;
 	position: relative;
-	border: thin solid #CCC;
-	display:none;
 }
 
-#loginCard .idCardLeft {
-	height: 166px;
-	width: 105px;
-	float: left;
-}
-
-#loginCard .idCardRight h2 {
-	margin-bottom: 20px;
-}
-
-#loginCard .idCardRight ul {
-	list-style: none;
-}
-
-#loginCard .idCardRight li {
-	margin-bottom: 5px;
-}
-
-#loginCard .idCardRight li span {
-	margin-left: 10px;
-	font-size: 9px;
-	color: #888;
-}
-
-#loginCard .countryCode {
-	font-size: 24px;
+#loginCard .idCard h2 {
+	font-size: 16px;
 	font-weight: bold;
-	color: rgba(0, 0, 0, .1);
-	position: absolute;
-	bottom: 0;
-	right: 3px;
+	text-align: center;
+	line-height: 43px;
+	text-transform:uppercase;
 }
 
 #pinBox {
 	width: 100%;
 	display: none;
 	overflow:hidden;
+	margin-top: 20px;
 }
 #pinBox b {
 	float: left;
