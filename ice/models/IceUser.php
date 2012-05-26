@@ -32,8 +32,8 @@ class IceUser extends IceModel {
 		return $this->passwordhash;
 	}
 
-	public function setKeyCardHash($hash) {
-		$this->keycardhash = $hash;
+	public function setKeyCardHash($key) {
+		$this->keycardhash = self::hash($key);
 	}
 
 	public function getArray(){
@@ -104,7 +104,8 @@ class IceUser extends IceModel {
 			('{$this->username}','{$this->passwordhash}','{$this->userlevel}','{$this->keycardhash}');";
 		} else {
 			$sql = "UPDATE ice_users 
-			SET username = '{$this->username}', password = '{$this->passwordhash}', userlevel = '{$this->userlevel}', keyCardHash = '{$this->keycardhash}'
+			SET username = '{$this->username}', password = '". $db->escape($this->passwordhash) ."',
+				userlevel = '{$this->userlevel}', keyCardHash = '". $db->escape($this->keycardhash) ."'
 			WHERE id='{$this->id}';";
 		}
 

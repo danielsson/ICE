@@ -13,7 +13,9 @@
 		$user = IceUser::byId($db, $id);
 		
 		if($user != NULL) {
-			die(json_encode($user->getArray()));
+			$arr = $user->getArray();
+			$arr['isCurrent'] = ($user->getId() == $_SESSION['uid']);
+			die(json_encode($arr));
 		} else {
 			die ('error');
 		}
@@ -51,12 +53,17 @@
 		W.element.find('input[name=id]').val(attrs.id);
 		W.uid = attrs.id;
 		W.onOpen = function (win) {
-			
+			win.loadingOn();
 			$.post('fragments/userwin.php', {id:win.uid}, function(data) {
+				win.loadingOff();
 				if(typeof data.username !== "undefined") {
 					win.element.find('[name=username]').val(data.username);
 					win.element.find('[name=userlevel]').val(data.userlevel);
 					win.element.find('input,select').removeAttr('disabled');
+					win.user = data;
+					if(!data.isCurrent) {
+						$('#btnCreateWebId', win.element).hide();
+					}
 				} else {
 					ice.message('Error. data corrupt');
 				}
@@ -76,6 +83,10 @@
 					}
 				}, 'json');
 			});
+			win.element.find('#btnCreateWebId').click(function() {
+				var win = ice.Manager.getWindow($(this).inWindow());
+				ice.fragment.load('keycardwiz',{},win.user);
+			})
 		};
 		
 		ice.Manager.addWindow(W);
@@ -103,7 +114,7 @@
 	<input type="button" value="Abort" style="float:left" onclick="ice.Manager.removeWindow($(this).inWindow())"/>
 	
 	<input type="submit" value="Update" style="float:right" disabled="disabled" />
-	<input type="button" value="Create WebID" style="float:right" />
+	<input type="button" value="Create WebID" style="float:right" id="btnCreateWebId" />
 	</form>
 	<div style="clear:both"></div>
 </div>

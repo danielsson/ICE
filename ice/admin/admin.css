@@ -5,6 +5,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 a:LINK, a {text-decoration: none;color: #00aeef;}
 a:VISITED {color: #00aeef;}
 a:HOVER {color: #0099cc;border-bottom: thin dotted #0099cc;}
+.enlight{background-color: #FAFAFA; line-height: 2;padding: 20px;}
 body {
 	font-family: sans-serif;
 	font-size: 12px;
@@ -332,4 +333,11 @@ label {
 }
 .chromeFrameOverlayContent {
 	z-index: 100900;
+}
+hr {
+	height: 1px;
+	border:none;
+	border-bottom:thin solid #FFF;
+	background-color: #CCC;
+	margin: 20px 0;
 }

@@ -315,9 +315,13 @@ var ice = {
 			
 		}
 	}, //End curtain
-	
+	/**
+	 * Takes a string and applies a simple shift chiper
+	 * @param String str The string to be shifted
+	 * @param String pin A string of numbers to use as shift key.
+	 * @return String decodedKey
+	 */
 	decodeKey : function(str, pin) {
-
 		var pinChars = pin.split(""),
 			pinNums = [],
 			out = [],
@@ -325,11 +329,17 @@ var ice = {
 			i = 0,
 			strlen = str.length,
 			pinlen = pinChars.length;
-
+			
+		/*
+		 * Create an array(pinNums) of the numbers in the input string.
+		 * The numbers are modified to depend on the other numbers,
+		 * to ensure greater difference in result when there is a slight
+		 * difference in the pin.
+		 */
 		for(i = 0; i < pinlen; i++) {
 			pinNums[i] = parseInt(pinChars[i], 10);
 			if(i > 0) {
-				pinNums[i] = pinNums[i] + (i * pinNums[i-1]);
+				pinNums[i] = pinNums[i] + ((i * pinNums[i-1]) % 10);
 			}
 		}
 
