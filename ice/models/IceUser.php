@@ -28,7 +28,7 @@ class IceUser extends IceModel {
 	public function setUsername($n) {$this->username = $n;}
 
 	public function setPassword($pass) {
-		$this->passwordhash = md5($pass);
+		$this->passwordhash = self::hash($pass);
 		return $this->passwordhash;
 	}
 
@@ -81,17 +81,19 @@ class IceUser extends IceModel {
 			);
 	}
 	public static function hash($str) {
-		//Highly temporary
-		return md5($str);
+		require_once('../lib/bcrypt.class.php');
+		return Bcrypt::hash($str);
 	}
 
 	/* METHODS */
 	public function passwordEquals($pass) {
-		return ($this->passwordhash == self::hash($pass));
+		require_once('../lib/bcrypt.class.php');
+		return Bcrypt::verify($pass, $this->passwordhash);
 	}
 
 	public function keyCardHashEquals($key) {
-		return $this->hasKeyCard() and $this->keycardhash === self::hash($key);
+		require_once('../lib/bcrypt.class.php');
+		return $this->hasKeyCard() and Bcrypt::verify($key,$this->keycardhash);
 	}
 
 	public function hasKeyCard() {
