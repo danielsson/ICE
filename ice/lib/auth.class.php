@@ -24,35 +24,29 @@ class Authentication {
 	}
 	public function loginProcess() {
 		global $db;
+		require_once(__DIR__ . '/../models/IceUser.php');
+
 		if(isset($_POST['username'])) {
 			$_POST = $this->sanitize($_POST);
 			if(strlen($_POST['username']) < 1 || strlen($_POST['password']) < 1) { die('No password and/or username given'); }
 			$db->connect();
-			$sql = "SELECT id, username, password, userlevel FROM ice_users WHERE username='".$_POST['username']."' LIMIT 1";
-			$result = $db->query($sql);
+
+			$user = IceUser::byUsername($db, $_POST['username']);
 			
-			if(!$result) {if($_GET['xhr']=="true"){die(0);} return; }
+			if($user == null) {if($_GET['xhr']=="true"){die(0);} return; }
 			
-			while($row = mysql_fetch_array($result))
-			  {
-			  	
-				if($row['password']==md5($_POST['password'])) {
-					$_SESSION['uid']=$row['id'];
-					$_SESSION['username']=$row['username'];
-					$_SESSION['userlevel'] = $row['userlevel'];
-					if($_GET['xhr']==true){die('true');}
-					if(isset($_POST['nextpage'])) {header('Location: '.urldecode(strip_tags($_POST['nextpage']))); die();}
-					continue;
-				} else {
-					if($_GET['xhr']=="true"){die(0);}
-					$this->error = "Wrong username/password";
-					continue;
-				}
-			  }
-		if($_GET['xhr']=="true"){die(0);}
-			  
-		}
-		elseif(isset($_GET['logout'])){
+			if($user->passwordEquals($_POST['password'])) {
+				$_SESSION['uid']		= $user->getId();
+				$_SESSION['username']	= $user->getUsername();
+				$_SESSION['userlevel']	= $user->getUserLevel();
+
+				if($_GET['xhr']==true){die('true');}
+				if(isset($_POST['nextpage'])) {header('Location: '.urldecode(strip_tags($_POST['nextpage']))); die();}
+			} else {
+				if($_GET['xhr']=="true"){die(0);}
+				$this->error = "Wrong username/password";
+			}
+		} elseif(isset($_GET['logout'])) {
 			session_destroy();
 			header('Location: ./');
 		}

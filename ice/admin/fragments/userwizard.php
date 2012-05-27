@@ -10,7 +10,7 @@
 	if(isset($_POST['username'])) {
 		if(!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['userlevel'])) {
 			$uname = $Auth->sanitize($_POST['username']);
-			$pass = md5($_POST['password']);
+			$pass = IceUser::hash($_POST['password']);
 			$lvl = (int) $_POST['userlevel'];
 			
 			$db->connect();

@@ -81,18 +81,18 @@ class IceUser extends IceModel {
 			);
 	}
 	public static function hash($str) {
-		require_once('../lib/bcrypt.class.php');
+		require_once(__DIR__ . '/../lib/bcrypt.class.php');
 		return Bcrypt::hash($str);
 	}
 
 	/* METHODS */
 	public function passwordEquals($pass) {
-		require_once('../lib/bcrypt.class.php');
+		require_once(__DIR__ . '/../lib/bcrypt.class.php');
 		return Bcrypt::verify($pass, $this->passwordhash);
 	}
 
 	public function keyCardHashEquals($key) {
-		require_once('../lib/bcrypt.class.php');
+		require_once(__DIR__ . '/../lib/bcrypt.class.php');
 		return $this->hasKeyCard() and Bcrypt::verify($key,$this->keycardhash);
 	}
 
