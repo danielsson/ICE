@@ -12,9 +12,9 @@ $queries = array(
 "CREATE TABLE IF NOT EXISTS `ice_users` (
  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
  `username` varchar(125) NOT NULL DEFAULT '--',
- `password` varchar(125) NOT NULL DEFAULT '--',
+ `password` varchar(64) NOT NULL DEFAULT '--',
  `userlevel` enum('0','1','2','3') NOT NULL DEFAULT '0',
- `keyCardHash` varchar(32) DEFAULT NULL,
+ `keyCardHash` varchar(64) DEFAULT NULL,
  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;",
 
