@@ -73,7 +73,9 @@
 			win.element.find('[type=submit]').click(function(e) {
 				e.preventDefault();
 				var d = win.element.find('form').serialize();
+				win.loadingOn();
 				$.post('fragments/userwin.php', d, function(data) {
+					win.loadingOff();
 					if(typeof data.status !== 'undefined') {
 						ice.message('Saved user', 'info');
 						ice.Manager.getWindow('USRMAN').refresh();

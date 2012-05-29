@@ -49,7 +49,9 @@
 					return true;
 				}
 				var formData = $('form', $t).serialize();
+				win.loadingOn();
 				$.post('fragments/login.php?xhr=true', formData, function(data) {
+					win.loadingOff();
 					if(data !="true") {
 						ice.message('Wrong username/password', 'warning', '#loginError');
 						win.element.effect('shake', 100);
