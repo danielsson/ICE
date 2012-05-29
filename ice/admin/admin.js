@@ -26,7 +26,7 @@ var ice = {
 			var name = win.name;
 			if(name.length < 1) {//Anonymous windows
 				name = "anon_" + this.incrementer++;
-				window.name = name;
+				win.name = name;
 			}
 			if( name in this.windowsStorage === false) {//Prevent duplicates.
 				console.log(name);
