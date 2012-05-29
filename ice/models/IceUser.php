@@ -124,4 +124,10 @@ class IceUser extends IceModel {
 			
 		return $this->id;
 	}
+
+	public function delete($db) {
+		$sql = "DELETE FROM ice_users WHERE id='{$this->id}' LIMIT 1;";
+
+		$db->query($sql);
+	}
 }
