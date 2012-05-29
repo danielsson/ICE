@@ -40,6 +40,16 @@
 		}
 		
 		die('{"status":"ok"}');
+	} elseif (isset($_POST['delete'])) {
+		$uid = intval($_POST['delete']);
+		$db->connect();
+
+		$user = IceUser::byId($db,$uid);
+
+		if($user != null) {
+			$user -> delete($db);
+		}
+		die('{"status":"ok"}');
 	}
 ?>
 
@@ -88,7 +98,20 @@
 			win.element.find('#btnCreateWebId').click(function() {
 				var win = ice.Manager.getWindow($(this).inWindow());
 				ice.fragment.load('keycardwiz',{},win.user);
-			})
+			});
+			win.element.find('#btnDeleteUser').click(function() {
+				if(confirm('Sure?')) {
+					$.post('fragments/userwin.php', {delete: win.user.id}, function(response, code) {
+						if(code != 'success') {
+							ice.message(code);
+							console.log(response);
+						} else {
+							ice.Manager.removeWindow(win.name);
+							try {ice.Manager.getWindow('USRMAN').refresh();} catch(e){}
+						}
+					});
+				}
+			});
 		};
 		
 		ice.Manager.addWindow(W);
@@ -117,6 +140,7 @@
 	
 	<input type="submit" value="Update" style="float:right" disabled="disabled" />
 	<input type="button" value="Create WebID" style="float:right" id="btnCreateWebId" />
+	<input type="button" value="Delete User" style="float:right; color:#F00" id="btnDeleteUser" />
 	</form>
 	<div style="clear:both"></div>
 </div>
