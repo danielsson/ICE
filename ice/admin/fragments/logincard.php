@@ -88,9 +88,9 @@ if(!empty($_POST['userid'])) {
 					
 					$idtext = $('<h2>').text(win.idFile.user.name);
 
-					$('.idCard')
-						.append($idtext)
-						.parent().css({boxShadow: "0 1px 1px #AEAEAE", backgroundColor: "#FFD"});
+					$('.idCard').children().replaceWith($idtext)
+					$('#idBox').css({boxShadow: "0 1px 1px #AEAEAE", backgroundColor: "#FFD"});
+
 					$('#pinBox')
 						.slideDown()
 						//Focus to input
@@ -151,10 +151,10 @@ if(!empty($_POST['userid'])) {
 
 <div class="winpadd" id="loginCard">
 	<div id="idBox" class="rounded6">
-<div class="idCard rounded6">
-	
-</div>
-</div>
+		<div class="idCard rounded6">
+			<h2 style="color:#DDD">Drop your WebID here.</h2>
+		</div>
+	</div>
 	<div id="pinBox">
 		<b>Enter PIN</b>
 		<input type="password" id="pwdPin" />
