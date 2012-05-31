@@ -128,7 +128,7 @@ if(!empty($_POST['userid'])) {
 								w.beforeClose = function(){};
 								ice.Manager.removeWindow(w.name);
 								
-								7ice.curtain.raise();
+								ice.curtain.raise();
 								console.log('success');
 								return;
 							} else if(statuscode == 'success') {
