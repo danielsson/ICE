@@ -244,7 +244,7 @@ function renderEditBubbles() {
 		var $bubble = $('<div> <span>Edit</span> </div>');
 		bubbles.push($bubble);
 		$bubble.addClass('ice icePointer').css({
-			left : off.left + $this.width() + 20,
+			left : off.left - 70,
 			top : off.top
 		}).appendTo('body').click(function() {renderEditorOnObject($this);
 		}).hover(function() {
