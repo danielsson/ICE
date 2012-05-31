@@ -136,11 +136,11 @@
 	<p><b>Password</b></p>
 	<input type="password" name="password" style="width:90%" disabled="disabled"/>
 	<br style="clear: both" />
-	<input type="button" value="Abort" style="float:left" onclick="ice.Manager.removeWindow($(this).inWindow())"/>
+	<!--<input type="button" value="Abort" style="float:left" onclick="ice.Manager.removeWindow($(this).inWindow())"/>-->
 	
 	<input type="submit" value="Update" style="float:right" disabled="disabled" />
 	<input type="button" value="Create WebID" style="float:right" id="btnCreateWebId" />
-	<input type="button" value="Delete User" style="float:right; color:#F00" id="btnDeleteUser" />
+	<input type="button" value="Delete" style="float:right; color:#F00" id="btnDeleteUser" />
 	</form>
 	<div style="clear:both"></div>
 </div>
