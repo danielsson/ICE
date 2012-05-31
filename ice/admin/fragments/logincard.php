@@ -33,7 +33,8 @@ if(!empty($_POST['userid'])) {
 		W.name = "CardLogin";
 		W.title = "Login With WebID";
 		W.width = 342;
-		W.closeable = false;
+		W.closeable = true;
+		W.minimizeable = false;
 		W.element.css('zIndex',99999);
 		W.setContent(document.getElementById('loginCardWindow').innerHTML);
 		W.onOpen = function(win) {
@@ -122,8 +123,12 @@ if(!empty($_POST['userid'])) {
 							if(statuscode == 'success' && response.status == 'ok') {
 								$('#headerText').html('<a href="#" onclick="ice.logout();"><b>Log out<b></a>');
 								ice.fragment.load('sidepanel');
-								ice.Manager.removeWindow('CardLogin');
-								ice.curtain.raise();
+								
+								var w = ice.Manager.getWindow('CardLogin');
+								w.beforeClose = function(){};
+								ice.Manager.removeWindow(w.name);
+								
+								7ice.curtain.raise();
 								console.log('success');
 								return;
 							} else if(statuscode == 'success') {
@@ -141,6 +146,9 @@ if(!empty($_POST['userid'])) {
 					},'json');
 				}
 			});
+		};
+		W.beforeClose = function (win) {
+			ice.fragment.load('login');
 		};
 		ice.Manager.addWindow(W);
 		
