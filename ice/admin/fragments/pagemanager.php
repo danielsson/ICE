@@ -63,7 +63,6 @@
 			})());
 		}
 		
-		
 		W.onContentChange = function(W) {
 			if("console" in window) {console.log('Ran onContentChange')}
 			$('.big_grid>li', W.contentBox).bind("contextmenu", function() {
@@ -84,63 +83,66 @@
 					.find('li:eq(0)')
 					.trigger('click');
 			});
-			$('#pageManagerMenu li').click(function() {
-				var $this = $(this), current = $this.parent().parent().attr('data-current'),
-				id = $this.parent().parent().attr('data-id');
-				
-				switch($this.attr('data-cmd')) {
-					case 'editN':
-						var dm = $('<form>').attr({
-							id: "formPostShiv",
-							action: current,
-							method: "post",
-							style: "display:none;",
-							target: "_blank"
-						});
-						$('<input type="text" name="edit" value="true">').appendTo(dm);
-						dm.appendTo('body');
-						document.getElementById('formPostShiv').submit();
-						$('#formPostShiv').remove();
-						$('#pageManagerMenu').attr('current', 'none').fadeOut();
-						break;
-					case 'edit':
-						ice.fragment.load('browser',{}, {url: current, postEdit: true});
-						$('#pageManagerMenu').attr('current', 'none').fadeOut();
-						break;
-					case 'rename':
-						var r = prompt('Please enter the new name');
-						if(r != null && r !="") {
-							$.post('fragments/pagemanager.php', {rename:true, id: id, name: r}, function(data) {
-								ice.Manager.getWindow('IcePM').refresh();
-								if(data=="true") {
-									$('.pageBtn[data-page-id="' + id + '"] span').text(r);
-									ice.message('Name changed', 'info');
-								} else {
-									ice.message(data, 'warning');
-								}
-							});
-						}
+		};
+
+		$('#pageManagerMenu li').click(function() {
+			console.log('ran handler');
+			var $this = $(this), current = $this.parent().parent().attr('data-current'),
+			id = $this.parent().parent().attr('data-id');
+			
+			switch($this.attr('data-cmd')) {
+				case 'editN':
+					var dm = $('<form>').attr({
+						id: "formPostShiv",
+						action: current,
+						method: "post",
+						style: "display:none;",
+						target: "_blank"
+					});
+					$('<input type="text" name="edit" value="true">').appendTo(dm);
+					dm.appendTo('body');
+					document.getElementById('formPostShiv').submit();
+					$('#formPostShiv').remove();
 					$('#pageManagerMenu').attr('current', 'none').fadeOut();
-						break;
-					case 'del':
-							
-						if(confirm('This action will delete the page and all accociated data. Continue?')) {
-							$.post('fragments/pagemanager.php', {del:true, id: id}, function(data) {
-								if(data == 'true') {
-									ice.Manager.getWindow('IcePM').refresh();
-								} else {
-									ice.message(data, 'warning');
-								}
-							});
-						}
-						$('#pageManagerMenu').attr('current', 'none').fadeOut();
-						break;
-					case 'close':
-						$('#pageManagerMenu').attr('current', 'none').fadeOut();
-						break;
-				}
-			});
-		}
+					break;
+				case 'edit':
+					ice.fragment.load('browser',{}, {url: current, postEdit: true});
+					$('#pageManagerMenu').attr('current', 'none').fadeOut();
+					break;
+				case 'rename':
+					var r = prompt('Please enter the new name');
+					if(r != null && r !="") {
+						$.post('fragments/pagemanager.php', {rename:true, id: id, name: r}, function(data) {
+							ice.Manager.getWindow('IcePM').refresh();
+							if(data=="true") {
+								$('.pageBtn[data-page-id="' + id + '"] span').text(r);
+								ice.message('Name changed', 'info');
+							} else {
+								ice.message(data, 'warning');
+							}
+						});
+					}
+				$('#pageManagerMenu').attr('current', 'none').fadeOut();
+					break;
+				case 'del':
+						
+					if(confirm('This action will delete the page and all accociated data. Continue?')) {
+						$.post('fragments/pagemanager.php', {del:true, id: id}, function(data) {
+							if(data == 'true') {
+								ice.Manager.getWindow('IcePM').refresh();
+							} else {
+								ice.message(data, 'warning');
+							}
+						});
+					}
+					$('#pageManagerMenu').attr('current', 'none').fadeOut();
+					break;
+				case 'close':
+					$('#pageManagerMenu').attr('current', 'none').fadeOut();
+					break;
+			}
+		});
+
 		W.setContent(document.getElementById('pageManager1').innerHTML);
 		ice.Manager.addWindow(W);
 	}
@@ -176,6 +178,7 @@
 	</ul>
 	<div style="clear:both;"></div>
 </div>
+
 <?php if(isset($_POST['refresh'])) { die(); } ?>
 </script>
 <div id="pageManagerMenu" class="shadow rounded6" style="display: none;">
