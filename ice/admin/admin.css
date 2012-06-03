@@ -243,7 +243,9 @@ input[type=text]:focus, input[type=password]:focus  {
 	box-shadow: 0 1px 1px #30b6f3;
 }
 input[type=submit], input[type=button] {
+	background-color: #FFF;
 	background-image: -webkit-linear-gradient(bottom, #EEE 0%, #FFF 100%);
+	background-image: -moz-linear-gradient(bottom, #EEE 0%, #FFF 100%);
 	padding: 7px 14px;
 	margin:5px;
 	color: #333;
