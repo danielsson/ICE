@@ -18,7 +18,9 @@ var icePopUp = function(u) {
 		var thisPopup = this;
 		iFrame.get()[0].onload = function() {
 			this.contentDocument.popup = thisPopup;
-			this.contentDocument._ready();
+			if('_ready' in this.contentDocument) {
+				this.contentDocument._ready();
+			}
 		};
 		
 	};
@@ -160,9 +162,12 @@ var iceEditorClass = function() {
 			} else {
 				iceEdit.objTarget.attr('src', data.url);
 			}
+
+			iceEdit.objTarget.removeClass('icemarked');
 			renderEditBubbles();
 			iceEdit = null;
 			iceEdit = new iceEditorClass();
+
 		}, 'json');
 
 	};

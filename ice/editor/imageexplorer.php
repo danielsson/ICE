@@ -49,7 +49,7 @@ if (isset($_GET['thumb'])) {
 					<div style="clear: both"/>
 				</ul>
 				<div class="center" style="width: 620px">
-					<input type="button" onclick="document.popup.destroy();" value="Cancel" style="top: 510px;float:right"/>
+					<input type="button" id="iceImageCancel" value="Cancel" style="top: 510px;float:right"/>
 					<input type="button" onclick="#" value="Insert image by url" style="float:right"/>
 				</div>
 			</div>
@@ -60,7 +60,8 @@ if (isset($_GET['thumb'])) {
 			var mediaRoot = "<?php echo $config['baseurl'], $config['sys_folder'], "media/"; ?>";
 			$('li').click(function() {
 				console.log
-				if(document.popup.payload.isTypeImage) {
+				if(document.popup.payload.isTypeImage) { 
+					//If the *field type* is img.
 					document.popup.exec(function(u) {
 						this.iceEdit.objTarget.attr('src', u);
 						this.iceEdit.saveImage(u)
@@ -70,6 +71,17 @@ if (isset($_GET['thumb'])) {
 						this.iceEdit.objTarget.focus();
 						this.document.execCommand('insertImage', false, u);
 					}, mediaRoot + $(this).attr('data-name'));
+				}
+				document.popup.destroy();
+			});
+			$('#iceImageCancel').click(function() {
+				if(document.popup.payload.isTypeImage) {
+					document.popup.exec(function() {
+						this.iceEdit.objTarget.removeClass('icemarked');
+						this.iceEdit = null;
+						this.iceEdit = new this.iceEditorClass();
+						this.renderEditBubbles();
+					});
 				}
 				document.popup.destroy();
 			});
