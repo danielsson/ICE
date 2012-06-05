@@ -47,6 +47,7 @@ $queries = array(
  ON UPDATE CASCADE
  ON DELETE CASCADE;",
 
-"INSERT IGNORE INTO ice_users (username,password,userlevel) VALUES ('admin','21232f297a57a5a743894a0e4a801fc3','3');");
+"INSERT IGNORE INTO ice_users (username,password,userlevel) 
+ VALUES ('admin','$2a$12$xqSXcEQv3U.cooRW81nnjOV8dmiUtSsv1o4GdrBO2ZJ/SnfSkNrJG','3');");
 
 ?>
