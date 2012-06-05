@@ -125,7 +125,7 @@
 	<p><b>UserName</b></p>
 	<input type="hidden" name="id"/>
 	<input type="text" name="username" style="width:90%" disabled="disabled"/>
-	<p><b>Userlevel</b></p><br />
+	<p><b>Userlevel</b></p>
 	<select name="userlevel" disabled="disabled">
 		<option value="1">1</option>
 		<option value="2">2</option>

@@ -231,7 +231,11 @@ aside {
 #taskBar ul li:hover {
 	background-color: rgba(255,255,255,0.2);
 }
-input[type=text], input[type=password] {
+p {
+	line-height: 2;
+}
+
+input[type=text], input[type=password], select {
 	background: #fff;
 	box-shadow: 0 1px 1px #AEAEAE;
 	border: none;
