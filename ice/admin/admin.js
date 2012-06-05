@@ -202,9 +202,11 @@ var ice = {
 		};
 		this.loadingOn = function() {
 			this.loader.stop().fadeIn();
+			this.contentBox.css('-webkit-filter','blur(2px)');
 		};
 		this.loadingOff = function() {
 			this.loader.stop().fadeOut();
+			this.contentBox.css('-webkit-filter','none');
 		};
 		this.onOpen = function(winObj) {
 		};
