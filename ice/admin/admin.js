@@ -324,10 +324,8 @@ var ice = {
 	 * @return String decodedKey
 	 */
 	decodeKey : function(str, pin) {
-		var pinChars = pin.split(""),
-			pinNums = [],
+		var pinNums = [],
 			out = [],
-			pinPos = 0,
 			i = 0,
 			strlen = str.length,
 			pinlen = pinChars.length;
@@ -339,21 +337,19 @@ var ice = {
 		 * difference in the pin.
 		 */
 		for(i = 0; i < pinlen; i++) {
-			pinNums[i] = parseInt(pinChars[i], 10);
+			pinNums[i] = parseInt(pin[i], 10);
 			if(i > 0) {
 				pinNums[i] = pinNums[i] + ((i * pinNums[i-1]) % 10);
 			}
 		}
 
 		for(i = 0; i < strlen; i++) {
-			if(pinPos===pinlen) {pinPos=0;}
 
 			out.push(
 				String.fromCharCode(
-					str.charCodeAt(i) + pinNums[pinPos]
+					str.charCodeAt(i) + pinNums[i % pinlen]
 				) 
 			);
-			pinPos++;
 		}
 
 		return out.join("");
