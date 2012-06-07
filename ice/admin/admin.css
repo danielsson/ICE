@@ -269,6 +269,7 @@ input[type=submit]:active, input[type=button]:active {
 input[type=submit][disabled], input[type=button][disabled] {background: #DDD; box-shadow: none;text-shadow: none}
 label {
 	color: #555;
+	margin-left: 20px;
 }
 .block190 {width: 190px;}
 .expBtn {
@@ -293,10 +294,12 @@ label {
 }
 .expBtn .small {
 	font-size: 9px;
+	line-height: 1;
 }
 .expBtn .big {
 	font-size: 14px;
 	font-weight: bold;
+	line-height: 1;
 }
 .nicelist li {padding: 6px 20px;cursor: pointer;}
 .nicelist li:hover {background-color: #30b6f3;}

@@ -10,7 +10,7 @@
 	function testing() {
 		var W = new ice.Window();
 		W.name = "testwin";
-		W.width = 745;
+		W.width = 360;
 
 		W.setContent(document.getElementById('testingTemplate').innerHTML);
 
@@ -42,6 +42,16 @@
 			<h3>Add pages</h3>
 		</li>
 	</ul>
+	<div style="clear:both" />
+</div>
+<hr />
+<div class="winpadd">
+	<p>Vinyl wayfarers keffiyeh, shoreditch carles cred thundercats occupy fixie pork belly leggings synth organic terry richardson.</p>
+	<input type="text" />
+	<input type="password" />
+	<h3>Wayfarers</h3>
+	<p>Raw denim echo park beard, bushwick swag tofu ethnic next level brunch irony master cleanse.</p>
+	<label>Brunch: <input type="text" /></label>
 	<div style="clear:both" />
 </div>
 </script>
