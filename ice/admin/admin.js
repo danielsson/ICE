@@ -261,7 +261,7 @@ var ice = {
 		} else if(type == "info") {
 			l = $('<div class="msg msgInfo"> <div class="winExit"></div> </div>');
 		}
-		l.html(message + l.html());
+		l.html('<p>'+message+'</p>' + l.html());
 		l.find('.winExit').click(function() {
 			$(this).parent().slideUp(500, function() {
 				$(this).remove();

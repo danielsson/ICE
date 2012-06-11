@@ -65,31 +65,35 @@ thead {
 	margin: 20px auto;
 }
 .msg {
-	padding: 10px 20px;
+	padding: 10px 10px 10px 20px;
 	color: #333;
 	display:none;
-
+	background-color: #EEE;
+	border-width:0 0 0 4px;
+	border-style:solid;
+	overflow: auto;
 }
 #windowSandbox>.msg {
 	float:right;
 	width: 400px;
 	clear: both;
-		margin: 20px 20px 0;
+	margin: 20px 20px 0;
 }
 .msg .winExit {
 	margin: 0;
 }
+.msg p {
+	float:left;
+	display: block;
+	width: 90%;
+}
 .msgWarning {
-	background: red;
-	background: -webkit-gradient(linear,left bottom,left top,color-stop(0, rgb(205,0,0)),color-stop(1, rgb(255,26,0)));
-	background: -moz-linear-gradient(center bottom,rgb(205,0,0) 0%,rgb(255,26,0) 100%);
-	border: thin solid #900;
+	border-color: red;
 }
 .msgInfo {
-	background: #EEE;
-	border: thin solid #CCC;
+	border-color: #30B6F3;
 }
-.rounded6, .msg, input[type=button], input[type=submit] {
+.rounded6, input[type=button], input[type=submit] {
 	-moz-border-radius: 1px;
 	-o-border-radius: 1px;
 	-webkit-border-radius: 1px;
