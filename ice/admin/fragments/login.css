@@ -5,7 +5,7 @@
 
 .loginwindow input[type=text], .loginwindow input[type=password]{
 	float:right;
-	width: 308px;
+	width: 288px;
 }
 .loginwindow label {
 	float: left;

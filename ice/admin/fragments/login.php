@@ -49,7 +49,9 @@
 					return true;
 				}
 				var formData = $('form', $t).serialize();
+				win.loadingOn();
 				$.post('fragments/login.php?xhr=true', formData, function(data) {
+					win.loadingOff();
 					if(data !="true") {
 						ice.message('Wrong username/password', 'warning', '#loginError');
 						win.element.effect('shake', 100);
@@ -67,9 +69,8 @@
 				ice.fragment.load('logincard');
 				ice.Manager.removeWindow("LoginWindow");
 			});
-			if(window.innerHeight > 600) {
-				win.element.css({top:320});
-			}
+
+			win.element.css({top:(window.innerHeight - 332) / 2});
 		};
 		
 		ice.Manager.addWindow(lWin);

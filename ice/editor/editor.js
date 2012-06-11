@@ -18,7 +18,9 @@ var icePopUp = function(u) {
 		var thisPopup = this;
 		iFrame.get()[0].onload = function() {
 			this.contentDocument.popup = thisPopup;
-			this.contentDocument._ready();
+			if('_ready' in this.contentDocument) {
+				this.contentDocument._ready();
+			}
 		};
 		
 	};
@@ -160,9 +162,12 @@ var iceEditorClass = function() {
 			} else {
 				iceEdit.objTarget.attr('src', data.url);
 			}
+
+			iceEdit.objTarget.removeClass('icemarked');
 			renderEditBubbles();
 			iceEdit = null;
 			iceEdit = new iceEditorClass();
+
 		}, 'json');
 
 	};
@@ -244,7 +249,7 @@ function renderEditBubbles() {
 		var $bubble = $('<div> <span>Edit</span> </div>');
 		bubbles.push($bubble);
 		$bubble.addClass('ice icePointer').css({
-			left : off.left + $this.width() + 20,
+			left : off.left - 70,
 			top : off.top
 		}).appendTo('body').click(function() {renderEditorOnObject($this);
 		}).hover(function() {

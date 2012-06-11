@@ -11,7 +11,7 @@ require_once('../lib/image.class.php');
 
 if($_SESSION['userlevel'] < 1) {
 	$data['status'] = 'error';
-	$data['error'] = "auth";
+	$data['error'] = 'auth';
 	die(json_encode($data));
 }
 function clean($str) {
@@ -35,12 +35,17 @@ if(isset($_POST['text'])){
 	$h = intval($_POST['h']);
 
 	$img = new IceImage(realpath('../media/' . basename($url['path'])));
-	$img->setCachePath(realpath('../cache/') . '/' . $w . 'x' . $h . basename($url['path']));
-	$content = $config['sys_folder'] . 'cache/' . $w . 'x' . $h . basename($url['path']);
+	
+	if($img->getHeight() != $h || $img->getWidth() != $w) {
+		$img->setCachePath(realpath('../cache/') . '/' . $w . 'x' . $h . basename($url['path']));
+		$content = $config['sys_folder'] . 'cache/' . $w . 'x' . $h . basename($url['path']);
 
-	$img->resizeToFit($w,$h);
+		$img->resizeToFit($w,$h);
 
-	$img->cache();
+		$img->cache();
+	} else {
+		$content = $config['sys_folder'] . 'media/' . basename($url['path']);
+	}
 	$data['url'] = $config['baseurl'] . $content;
 
 	$content = $db->escape($content);
@@ -49,7 +54,7 @@ if(isset($_POST['text'])){
 	$sql = 'UPDATE '. $config['content_table'] ." SET content = '$content' WHERE fieldname = '$fieldname' and pagename = '$pagename';"; 
 	$db->connect();
 	$res = $db->query($sql);
-	if(!$res) {
+	if($db->error()) {
 		$data['status'] = 'error';
 		if($config['dev_mode']==true) {
 			$data['error'] = $db->error() . "::" . $sql;

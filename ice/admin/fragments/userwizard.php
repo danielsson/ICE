@@ -1,29 +1,27 @@
 <?php
 	define('SYSINIT',true);
-	require '../../ice-config.php';
-	require '../../lib/db.class.php';
-	require '../../lib/auth.class.php';
+	require_once '../../ice-config.php';
+	require_once '../../lib/db.class.php';
+	require_once '../../lib/auth.class.php';
+	require_once '../../models/IceUser.php';
+
 	$Auth->init(3);
 	
 	if(isset($_POST['username'])) {
 		if(!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['userlevel'])) {
 			$uname = $Auth->sanitize($_POST['username']);
-			$pass = md5($_POST['password']);
+			$pass = IceUser::hash($_POST['password']);
 			$lvl = (int) $_POST['userlevel'];
 			
 			$db->connect();
-			$sql = "INSERT INTO ice_users (username,password,userlevel) VALUES ('$uname','$pass','$lvl');";
-			$db->query($sql);
-			if($db->error()) {
-				
-				echo $db->error();
-				$db->close();
-				die();
-			} else {
-				$db->close();
-				die('{"status":"ok"}');
-				
-			}
+
+			$user = new IceUser(0,$lvl,$uname,$pass);
+
+			$user->save($db);
+
+			$db->close();
+			die('{"status":"ok"}');
+
 		} else {
 			die('ERROR - EMPTY STRINGS');
 		}
@@ -49,13 +47,13 @@ function userwizard() {
 			$win.data.currentSlide = $win.data.currentSlide+1;
 			$win.titleBox.text('New user wizard - Step ' + ($win.data.currentSlide + 1) + ' of 5');
 			var nr = 0 - ($win.data.currentSlide * 418);
-			if($win.data.currentSlide != 4)  {
+			if($win.data.currentSlide != 3)  {
 				$backBtn.removeAttr('disabled');
 				this.disabled = false;
 			} else {
 				this.disabled = true;
 			}
-			if($win.data.currentSlide == 3) {
+			if($win.data.currentSlide == 2) {
 				$wdr = $('.wizDataReview', $win.contentBox);
 				if($win.contentBox.find('input[name]').filter(function() { return $(this).val() == ""; }).length > 0) {
 					ice.message('One or more fields are empty. Please go back and fill it in.', 'warning', $wdr);
@@ -66,7 +64,7 @@ function userwizard() {
 					$wdr.html('<b>Username:</b> ' + name + '<br /><b>Password:</b> ********'
 						+ '<br /><b>Userlevel:</b> ' + lvl);
 				}
-			} else if($win.data.currentSlide == 4) {
+			} else if($win.data.currentSlide == 3) {
 				this.disabled = true;
 				$backBtn.attr('disabled', 'disabled');
 				$win.loadingOn();
@@ -107,7 +105,7 @@ function wizCreateUser(formdata, wName) {
 		if(typeof data.status !== "undefined") {
 			$win = ice.Manager.getWindow(wName);
 			$win.loadingOff();
-			$('.horizSlider', $win.contentBox).animate({marginLeft: 0-(4*418)},500);
+			$('.horizSlider', $win.contentBox).animate({marginLeft: 0-(3*418)},500);
 			
 			try{ice.Manager.getWindow('USRMAN').refresh();} catch(e){}
 		} else {
@@ -132,16 +130,14 @@ function wizCreateUser(formdata, wName) {
 					This wizard will help you create a new user. To begin, please choose a
 					username.
 					</p><br /> <br />
-					<label for="usrWizUsername">Username<input name="username" type="text" style="width: 285px;" /> </label>
+					<label for="usrWizUsername">Username<input name="username" type="text" style="width: 275px;" /> </label>
+
 				</div>
-				
-				
-			</li>
-			<li class="horizSlide">
 				<div class="winpadd">
 					<p>Please enter the password</p><br /> <br />
-					<label for="usrWizPassword">Password <input name="password" type="password" style="width: 285px;" /> </label>
+					<label for="usrWizPassword">Password <input name="password" type="password" style="width: 275px;" /> </label>
 				</div>
+				
 			</li>
 			<li class="horizSlide">
 				<div class="winpadd">

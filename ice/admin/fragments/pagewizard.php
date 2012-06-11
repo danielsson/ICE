@@ -3,22 +3,26 @@
 	require '../../ice-config.php';
 	require '../../lib/db.class.php';
 	require '../../lib/auth.class.php';
+	require '../../models/IcePage.php';
 	$Auth->init(2);
 	$db->connect();
 	if(!empty($_POST['name'])) {
 		$data = Array('status'=>'ok', 'error'=>'none');
 		$_POST = $Auth->sanitize($_POST);
-		$name = addslashes($_POST['name']);
-		$tid = intval($_POST['tid']);
+
 		$tmp = parse_url($config['baseurl'] . $_POST['url']);
-		$url = addslashes($tmp['path']);
-		$sql = "INSERT INTO ice_pages (name,tid,url) VALUES ('$name', '$tid', '$url');";
-		$db->query($sql);
-		if($db->error() != "") {
-			$data = Array('status'=>'error', 'error'=>$db->error());
-		}
+		$url = $db->escape($tmp['path']);
+
+		$page = new IcePage(
+				0,
+				$db->escape($_POST['name']),
+				intval($_POST['tid']),
+				$url
+			);
+
+		$page->save($db);
 		$db->close();
-		$data['path'] = $tmp['path'];
+
 		die(json_encode($data));
 	}
 ?>
@@ -115,19 +119,17 @@ function wizCreatePage(name,url,tid, wName) {
 
 </script>
 
-<script type="text/template" id="pageWizContent">
+<script type="text/x-template" id="pageWizContent">
 
 <div class="winpadd pageWiz" style="max-height: 500px;">
 	<div class="viewPort rounded6">
 	<form method="post" action="fragments/pagewizard.php">
 		<ul class="horizSlider">
 			<li class="horizSlide">
-				<div class="winpadd">
-					<p>
+				<p class="enlight">
 					This wizard will help you create a new page based on a template. To begin, please choose a
 					template in the list below.
-					</p> 
-				</div>
+				</p> 
 				<table>
 					<thead>
 						<tr>
@@ -156,15 +158,12 @@ function wizCreatePage(name,url,tid, wName) {
 				
 			</li>
 			<li class="horizSlide">
-				<div class="winpadd">
-					<p>Please choose an appropriate name for this page. The name is used backend to help you distinguish between different pages.</p><br /> <br />
-					<label for="name">Name: <input name="name" type="text" style="width: 285px;" /> </label>
-				</div>
-				<div class="winpadd">
-					<p> Complete the url to the page below. This will be the url used to navigate to the page.</p><br /> <br />
-					<label for="url"><?php echo $config['baseurl']; ?><br />
-					<input name="url" type="text" style="width: 285px; margin-left: 45px"/> </label>
-				</div>
+				<p class="enlight">Please choose an appropriate name for this page.
+					The name is used backend to help you distinguish between different pages.</p>
+				<label for="name">Name: <input name="name" type="text" style="width: 285px;" /> </label>
+				<p class="enlight"> Complete the url to the page below. This will be the url used to navigate to the page.</p>
+				<label for="url"><?php echo $config['baseurl']; ?><br />
+				<input name="url" type="text" style="width: 285px; margin-left: 70px"/> </label>
 			</li>
 			<li class="horizSlide">
 				<div class="winpadd">

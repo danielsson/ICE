@@ -25,7 +25,6 @@
 }
 .icePointer > span {
 	background-color: #30B6F3;
-	border: 3px solid rgba(255,255,255,.8);
 	padding: 6px;
 	cursor: pointer;
 }
@@ -34,28 +33,28 @@
 	-moz-box-shadow: 0 0 2px #000;
 	color: #CCC;
 }
-.icePointer:before {
+.icePointer:after {
 	display: block;
 	content: '';
 	width: 0px;
-	border-right: 5px solid #222;
+	border-left: 5px solid #30B6F3;
 	border-top: 5px solid transparent;
 	border-bottom: 5px solid transparent;
 	position: absolute;
 	top: 0px;
-	left: -10px;
+	right: -10px;
 }
 .icemarked {
 	outline: thin dashed #252525;
 	min-height: 10px;
 }
-.iceRounded, .icePointer > span {
+.iceRounded {
 	border-radius: 2px;
 	-moz-border-radius: 2px;
 	-o-border-radius: 2px;
 	-webkit-border-radius: 2px;
 }
-.iceShadow, .icePointer > span {
+.iceShadow {
 	-moz-box-shadow: 0 0 5px #000;
 	-webkit-box-shadow: 0 0 5px #000;
 	-o-box-shadow: 0 0 5px #000;

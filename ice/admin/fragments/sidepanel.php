@@ -41,10 +41,14 @@ $Auth -> init(1);
 		<li style="background-position: 0 -196px" ></li>
 		<li style="background-position: -98px -196px" class="end"></li>
 	</ul>
-	<ul style="display: none;">
-		<li>
-			<a onclick="ice.fragment.load('templatemanager')"><b>Add files</b></a>
-			<a onclick="ice.fragment.load('testing')"><b>Start testing</b></a>
-		</li>
-	</ul>
+	<table style="display:none; background:#EEF">
+		<tbody>
+			<tr>
+				<td><a onclick="ice.fragment.load('testing')"><b>Start testing</b></a></td>
+			</tr>
+			<tr>
+				<td><a onclick="ice.fragment.load('templatemanager')"><b>Add files</b></a></td>
+			</tr>
+		</tbody>
+	</table>
 </script>

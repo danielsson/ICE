@@ -1,7 +1,7 @@
 <?php defined('SYSINIT') or die('No direct access');
 $config = array();
 /*********************************************
-Configuration for ICY CMS.
+Configuration for ICE! CMS.
 
 The base url of the directory containing the
 system folder. WITH a trailing slash.

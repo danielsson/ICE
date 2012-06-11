@@ -5,6 +5,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 a:LINK, a {text-decoration: none;color: #00aeef;}
 a:VISITED {color: #00aeef;}
 a:HOVER {color: #0099cc;border-bottom: thin dotted #0099cc;}
+.enlight{background-color: #FAFAFA; line-height: 2;padding: 20px;}
 body {
 	font-family: sans-serif;
 	font-size: 12px;
@@ -64,31 +65,35 @@ thead {
 	margin: 20px auto;
 }
 .msg {
-	padding: 10px 20px;
+	padding: 10px 10px 10px 20px;
 	color: #333;
 	display:none;
-
+	background-color: #EEE;
+	border-width:0 0 0 4px;
+	border-style:solid;
+	overflow: auto;
 }
 #windowSandbox>.msg {
 	float:right;
 	width: 400px;
 	clear: both;
-		margin: 20px 20px 0;
+	margin: 20px 20px 0;
 }
 .msg .winExit {
 	margin: 0;
 }
+.msg p {
+	float:left;
+	display: block;
+	width: 90%;
+}
 .msgWarning {
-	background: red;
-	background: -webkit-gradient(linear,left bottom,left top,color-stop(0, rgb(205,0,0)),color-stop(1, rgb(255,26,0)));
-	background: -moz-linear-gradient(center bottom,rgb(205,0,0) 0%,rgb(255,26,0) 100%);
-	border: thin solid #900;
+	border-color: red;
 }
 .msgInfo {
-	background: #EEE;
-	border: thin solid #CCC;
+	border-color: #30B6F3;
 }
-.rounded6, .msg, input[type=button], input[type=submit] {
+.rounded6, input[type=button], input[type=submit] {
 	-moz-border-radius: 1px;
 	-o-border-radius: 1px;
 	-webkit-border-radius: 1px;
@@ -106,11 +111,7 @@ aside {
 	background-color: rgba(0,0,0,0.2);
 }
 .winpadd {padding: 20px;}
-.shadow, #taskBar ul li:hover {
-	#-moz-box-shadow: 0 0 5px #000;
-	#-webkit-box-shadow: 0 0 5px #000;
-	#box-shadow: 0 0 5px #000;
-}
+
 .window {
 	position: absolute;
 	background: #EEEEEE;
@@ -234,7 +235,11 @@ aside {
 #taskBar ul li:hover {
 	background-color: rgba(255,255,255,0.2);
 }
-input[type=text], input[type=password] {
+p {
+	line-height: 2;
+}
+
+input[type=text], input[type=password], select {
 	background: #fff;
 	box-shadow: 0 1px 1px #AEAEAE;
 	border: none;
@@ -246,7 +251,9 @@ input[type=text]:focus, input[type=password]:focus  {
 	box-shadow: 0 1px 1px #30b6f3;
 }
 input[type=submit], input[type=button] {
+	background-color: #FFF;
 	background-image: -webkit-linear-gradient(bottom, #EEE 0%, #FFF 100%);
+	background-image: -moz-linear-gradient(bottom, #EEE 0%, #FFF 100%);
 	padding: 7px 14px;
 	margin:5px;
 	color: #333;
@@ -266,6 +273,7 @@ input[type=submit]:active, input[type=button]:active {
 input[type=submit][disabled], input[type=button][disabled] {background: #DDD; box-shadow: none;text-shadow: none}
 label {
 	color: #555;
+	margin-left: 20px;
 }
 .block190 {width: 190px;}
 .expBtn {
@@ -290,10 +298,12 @@ label {
 }
 .expBtn .small {
 	font-size: 9px;
+	line-height: 1;
 }
 .expBtn .big {
 	font-size: 14px;
 	font-weight: bold;
+	line-height: 1;
 }
 .nicelist li {padding: 6px 20px;cursor: pointer;}
 .nicelist li:hover {background-color: #30b6f3;}
@@ -332,4 +342,11 @@ label {
 }
 .chromeFrameOverlayContent {
 	z-index: 100900;
+}
+hr {
+	height: 1px;
+	border:none;
+	border-bottom:thin solid #FFF;
+	background-color: #CCC;
+	margin: 20px 0;
 }

@@ -12,9 +12,9 @@ $queries = array(
 "CREATE TABLE IF NOT EXISTS `ice_users` (
  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
  `username` varchar(125) NOT NULL DEFAULT '--',
- `password` varchar(125) NOT NULL DEFAULT '--',
+ `password` varchar(64) NOT NULL DEFAULT '--',
  `userlevel` enum('0','1','2','3') NOT NULL DEFAULT '0',
- `keyCardHash` varchar(32) DEFAULT NULL,
+ `keyCardHash` varchar(64) DEFAULT NULL,
  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;",
 
@@ -36,17 +36,18 @@ $queries = array(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;",
 
 "ALTER TABLE `ice_content`
- ADD CONSTRAINT FK_content
+ ADD CONSTRAINT FK_content IF NOT EXISTS
  FOREIGN KEY (`pagename`) REFERENCES ice_pages(`name`)
  ON UPDATE CASCADE
  ON DELETE CASCADE;",
 
 "ALTER TABLE `ice_pages`
- ADD CONSTRAINT FK_pages
+ ADD CONSTRAINT FK_pages IF NOT EXISTS
  FOREIGN KEY (`tid`) REFERENCES ice_files(`id`)
  ON UPDATE CASCADE
  ON DELETE CASCADE;",
 
-"INSERT INTO ice_users (username,password,userlevel) VALUES ('admin','21232f297a57a5a743894a0e4a801fc3','3');");
+"INSERT IGNORE INTO ice_users (username,password,userlevel) 
+ VALUES ('admin','$2a$12$xqSXcEQv3U.cooRW81nnjOV8dmiUtSsv1o4GdrBO2ZJ/SnfSkNrJG','3');");
 
 ?>

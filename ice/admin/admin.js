@@ -1,6 +1,6 @@
 var ice = {
 	Manager : {
-		windowsStorage : [],
+		windowsStorage : {},
 		incrementer : 0,
 		displayNoWindowsWarning: true,
 		windowSandbox : {},
@@ -17,18 +17,20 @@ var ice = {
 				return false;
 			}
 		},
-		addWindow : function(window) {//First argument is a windowClass object.
+		getall: function() {return this.windowsStorage},
+		addWindow : function(win) {//First argument is a windowClass object.
 			if(this.displayNoWindowsWarning) {
 				this.windowSandbox.find("div:has(img)").html("");
 				this.displayNoWindowsWarning = false;
 			}//Ensure empty canvas
-			var name = window.name;
+			var name = win.name;
 			if(name.length < 1) {//Anonymous windows
 				name = "anon_" + this.incrementer++;
-				window.name = name;
+				win.name = name;
 			}
 			if( name in this.windowsStorage === false) {//Prevent duplicates.
-				this.windowsStorage[name] = window;
+				console.log(name);
+				this.windowsStorage[name] = win;
 			} else {
 				return false;
 			}
@@ -78,7 +80,7 @@ var ice = {
 				width : $win.width,
 				left : (this.windowSandbox.width() - $win.width) / 2,
 				zIndex : ice.Manager.maxZindex(),
-				top : 150
+				top : 51
 			}).draggable({
 				handle : '.winBar',
 				stack : '.window',
@@ -121,6 +123,8 @@ var ice = {
 				opacity : 0
 			}, 300, function() {
 				$(this).remove();
+				delete $win;
+
 			});
 			var tmp = $('li[data-win-name=' + name + ']', this.taskBar);
 			tmp.css({
@@ -198,9 +202,11 @@ var ice = {
 		};
 		this.loadingOn = function() {
 			this.loader.stop().fadeIn();
+			this.contentBox.css('-webkit-filter','blur(2px)');
 		};
 		this.loadingOff = function() {
 			this.loader.stop().fadeOut();
+			this.contentBox.css('-webkit-filter','none');
 		};
 		this.onOpen = function(winObj) {
 		};
@@ -255,7 +261,7 @@ var ice = {
 		} else if(type == "info") {
 			l = $('<div class="msg msgInfo"> <div class="winExit"></div> </div>');
 		}
-		l.html(message + l.html());
+		l.html('<p>'+message+'</p>' + l.html());
 		l.find('.winExit').click(function() {
 			$(this).parent().slideUp(500, function() {
 				$(this).remove();
@@ -281,7 +287,6 @@ var ice = {
 					$('#headerText').html('Not logged in.');
 					$('aside').html("");
 					ice.fragment.load('login');
-					ice.message("Successfully logged out", 'info');
 				});
 			});
 		}
@@ -290,10 +295,10 @@ var ice = {
 		lower : function(now) {
 			if(now === true) {
 				$('#header').css({height:"100%", zIndex:88888});
-				$('#header .center').css({marginTop:200});
+				$('#header .center').css({marginTop:100});
 			} else {
 				$('#header').animate({height:"100%"},800).css({zIndex:88888});
-				$('#header .center').delay(400).animate({marginTop:200}, 400);
+				$('#header .center').delay(400).animate({marginTop:100}, 400);
 			}
 			
 		},
@@ -310,6 +315,44 @@ var ice = {
 			}
 			
 		}
+	}, //End curtain
+	/**
+	 * Takes a string and applies a simple shift chiper
+	 * @param String str The string to be shifted
+	 * @param String pin A string of numbers to use as shift key.
+	 * @return String decodedKey
+	 */
+	decodeKey : function(str, pin) {
+		var pinNums = [],
+			out = [],
+			i = 0,
+			strlen = str.length,
+			pinlen = pin.length;
+			
+		/*
+		 * Create an array(pinNums) of the numbers in the input string.
+		 * The numbers are modified to depend on the other numbers,
+		 * to ensure greater difference in result when there is a slight
+		 * difference in the pin.
+		 */
+		for(i = 0; i < pinlen; i++) {
+			pinNums[i] = parseInt(pin[i], 10);
+			if(i > 0) {
+				pinNums[i] = pinNums[i] + ((i * pinNums[i-1]) % 10);
+			}
+		}
+
+		for(i = 0; i < strlen; i++) {
+
+			out.push(
+				String.fromCharCode(
+					str.charCodeAt(i) + pinNums[i % pinlen]
+				) 
+			);
+		}
+
+		return out.join("");
+
 	}
 };
 //End ice
