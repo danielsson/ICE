@@ -328,7 +328,7 @@ var ice = {
 			out = [],
 			i = 0,
 			strlen = str.length,
-			pinlen = pinChars.length;
+			pinlen = pin.length;
 			
 		/*
 		 * Create an array(pinNums) of the numbers in the input string.
