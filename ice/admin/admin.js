@@ -287,7 +287,6 @@ var ice = {
 					$('#headerText').html('Not logged in.');
 					$('aside').html("");
 					ice.fragment.load('login');
-					ice.message("Successfully logged out", 'info');
 				});
 			});
 		}
