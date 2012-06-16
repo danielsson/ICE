@@ -1,4 +1,6 @@
 <?php
+namespace Ice;
+
 final class Database {
 	protected $db;
 	protected $db_host, $db_username, $db_password, $db_name;
@@ -22,7 +24,7 @@ final class Database {
 		return true;
 	}
 	public function escape($str) {
-		return mysql_real_escape_string($str);
+		return mysql_real_escape_string($str, $this->db);
 	}
 	public function query($q){
 		return mysql_query($q, $this->db);

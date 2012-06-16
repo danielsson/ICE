@@ -1,4 +1,5 @@
 <?php
+
 /**********************************************
 This is the ICE! cms adapter. Include this file
 on all pages with editable content.
@@ -147,7 +148,7 @@ class ICECMS {
 
 if(isset($_POST['edit']) && $_POST['edit']=="true") {
 	require_once('editor/editor.php');
-	$ice = new ICECMSEDIT();
+	$ice = new Ice\ICECMSEDIT();
 	$ice->in_editor_mode = true;
 } else {
 	$ice = new ICECMS();

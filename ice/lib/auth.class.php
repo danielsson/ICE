@@ -1,4 +1,6 @@
 <?php
+namespace Ice;
+
 class Authentication {
 	
 	public $error;
