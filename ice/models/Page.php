@@ -1,6 +1,8 @@
-<?php defined('SYSINIT') or die('<b>Error:</b> No direct access allowed');
+<?php 
 
 namespace Ice\Models;
+
+defined('SYSINIT') or die('<b>Error:</b> No direct access allowed');
 
 require_once 'Model.php';
 require_once 'ContentSet.php';

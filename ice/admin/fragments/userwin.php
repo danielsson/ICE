@@ -1,16 +1,20 @@
 <?php
+	use Ice\Models\User;
+
 	define('SYSINIT',true);
+	
 	require_once '../../ice-config.php';
 	require_once '../../lib/db.class.php';
 	require_once '../../lib/auth.class.php';
-	require_once '../../models/IceUser.php';
+	require_once '../../models/User.php';
+	
 	$Auth->init(3);
 	
 	if(isset($_POST['id']) && !isset($_POST['username'])) {
 		$db->connect();
 		$id = (int) $_POST['id'];
 		
-		$user = IceUser::byId($db, $id);
+		$user = User::byId($db, $id);
 		
 		if($user != NULL) {
 			$arr = $user->getArray();
@@ -26,7 +30,7 @@
 			$ulvl = (int) $_POST['userlevel'];
 			$uname = $Auth->sanitize($_POST['username']);
 
-			$user = IceUser::byId($db,$uid);
+			$user = User::byId($db,$uid);
 			
 			$user->setUserLevel($ulvl);
 			$user->setUsername($uname);
@@ -44,7 +48,7 @@
 		$uid = intval($_POST['delete']);
 		$db->connect();
 
-		$user = IceUser::byId($db,$uid);
+		$user = User::byId($db,$uid);
 
 		if($user != null) {
 			$user -> delete($db);
