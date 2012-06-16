@@ -22,7 +22,7 @@ final class Database {
 		return true;
 	}
 	public function escape($str) {
-		return mysql_real_escape_string($str);
+		return mysql_real_escape_string($str,$this->db);
 	}
 	public function query($q){
 		return mysql_query($q, $this->db);

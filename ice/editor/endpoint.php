@@ -21,6 +21,8 @@ function clean($str) {
 $fieldname = clean($_POST['fieldname']);
 $pagename = clean($_POST['pagename']);
 
+$db->connect();
+
 if(isset($_POST['text'])){
 	$content = $db->escape($_POST['text']);
 
@@ -52,7 +54,6 @@ if(isset($_POST['text'])){
 }
 
 	$sql = 'UPDATE '. $config['content_table'] ." SET content = '$content' WHERE fieldname = '$fieldname' and pagename = '$pagename';"; 
-	$db->connect();
 	$res = $db->query($sql);
 	if($db->error()) {
 		$data['status'] = 'error';
