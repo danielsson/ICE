@@ -1,6 +1,8 @@
 <?php defined('SYSINIT') or die('<b>Error:</b> No direct access allowed');
 
-abstract class IceModel {
+namespace Ice\Models;
+
+abstract class Model {
 	protected $id;
 
 	protected $newItem = true;

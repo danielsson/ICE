@@ -1,8 +1,10 @@
 <?php defined('SYSINIT') or die('<b>Error:</b> No direct access allowed');
 
-require_once 'IceModel.php';
+namespace Ice\Models;
 
-class IceUser extends IceModel {
+require_once 'Model.php';
+
+class User extends Model {
 
 	private $userlevel = 0;
 	private $username = "";

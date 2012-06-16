@@ -1,6 +1,8 @@
 <?php defined('SYSINIT') or die('<b>Error:</b> No direct access allowed');
 
-class IceContentSet {
+namespace Ice\Models;
+
+class ContentSet {
 	private $content;
 	private $delta = array();
 
