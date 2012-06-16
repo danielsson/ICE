@@ -1,18 +1,22 @@
 <?php
+	use Ice\Models\Page;
+	
 	define('SYSINIT',true);
+
 	require '../../ice-config.php';
 	require '../../lib/db.class.php';
 	require '../../lib/auth.class.php';
-	require '../../models/IcePage.php';
+	require '../../models/Page.php';
 
 	$Auth->init(1);
 	$db->connect();
+
 	if(isset($_POST['del']) && $_POST['del'] == "true") {
 		if($_SESSION['userlevel'] < 2) {
 			die('You are not allowed to perform this action');
 		}
 
-		$page = IcePage::byId($db,intval($_POST['id']));
+		$page = Page::byId($db,intval($_POST['id']));
 
 		$page->delete($db);
 		
@@ -22,7 +26,7 @@
 			die('You are not allowed to perform this action');
 		}
 
-		$page = IcePage::byId($db,intval($_POST['id']));
+		$page = Page::byId($db,intval($_POST['id']));
 		$page->setName($db->escape($_POST['name']));
 		$page->save($db);
 
@@ -162,7 +166,7 @@
 	<ul class="big_grid">
 		<?php
 
-			$pages = IcePage::findAll($db);
+			$pages = Page::findAll($db);
 
 			if ($pages) {
 				foreach ($pages as $i => $page) {

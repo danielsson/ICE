@@ -1,5 +1,7 @@
 <?php 
 
+use Ice\Models\User;
+
 if(!empty($_POST['userid'])) {
 	session_start();
 	
@@ -7,13 +9,13 @@ if(!empty($_POST['userid'])) {
 
 	require_once '../../ice-config.php';
 	require_once '../../lib/db.class.php';
-	require_once '../../models/IceUser.php';
+	require_once '../../models/User.php';
 
 	$key = $_POST['key'];
 	$uid = intval($_POST['userid']);
 
 	$db->connect();
-	$user = IceUser::byId($db,$uid);
+	$user = User::byId($db,$uid);
 	if($user !== null && $user->keyCardHashEquals($key)) {
 		$_SESSION['username']=$user->getUsername();
 		$_SESSION['userlevel'] = $user->getUserlevel();

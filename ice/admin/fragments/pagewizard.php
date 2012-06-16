@@ -1,11 +1,16 @@
 <?php
+	use Ice\Models;
+
 	define('SYSINIT',true);
+	
 	require '../../ice-config.php';
 	require '../../lib/db.class.php';
 	require '../../lib/auth.class.php';
-	require '../../models/IcePage.php';
+	require '../../models/Page.php';
+	
 	$Auth->init(2);
 	$db->connect();
+	
 	if(!empty($_POST['name'])) {
 		$data = Array('status'=>'ok', 'error'=>'none');
 		$_POST = $Auth->sanitize($_POST);
@@ -13,7 +18,7 @@
 		$tmp = parse_url($config['baseurl'] . $_POST['url']);
 		$url = $db->escape($tmp['path']);
 
-		$page = new IcePage(
+		$page = new Page(
 				0,
 				$db->escape($_POST['name']),
 				intval($_POST['tid']),

@@ -1,9 +1,13 @@
-<?php defined('SYSINIT') or die('<b>Error:</b> No direct access allowed');
+<?php 
 
-require_once 'IceModel.php';
-require_once 'IceContentSet.php';
+namespace Ice\Models;
 
-class IcePage extends IceModel {
+defined('SYSINIT') or die('<b>Error:</b> No direct access allowed');
+
+require_once 'Model.php';
+require_once 'ContentSet.php';
+
+class Page extends Model {
 
 	protected $id;
 	protected $name;
@@ -70,7 +74,7 @@ class IcePage extends IceModel {
 	/* METHODS */
 
 	public function getContentSet($db) {
-		return IceContentSet::byPageName($db, $this->name);
+		return ContentSet::byPageName($db, $this->name);
 	}
 
 	public function delete($db) {

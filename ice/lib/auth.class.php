@@ -1,4 +1,6 @@
 <?php
+namespace Ice;
+
 class Authentication {
 	
 	public $error;
@@ -24,14 +26,14 @@ class Authentication {
 	}
 	public function loginProcess() {
 		global $db;
-		require_once(__DIR__ . '/../models/IceUser.php');
+		require_once(__DIR__ . '/../models/User.php');
 
 		if(isset($_POST['username'])) {
 			$_POST = $this->sanitize($_POST);
 			if(strlen($_POST['username']) < 1 || strlen($_POST['password']) < 1) { die('No password and/or username given'); }
 			$db->connect();
 
-			$user = IceUser::byUsername($db, $_POST['username']);
+			$user = Ice\Models\User::byUsername($db, $_POST['username']);
 			
 			if($user == null) {if($_GET['xhr']=="true"){die(0);} return; }
 			
@@ -66,7 +68,7 @@ class Authentication {
 			return filter_var($input, FILTER_SANITIZE_NUMBER_INT);
 		}
 		else if(is_float($input)) {
-			return ilter_var($input, FILTER_SANITIZE_NUMBER_FLOAT);
+			return filter_var($input, FILTER_SANITIZE_NUMBER_FLOAT);
 		}
 	}
 }

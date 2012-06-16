@@ -1,11 +1,16 @@
 <?php
+	use Ice\Models\User;
+
 	define('SYSINIT',true);
+	
 	require_once '../../ice-config.php';
 	require_once '../../lib/db.class.php';
 	require_once '../../lib/auth.class.php';
-	require_once '../../models/IceUser.php';
+	require_once '../../models/User.php';
+	
 	$Auth->init(2);
 	$db->connect();
+	
 	if(!isset($_POST['refresh'])) :
 ?>
 
@@ -50,7 +55,7 @@ function usermanager() {
 <tbody>
 
 	<?php 
-	$users = IceUser::findAll($db);
+	$users = User::findAll($db);
 
 	foreach($users as $i => $user) {
 		echo '<tr><td>', $user->getId(), '</td><td>',

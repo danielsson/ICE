@@ -1,10 +1,13 @@
-<?php defined('SYSINIT') or die('<b>Error:</b> No direct access allowed');
+<?php
+namespace Ice;
+
+defined('SYSINIT') or die('<b>Error:</b> No direct access allowed');
 
 require_once(dirname(__FILE__).'/../lib/auth.class.php');
 
 $Auth->init(1); //Userlevel 1 or higher required
 
-class ICECMSEDIT extends ICECMS {
+class ICECMSEDIT extends \ICECMS {
 	
 	public function head($include_jquery = true) {
 		global $config;
