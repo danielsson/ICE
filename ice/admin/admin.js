@@ -147,7 +147,7 @@ var ice = {
 					return false;
 				}
 			}
-			this.windowsStorage = [];
+			this.windowsStorage = {};
 			//reset, just in case
 			if( typeof callback == 'function') {
 				callback();
