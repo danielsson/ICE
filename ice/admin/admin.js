@@ -8,7 +8,9 @@ var ice = {
 		ready : function() {
 			this.taskBar = $('#taskBar ul');
 			this.windowSandbox = $('#windowSandbox');
-
+			if(!'console' in window) {
+				console = {log:function(m){ice.message(m,'warning')}}
+			}
 		},
 		getWindow : function(name) {
 			if( name in this.windowsStorage) {
@@ -17,7 +19,6 @@ var ice = {
 				return false;
 			}
 		},
-		getall: function() {return this.windowsStorage},
 		addWindow : function(win) {//First argument is a windowClass object.
 			if(this.displayNoWindowsWarning) {
 				this.windowSandbox.find("div:has(img)").html("");
@@ -29,9 +30,11 @@ var ice = {
 				win.name = name;
 			}
 			if( name in this.windowsStorage === false) {//Prevent duplicates.
-				console.log(name);
 				this.windowsStorage[name] = win;
 			} else {
+				//Move requested window to front
+				this.windowsStorage[name].element.css({zIndex:this.maxZindex()});
+				console.log("ID already in use: " + name);
 				return false;
 			}
 

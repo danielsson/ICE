@@ -1,5 +1,5 @@
 <?php
-	use Ice\Models;
+	use Ice\Models\Page;
 
 	define('SYSINIT',true);
 	
