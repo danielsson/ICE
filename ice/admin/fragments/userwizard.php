@@ -45,18 +45,19 @@ function userwizard() {
 	W.data = {currentSlide: 0};
 	W.icon = "layout_add.png";
 	W.onOpen = function(win) {
+		//Next button
 		$(':button:eq(0)', win.contentBox).click(function(e) {
 			var $this = $(this), $win = ice.Manager.getWindow($this.inWindow()), $backBtn = $(':button:eq(1)', $win.contentBox);
 			$win.data.currentSlide = $win.data.currentSlide+1;
-			$win.titleBox.text('New user wizard - Step ' + ($win.data.currentSlide + 1) + ' of 5');
+			$win.titleBox.text('New user wizard - Step ' + ($win.data.currentSlide + 1) + ' of 4');
 			var nr = 0 - ($win.data.currentSlide * 418);
-			if($win.data.currentSlide != 3)  {
+			if($win.data.currentSlide != 2)  {
 				$backBtn.removeAttr('disabled');
 				this.disabled = false;
 			} else {
 				this.disabled = true;
 			}
-			if($win.data.currentSlide == 2) {
+			if($win.data.currentSlide == 1) {
 				$wdr = $('.wizDataReview', $win.contentBox);
 				if($win.contentBox.find('input[name]').filter(function() { return $(this).val() == ""; }).length > 0) {
 					ice.message('One or more fields are empty. Please go back and fill it in.', 'warning', $wdr);
@@ -67,7 +68,7 @@ function userwizard() {
 					$wdr.html('<b>Username:</b> ' + name + '<br /><b>Password:</b> ********'
 						+ '<br /><b>Userlevel:</b> ' + lvl);
 				}
-			} else if($win.data.currentSlide == 3) {
+			} else if($win.data.currentSlide == 2) {
 				this.disabled = true;
 				$backBtn.attr('disabled', 'disabled');
 				$win.loadingOn();
@@ -79,14 +80,15 @@ function userwizard() {
 			$('.horizSlider', $win.contentBox).animate({marginLeft: nr},500);
 			
 		});
+		//Prev button
 		$(':button:eq(1)', win.contentBox).click(function(e) {
 			var $this = $(this), $win = ice.Manager.getWindow($this.inWindow()),$nextBtn = $(':button:eq(0)', $win.contentBox);
 			$win.data.currentSlide = $win.data.currentSlide-1;
-			$win.titleBox.text('New page wizard - Step ' + ($win.data.currentSlide + 1) + ' of 5');
+			$win.titleBox.text('New page wizard - Step ' + ($win.data.currentSlide + 1) + ' of 4');
 			var nr = 0 - ($win.data.currentSlide * 418);
-			if($win.data.currentSlide !== 0)  {
+			if($win.data.currentSlide == 0)  {
 				$nextBtn.removeAttr('disabled');
-				this.disabled = false;
+				this.disabled = true;
 			} else {
 				this.disabled = true;
 			}
@@ -108,7 +110,7 @@ function wizCreateUser(formdata, wName) {
 		if(typeof data.status !== "undefined") {
 			$win = ice.Manager.getWindow(wName);
 			$win.loadingOff();
-			$('.horizSlider', $win.contentBox).animate({marginLeft: 0-(3*418)},500);
+			$('.horizSlider', $win.contentBox).animate({marginLeft: 0-(2*418)},500);
 			
 			try{ice.Manager.getWindow('USRMAN').refresh();} catch(e){}
 		} else {
@@ -121,36 +123,36 @@ function wizCreateUser(formdata, wName) {
 
 </script>
 
-<script type="text/template" id="userWizContent">
+<script type="text/x-template" id="userWizContent">
 
 <div class="winpadd pageWiz">
 	<div class="viewPort rounded6">
 	<form method="post" action="fragments/userwizard.php">
 		<ul class="horizSlider">
 			<li class="horizSlide">
-				<div class="winpadd">
-					<p>
-					This wizard will help you create a new user. To begin, please choose a
-					username.
-					</p><br /> <br />
-					<label for="usrWizUsername">Username<input name="username" type="text" style="width: 275px;" /> </label>
-
-				</div>
-				<div class="winpadd">
-					<p>Please enter the password</p><br /> <br />
-					<label for="usrWizPassword">Password <input name="password" type="password" style="width: 275px;" /> </label>
-				</div>
-				
-			</li>
-			<li class="horizSlide">
-				<div class="winpadd">
-					<p> Select Userlevel for the new user. Be careful with level three.</p><br /> <br />
-					<select name="userlevel">
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-					</select>
-				</div>
+				<p class="enlight">
+				This wizard will help you create a new user. To begin, please choose a
+				username and a password.
+				</p>
+				<dl class="form">
+					<dt><label for="usrWizUsername">Username</label></dt>
+					<dd><input name="username" type="text" style="width: 255px;" /></dd>
+				</dl>
+				<dl class="form">
+					<dt><label for="usrWizPassword">Password</label></dt>
+					<dd><input name="password" type="password" style="width: 255px;" /></dd>
+				</dl>
+				<p class="enlight"> Select Userlevel for the new user. Be careful with level three.</p>
+				<dl class="form">
+					<dt><label>Userlevel</label></dt>
+					<dd>
+						<select name="userlevel">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+						</select>
+					</dd>
+				</dl>
 			</li>
 			<li class="horizSlide">
 				<div class="winpadd">

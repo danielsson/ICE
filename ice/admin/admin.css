@@ -106,10 +106,6 @@ aside {
 	width:194px;
 	z-index: 2;
 }
-.borderStyle {
-	padding:3px;
-	background-color: rgba(0,0,0,0.2);
-}
 .winpadd {padding: 20px;}
 
 .window {
@@ -121,7 +117,7 @@ aside {
 	font-weight: 400;
 	box-shadow: 0 3px 10px #000;
 }
-.window.ui-draggable-dragging {
+.ui-draggable-dragging {
 	-moz-box-shadow: none;
 	-webkit-box-shadow: none;
 	box-shadow: none;
@@ -139,7 +135,6 @@ aside {
 	color: #333;
 	padding: 0 20px;
 	float: left;
-	background: url("resources/application_xp.png") 5px 7px no-repeat;
 }
 .winExit {
 	float: right;
@@ -153,7 +148,7 @@ aside {
 
 .winExit:hover {
 	opacity: 1;
-	-moz-box-shadow: 0 0 5px red; 
+	box-shadow: 0 0 5px red; 
 }
 .winContent {
 	min-height:100px;
