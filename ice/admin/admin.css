@@ -350,3 +350,16 @@ hr {
 	background-color: #CCC;
 	margin: 20px 0;
 }
+dl.form {
+	list-style: none;
+	overflow:hidden;
+}
+dl.form dt {
+	float:left;
+	width: 100px;
+	padding:17px 0;
+	clear:left;
+}
+dl.form dd{
+	float:left;
+}

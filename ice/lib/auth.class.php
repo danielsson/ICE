@@ -33,7 +33,7 @@ class Authentication {
 			if(strlen($_POST['username']) < 1 || strlen($_POST['password']) < 1) { die('No password and/or username given'); }
 			$db->connect();
 
-			$user = Ice\Models\User::byUsername($db, $_POST['username']);
+			$user = Models\User::byUsername($db, $_POST['username']);
 			
 			if($user == null) {if($_GET['xhr']=="true"){die(0);} return; }
 			

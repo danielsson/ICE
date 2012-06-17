@@ -1,5 +1,6 @@
 <?php 
 namespace Ice\Models;
+use \Bcrypt;
 
 defined('SYSINIT') or die('<b>Error:</b> No direct access allowed');
 
