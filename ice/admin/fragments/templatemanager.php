@@ -147,20 +147,30 @@ function templatemanager() {
 
 </script>
 <script type="text/template" id="addFilesDialog">
-<div class="winpadd">
-	<p>You will have to put the files on the server yourself</p>
-	<br />
-	<form>
-	<p><b>Name</b></p>
-	<input type="text" name="nicename" style="width:90%"/>
-	<p><b>Relative File Path. </b><i>(Relative to the document root) I.e. /templates/about.php</i></p>
-	<input type="text" name="path" style="width:90%"/>
-	<p><b>Relative Url.</b><i> (Relative to the root)I.e. if url to the page is example.com/tmp/a.php, write /tmp/a.php in this box.</i></p>
-	<input type="text" name="url" style="width:90%"/>
+<div class="enlight">
+	<p>You have to put the files on the server yourself</p>
+</div>
+<form>
+	<dl class="form">
+		<dt><label>Name</label></dt>
+		<dd><input type="text" name="nicename" style="width:90%" placeholder="Article page"/></dd>
+	</dl>
+
+	<p class="enlight"><b>Relative File Path. </b><i>(Relative to the document root) I.e. /templates/about.php</i></p>
+	<dl class="form">
+		<dt><label for="">Rel. path</label></dt>
+		<dd><input type="text" name="path" style="width:90%" placeholder="/templates/article.php"/></dd>
+	</dl>
+	<p class="enlight"><b>Relative Url.</b><i> (Relative to the root)I.e. if url to the page is example.com/tmp/a.php, write /tmp/a.php in this box.</i></p>
+	<dl class="form">
+		<dt><label for="">Rel URL</label></dt>
+		<dd><input type="text" name="url" style="width:90%" placeholder="/templates/article.php"/></dd>
+	</dl>
 	<input type="button" value="Abort" style="float:left"/>
 	<input type="submit" value="Add file" style="float:right" />
-	</form>
-	<div style="clear:both"></div>
-</div>
+</form>
+<div style="clear:both"></div>
 
 </script>
+
+
