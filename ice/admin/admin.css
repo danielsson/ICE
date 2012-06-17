@@ -137,7 +137,7 @@ aside {
 .winTitle {
 	font: bold 12px/32px sans-serif;
 	color: #333;
-	padding: 0 25px;
+	padding: 0 20px;
 	float: left;
 	background: url("resources/application_xp.png") 5px 7px no-repeat;
 }
@@ -362,4 +362,18 @@ dl.form dt {
 }
 dl.form dd{
 	float:left;
+}
+#pageManagerMenu {
+	background: #FFF;
+	background: rgba(255,255,255,0.8);
+	border:1px solid #FFF;
+	border: thin solid #777;
+	position: absolute;
+	width: auto;
+	z-index: 999999;
+}
+#pageManagerMenu b {
+	text-align: center;
+	display: block;
+	
 }

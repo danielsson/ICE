@@ -36,7 +36,6 @@
 ?>
 <script type="text/javascript">
 	function pagemanager() {
-		ice.fragment.addCss('pagemanager.css');
 		var W = new ice.Window();
 		W.name = "IcePM";
 		W.title = "Manage pages";
@@ -155,13 +154,13 @@
 <script type="text/template" id="pageManager1">
 <?php endif;?>
 
-<div class="pagemanager">
+<div class="winpadd" style="padding-top:5px;">
 	<div class="toolbar">
 		Click on a page to edit, right click for options.
 		<a href="#" style="float:right;" onclick="ice.fragment.load('pagewizard');">Create new page</a>
 		
 	</div>
-<br />
+	<br />
 	<div style="clear:both;"></div>
 	<ul class="big_grid">
 		<?php
