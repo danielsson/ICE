@@ -248,6 +248,11 @@ function renderEditBubbles() {
 		var $this = $(this), off = $this.position();
 		var $bubble = $('<div> <span>Edit</span> </div>');
 		bubbles.push($bubble);
+
+		if(off.left - 70 < 0) { //Ensure that the pointer is in view
+			off.left = 70;
+		}
+		
 		$bubble.addClass('ice icePointer').css({
 			left : off.left - 70,
 			top : off.top
