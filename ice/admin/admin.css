@@ -106,7 +106,7 @@ aside {
 	width:194px;
 	z-index: 2;
 }
-.winpadd {padding: 20px;}
+.winpadd {padding: 20px; overflow: hidden}
 
 .window {
 	position: absolute;

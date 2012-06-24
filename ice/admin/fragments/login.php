@@ -27,7 +27,6 @@
 ?>
 <script type="text/javascript" >
 	function login() {
-		ice.fragment.addCss('login.css');
 		
 		var lWin = new ice.Window();
 		lWin.name = "LoginWindow";
@@ -79,25 +78,20 @@
 
 </script>
 <script type="text/template" id="loginWindow" >
+	<div id="loginError"></div>
+	<form action="#" method="post" >
+		<br />
+		<dl class="form">
+			<dt><label>Username</label></dt>
+			<dd><input type="text" id="username" name="username" style="width:300px" /></dd>
 
-<div class="loginwindow">
-	<div class="loginForm">
-		<div id="loginError"></div>
-		<form action="#" method="post" >
-			<fieldset>
-				<label for="username">Username</label>
-				<input type="text" id="username" name="username"></input>
-			</fieldset>
-			<fieldset>
-				<label for="password">Password</label>
-				<input type="password" id="password" name="password"></input>
-			</fieldset>
-			<br />
-			<a href="#" style="float: left;">Have a WebID?</a>
+			<dt><label>Password</label></dt>
+			<dd><input type="password" id="password" name="password" style="width:300px" /></dd>
+
+		</dl>
+		<div class="winpadd">
+			<a href="#" style="float: left; margin-top: 15px;">Have a WebID?</a>
 			<input type="submit" value="Log in" style="float:right;"></input>
-			
-			<br style="clear: both"/>
-		</form>
-	</div>
-</div>
+		</div>
+	</form>
 </script>
