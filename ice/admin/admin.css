@@ -256,8 +256,8 @@ input[type=submit], input[type=button] {
 	font-weight: bold;
 	border:none;
 	box-shadow: 0 1px 1px #CCC;
-	
 }
+input + input {margin-left: 1px !important;}
 input[type=submit]:hover, input[type=button]:hover {
 	background: #FFF;
 }
@@ -265,6 +265,7 @@ input[type=submit]:active, input[type=button]:active {
 	color: #888;
 	box-shadow: 0 0 1px #CCC;
 }
+
 input[type=submit][disabled], input[type=button][disabled] {background: #DDD; box-shadow: none;text-shadow: none}
 label {
 	color: #555;

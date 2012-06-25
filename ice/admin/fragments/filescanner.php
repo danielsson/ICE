@@ -4,12 +4,37 @@ namespace Ice;
 define('SYSINIT',true);
 
 require_once '../../ice-config.php';
+require_once '../../lib/db.class.php';
 require_once '../../lib/auth.class.php';
 require_once '../../lib/scanner.php';
 
+$Auth -> init(3);
+
 if(isset($_POST['files'])) {
-	print_r($_POST['files']);
-	die();
+	$db->connect();
+	$paths = $_POST['files'];
+	
+	foreach($paths as $i => $path64) {
+		$path = $Auth -> sanitize(base64_decode($path64));
+		$url = str_replace('\\', '/', $path); //Fix for windows
+
+		$path = $db->escape($path);
+		$url = $db->escape($url);
+
+		$name = $Auth -> sanitize($_POST[$path64]); //The name for the text boxes are simply the encoded path
+		$name = $db->escape($name);
+
+		$sql = "INSERT INTO ice_files (name,path,url) VALUES ('$name','$path','$url');";
+
+		$db->query($sql);
+		if($db->error()) {
+			echo $db->error();
+			die();
+		}
+
+	}
+	print_r($_POST);
+	die('{"status":"ok"}');
 }
 
 ?>
@@ -21,6 +46,27 @@ function filescanner() {
 	W.name = 'filescanner';
 	W.title = 'Scan for files';
 	W.width = 600;
+
+	W.onOpen = function(win) {
+		$(':submit', win.contentBox).click(function(e){
+			e.preventDefault();
+			var W = ice.Manager.getWindow('filescanner'),
+				postdata = $('form', W.contentBox).serialize();
+			W.loadingOn();
+
+			$.post('fragments/filescanner.php', postdata, function(response, code) {
+				var W = ice.Manager.getWindow('filescanner');
+				W.loadingOff();
+				$('form', W.contentBox).slideUp();
+				$('p.enlight', W.contentBox).text('The files were added successfully.');
+				try {
+					ice.Manager.getWindow('TMPLMAN').refresh();
+				} catch(e){}
+			});
+
+
+		});
+	};
 
 	W.setContent(document.getElementById('filescannertemplate').innerHTML);
 	ice.Manager.addWindow(W);
@@ -35,6 +81,7 @@ function filescanner() {
 	<thead>
 		<tr>
 			<td>Add</td>
+			<td>Name</td>
 			<td>Path</td>
 			<td>URL</td>
 		</tr>
@@ -48,8 +95,10 @@ function filescanner() {
 		$scanner->make_paths_relative_to_doc_root();
 
 		foreach($scanner->pathlist as $path) {
+			$enc = base64_encode($path);
 			echo '<tr>';
-			echo '<td><input type="checkbox" name="files[]" value="' . base64_encode($path) . '" /></td>';
+			echo '<td><input type="checkbox" name="files[]" value="' . $enc . '" /></td>';
+			echo '<td><input type="text" name="'. $enc .'" placeholder="Name this template" /></td>';
 			echo "<td>$path</td>";
 			echo "<td>$path</td>";
 			echo '</tr>';

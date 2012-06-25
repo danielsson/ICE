@@ -80,15 +80,17 @@ function templatemanager() {
 			ice.Manager.addWindow(AFW);
 		});
 		W.contentBox.find('#delFilesBtn').click(function() {
-		var res = prompt('Please enter the id of the file You want to remove from the system.', "#");
-		if(res !== null && res !== "" && confirm("This will delete all pages using this template, and all their text.")) {
-			$.post("fragments/templatemanager.php", {del: true, id: res}, function() {
-				ice.message('File was deleted', 'info');
-				ice.Manager.getWindow('TMPLMAN').refresh();
-			});
-		}
-			
+			var res = prompt('Please enter the id of the file You want to remove from the system.', "#");
+			if(res !== null && res !== "" && confirm("This will delete all pages using this template, and all their text.")) {
+				$.post("fragments/templatemanager.php", {del: true, id: res}, function() {
+					ice.message('File was deleted', 'info');
+					ice.Manager.getWindow('TMPLMAN').refresh();
+				});
+			}	
 		});
+		W.contentBox.find('#scanFilesBtn').click(function() {
+			ice.fragment.load('filescanner');
+		})
 	}
 	W.setContent(document.getElementById('pageFileManager').innerHTML);
 	ice.Manager.addWindow(W);
@@ -98,10 +100,9 @@ function templatemanager() {
 
 <script type="text/template" id="pageFileManager">
 <?php endif; ?>
-<div class="winpadd">
-<p>Use this interface to add finished files to the cms. (URL)Instructions</p>
-<br />
-<table class="rounded6">
+
+<p class="enlight">Use this interface to add finished files to the cms. </p>
+<table>
 <thead>
 	<tr>
 		<td>ID</td>
@@ -127,22 +128,10 @@ function templatemanager() {
 
 </tbody>
 </table>
-<div style="height:20px;"></div>
-<div class="block190" style="float:left">
-	<div id="delFilesBtn" class="expBtn rounded6" style="margin:0;">
-		<p class="big">Remove a File</p>
-		<p class="small">from ICE!</p>
-	</div>
-</div>
-<div class="block190" style="float:right">
-	<div id="addFilesBtn" class="expBtn rounded6" style="margin:0;">
-		<p class="big">Add a File</p>
-		<p class="small">to ICE!</p>
-	</div>
-</div>
-<div style="clear:both"></div>
-</div>
 
+<input type="button" id="scanFilesBtn" value="Find files automatically" style="float:right" />
+<input type="button" id="addFilesBtn" value="Add file manually" style="float:right" />
+<input type="button" id="delFilesBtn" value="Delete file" style="color:#B00;float:right" />
 <?php if(isset($_POST['refresh'])) {die();} ?>
 
 </script>
