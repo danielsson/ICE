@@ -1,14 +1,15 @@
 <?php
+	namespace Ice;
 	use Ice\Models\User;
 
 	define('SYSINIT',true);
 	
 	require_once '../../ice-config.php';
 	require_once '../../lib/db.class.php';
-	require_once '../../lib/auth.class.php';
+	require_once '../../lib/Auth.php';
 	require_once '../../models/User.php';
 	
-	$Auth->init(3);
+	Auth::init(3);
 	
 	if(isset($_POST['id']) && !isset($_POST['username'])) {
 		$db->connect();
@@ -28,7 +29,7 @@
 			$db->connect();
 			$uid = (int) $_POST['id'];
 			$ulvl = (int) $_POST['userlevel'];
-			$uname = $Auth->sanitize($_POST['username']);
+			$uname = Auth::sanitize($_POST['username']);
 
 			$user = User::byId($db,$uid);
 			

@@ -1,14 +1,15 @@
 <?php
+	namespace Ice;
 	use Ice\Models\Page;
 	
 	define('SYSINIT',true);
 
 	require '../../ice-config.php';
 	require '../../lib/db.class.php';
-	require '../../lib/auth.class.php';
+	require '../../lib/Auth.php';
 	require '../../models/Page.php';
 
-	$Auth->init(1);
+	Auth::init(1);
 	$db->connect();
 
 	if(isset($_POST['del']) && $_POST['del'] == "true") {

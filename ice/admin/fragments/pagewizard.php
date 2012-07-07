@@ -1,19 +1,20 @@
 <?php
+	namespace Ice;
 	use Ice\Models\Page;
 
 	define('SYSINIT',true);
 	
 	require '../../ice-config.php';
 	require '../../lib/db.class.php';
-	require '../../lib/auth.class.php';
+	require '../../lib/Auth.php';
 	require '../../models/Page.php';
 	
-	$Auth->init(2);
+	Auth::init(2);
 	$db->connect();
 	
 	if(!empty($_POST['name'])) {
 		$data = Array('status'=>'ok', 'error'=>'none');
-		$_POST = $Auth->sanitize($_POST);
+		$_POST = Auth::sanitize($_POST);
 
 		$tmp = parse_url($config['baseurl'] . $_POST['url']);
 		$url = $db->escape($tmp['path']);

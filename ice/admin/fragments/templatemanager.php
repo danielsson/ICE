@@ -1,12 +1,13 @@
 <?php
+	namespace Ice;
 	define('SYSINIT',true);
 	require '../../ice-config.php';
 	require '../../lib/db.class.php';
-	require '../../lib/auth.class.php';
-	$Auth->init(2);
+	require '../../lib/Auth.php';
+	Auth::init(2);
 	$db->connect();
 	if(!empty($_POST['nicename'])) {
-		$_POST = $Auth->sanitize($_POST);
+		$_POST = Auth::sanitize($_POST);
 		if(!file_exists($_SERVER['DOCUMENT_ROOT'] . $_POST['path'])) {
 			die('Incorrect path: File not found.' . $_POST['path']);
 			// TODO: THIS IS NOT WORKING
@@ -26,7 +27,7 @@
 		}
 	}
 	if(!empty($_POST['del'])) {
-		$_POST = $Auth->sanitize($_POST);
+		$_POST = Auth::sanitize($_POST);
 		$sql = "DELETE FROM ice_files WHERE id = '" . intval($_POST['id']) . "'; ";
 		$db->query($sql);
 		//$sql = "DELETE FROM ice_pages WHERE tid = '" . intval($_POST['id']) . "'; ";
