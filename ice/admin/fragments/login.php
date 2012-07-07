@@ -1,28 +1,39 @@
-<?php 
+<?php
+namespace Ice;
 
-	if(isset($_POST['username'])) {
-		define('SYSINIT',true);
-		require '../../ice-config.php';
-		require '../../lib/db.class.php';
-		require '../../lib/auth.class.php';
-		$Auth->loginProcess();
-		die(); //This should be unreachable
-	} elseif($_POST['logout']=="true"){
-		session_start();
-		unset($_SESSION['username'], $_SESSION['userlevel']);
-		die();
+define('SYSINIT',true);
+
+require '../../ice-config.php';
+require '../../lib/db.class.php';
+require '../../lib/Auth.php';
+
+Auth::init(0);
+
+if(isset($_POST['username'])) {
+	
+	$db->connect();
+	$result = Auth::login($db, $_POST['username'], $_POST['password']);
+
+	if(is_null($result)) {
+		//Failed
+		die('false');
 	} else {
-		session_start();
-		if(isset($_SESSION['userlevel']) && $_SESSION['userlevel'] > 0) { ?>
-				<script type="text/javascript" >
-					function login() {
-						ice.fragment.load("sidebar");
-					}
-				</script>
-			<?php 
-			die();
-		}
+		die('true');
 	}
+} elseif($_POST['logout']=="true"){
+	Auth::logout();
+	die();
+} else {
+	if(isset($_SESSION['userlevel']) && $_SESSION['userlevel'] > 0) { ?>
+	<script type="text/javascript" >
+		function login() {
+			ice.fragment.load("sidebar");
+		}
+	</script>
+	<?php 
+	die();
+	}
+}
 
 ?>
 <script type="text/javascript" >

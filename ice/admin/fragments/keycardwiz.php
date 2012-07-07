@@ -1,14 +1,15 @@
 <?php
+	namespace Ice;
 	use Ice\Models\User;
 
 	define('SYSINIT',true);
 	
 	require_once '../../ice-config.php';
 	require_once '../../lib/db.class.php';
-	require_once '../../lib/auth.class.php';
+	require_once '../../lib/Auth.php';
 	require_once '../../models/User.php';
 
-	$Auth->init(1);
+	Auth::init(1);
 	
 	if(isset($_GET['download'])) {
 

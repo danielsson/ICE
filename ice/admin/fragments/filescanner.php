@@ -5,23 +5,23 @@ define('SYSINIT',true);
 
 require_once '../../ice-config.php';
 require_once '../../lib/db.class.php';
-require_once '../../lib/auth.class.php';
+require_once '../../lib/Auth.php';
 require_once '../../lib/scanner.php';
 
-$Auth -> init(3);
+Auth::init(3);
 
 if(isset($_POST['files'])) {
 	$db->connect();
 	$paths = $_POST['files'];
 	
 	foreach($paths as $i => $path64) {
-		$path = $Auth -> sanitize(base64_decode($path64));
+		$path = Auth::sanitize(base64_decode($path64));
 		$url = str_replace('\\', '/', $path); //Fix for windows
 
 		$path = $db->escape($path);
 		$url = $db->escape($url);
 
-		$name = $Auth -> sanitize($_POST[$path64]); //The name for the text boxes are simply the encoded path
+		$name = Auth::sanitize($_POST[$path64]); //The name for the text boxes are simply the encoded path
 		$name = $db->escape($name);
 
 		$sql = "INSERT INTO ice_files (name,path,url) VALUES ('$name','$path','$url');";

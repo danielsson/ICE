@@ -1,9 +1,10 @@
-<?php 
+<?php
+	namespace Ice;
 	define('SYSINIT',true);
 	require_once '../../ice-config.php';
-	require_once '../../lib/auth.class.php';
+	require_once '../../lib/Auth.php';
 	require_once '../../lib/image.class.php';
-	$Auth->init(2);
+	Auth::init(2);
 ?>
 
 <script type="text/javascript">

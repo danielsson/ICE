@@ -5,14 +5,14 @@
 	
 	require_once '../../ice-config.php';
 	require_once '../../lib/db.class.php';
-	require_once '../../lib/auth.class.php';
+	require_once '../../lib/Auth.php';
 	require_once '../../models/User.php';
 
-	$Auth->init(3);
+	Auth::init(3);
 	
 	if(isset($_POST['username'])) {
 		if(!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['userlevel'])) {
-			$uname = $Auth->sanitize($_POST['username']);
+			$uname = Auth::sanitize($_POST['username']);
 			$pass = User::hash($_POST['password']);
 			$lvl = (int) $_POST['userlevel'];
 			

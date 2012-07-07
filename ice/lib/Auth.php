@@ -1,9 +1,11 @@
 <?php
 
 namespace Ice;
-use Models\User;
+use Ice\Models\User;
 
-static class Auth {
+require_once(__DIR__ . '/../models/User.php');
+
+class Auth {
 
 	public static function init($required_userlevel = 0) {
 		global $config;
@@ -13,20 +15,18 @@ static class Auth {
 			$_SESSION['userlevel'] = 0;
 		}
 
-		self::require($required_userlevel);
+		self::requires($required_userlevel);
 	}
 
 	//TODO: Better handling of failure
-	public static function require($required_userlevel = 0) {
+	public static function requires($required_userlevel = 0) {
 		if ($_SESSION['userlevel'] < 1
 			&& $required_userlevel > 0) {
-			
-			if(isset($_GET['xhr']) {
-				header("Location: " . $config['baseurl'] . $config['sys_folder'] . 'admin/#login');
-			}
+
+			header("Location: " . $config['baseurl'] . $config['sys_folder'] . 'admin/#login');
 			die('UserLevel==zero');
 		}
-		elseif($_SESSION['userlevel'] < $req_userlevel) {
+		elseif($_SESSION['userlevel'] < $required_userlevel) {
 			die('You are not allowed to view this page.');
 		}
 	}
@@ -34,15 +34,18 @@ static class Auth {
 	public static function login(Database $db, $username, $password) {
 		$user = User::byUsername($db, $username);
 
-		is_null($user) and return false;
+		if(is_null($user)) {
+			return null;
+		}
 
 		if($user->passwordEquals($password)) {
 			$_SESSION['uid']		= $user->getId();
 			$_SESSION['username']	= $user->getUsername();
 			$_SESSION['userlevel']	= $user->getUserLevel();
 
+			return $user;
 		} else {
-			return false;
+			return null;
 		}
 	}
 

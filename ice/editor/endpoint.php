@@ -6,7 +6,7 @@ $data = array(
 define('SYSINIT', true);
 require_once('../ice-config.php');
 require_once('../lib/db.class.php');
-require_once('../lib/auth.class.php');
+require_once('../lib/Auth.php');
 require_once('../lib/image.class.php');
 
 if($_SESSION['userlevel'] < 1) {

@@ -3,9 +3,9 @@ namespace Ice;
 
 defined('SYSINIT') or die('<b>Error:</b> No direct access allowed');
 
-require_once(dirname(__FILE__).'/../lib/auth.class.php');
+require_once(dirname(__FILE__).'/../lib/Auth.php');
 
-$Auth->init(1); //Userlevel 1 or higher required
+Auth::init(1); //Userlevel 1 or higher required
 
 class ICECMSEDIT extends \ICECMS {
 	

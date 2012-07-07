@@ -1,13 +1,16 @@
 <?php 
+	namespace Ice;
+	use \IceImage;
+	
 	define('SYSINIT',true);
 	require_once '../../ice-config.php';
-	require_once '../../lib/auth.class.php';
+	require_once '../../lib/Auth.php';
 	require_once '../../lib/image.class.php';
-	$Auth->init(2);
+	Auth::init(2);
 	
 	
 	if(isset($_GET['thumb'])) {
-		$name = $Auth->sanitize($_GET['thumb']);
+		$name = Auth::sanitize($_GET['thumb']);
 		$path = realpath('../../media/' . $name);
 		$tpath = '../../cache/thumb_' . $name;
 		if(!file_exists($tpath)) {
@@ -25,7 +28,7 @@
 		die();
 	} 
 	if(isset($_POST['del'])) {
-		$name = $Auth->sanitize($_POST['del']);
+		$name = Auth::sanitize($_POST['del']);
 		$path = realpath('../../media/' . $name);
 		if(file_exists($path)) {
 			unlink($path);

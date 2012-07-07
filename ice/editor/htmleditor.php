@@ -1,7 +1,7 @@
 <?php define('SYSINIT', true);
 require '../ice-config.php';
-require '../lib/auth.class.php';
-$Auth -> init(1);
+require '../lib/Auth.php';
+Auth::init(1);
 ?>
 <!DOCTYPE html>
 <html>

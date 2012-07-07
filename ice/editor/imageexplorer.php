@@ -2,9 +2,9 @@
 //TODO: Make this less shitty.
 define('SYSINIT', true);
 require '../ice-config.php';
-require '../lib/auth.class.php';
+require '../lib/Auth.php';
 require '../lib/image.class.php';
-$Auth -> init(2);
+Auth::init(2);
 
 if (isset($_GET['thumb'])) {
 	$path = realpath('../media/' . $_GET['thumb']);
