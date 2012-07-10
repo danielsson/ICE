@@ -1,8 +1,13 @@
 <?php
 	namespace Ice;
+	use \PDO;
+	use Ice\Models\User;
+
 	define('SYSINIT',true);
 	require_once '../../ice-config.php';
 	require_once '../../lib/Auth.php';
+	require_once '../../lib/DB.php';
+	require_once '../../models/User.php';
 	require_once '../../lib/image.class.php';
 	Auth::init(2);
 ?>
@@ -47,12 +52,17 @@
 </div>
 <hr />
 <div class="winpadd">
-	<p>Vinyl wayfarers keffiyeh, shoreditch carles cred thundercats occupy fixie pork belly leggings synth organic terry richardson.</p>
-	<input type="text" />
-	<input type="password" />
-	<h3>Wayfarers</h3>
-	<p>Raw denim echo park beard, bushwick swag tofu ethnic next level brunch irony master cleanse.</p>
-	<label>Brunch: <input type="text" /></label>
-	<div style="clear:both" />
+	<?php
+		$stmt = DB::prepare('SELECT * FROM ice_users WHERE id = :id');
+		//$id = 450344;
+		//$stmt -> bindParam(':id', $id, PDO::PARAM_INT);
+		$stmt -> execute(array(':id' => 1));
+
+		$res = $stmt -> fetchAll(PDO::FETCH_CLASS, 'Ice\Models\User');
+		//print_r($res[0] -> getArray());
+		print($res[0] -> hasKeyCard() === true);
+
+
+	?>
 </div>
 </script>

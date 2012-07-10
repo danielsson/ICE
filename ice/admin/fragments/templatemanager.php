@@ -1,11 +1,14 @@
 <?php
 	namespace Ice;
+	use \PDO;
 	define('SYSINIT',true);
+
 	require '../../ice-config.php';
-	require '../../lib/db.class.php';
+	require '../../lib/DB.php';
 	require '../../lib/Auth.php';
+	
 	Auth::init(2);
-	$db->connect();
+	
 	if(!empty($_POST['nicename'])) {
 		$_POST = Auth::sanitize($_POST);
 		if(!file_exists($_SERVER['DOCUMENT_ROOT'] . $_POST['path'])) {
@@ -116,15 +119,14 @@ function templatemanager() {
 
 	<?php 
 	$sql = "SELECT * FROM ice_files";
-	$res = $db->query($sql);
+	$res = DB::query($sql);
 	if(!$res) {
 		echo "No pages";
 	} else {
-		while ($row = mysql_fetch_array($res)) {
+		while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
 			echo '<tr><td>', $row['id'], '</td><td>', $row['name'], '</td><td>', $row['path'], '</td><td>', $row['url'], '</td>';
 		}
 	}
-	$db->close();
 	?>
 
 </tbody>

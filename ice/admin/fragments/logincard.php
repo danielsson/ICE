@@ -1,5 +1,5 @@
 <?php 
-
+namespace Ice;
 use Ice\Models\User;
 
 if(!empty($_POST['userid'])) {
@@ -8,19 +8,17 @@ if(!empty($_POST['userid'])) {
 	define('SYSINIT',true);
 
 	require_once '../../ice-config.php';
-	require_once '../../lib/db.class.php';
+	require_once '../../lib/DB.php';
 	require_once '../../models/User.php';
 
 	$key = $_POST['key'];
 	$uid = intval($_POST['userid']);
 
-	$db->connect();
-	$user = User::byId($db,$uid);
+	$user = User::byId($uid);
 	if($user !== null && $user->keyCardHashEquals($key)) {
 		$_SESSION['username']=$user->getUsername();
 		$_SESSION['userlevel'] = $user->getUserlevel();
 		$_SESSION['uid'] = $user->getId();
-		$db->close();
 		die('{"status":"ok","error":""}');
 	} else {
 		die('{"status":"error","error":"Wrong PIN or unathorized IDd"}');

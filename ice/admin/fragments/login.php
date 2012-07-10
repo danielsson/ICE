@@ -4,15 +4,13 @@ namespace Ice;
 define('SYSINIT',true);
 
 require '../../ice-config.php';
-require '../../lib/db.class.php';
 require '../../lib/Auth.php';
 
 Auth::init(0);
 
 if(isset($_POST['username'])) {
 	
-	$db->connect();
-	$result = Auth::login($db, $_POST['username'], $_POST['password']);
+	$result = Auth::login($_POST['username'], $_POST['password']);
 
 	if(is_null($result)) {
 		//Failed

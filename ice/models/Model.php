@@ -1,8 +1,18 @@
 <?php
 
 namespace Ice\Models;
+use Ice\DB;
+use \PDO;
+use \Exception;
 
 defined('SYSINIT') or die('<b>Error:</b> No direct access allowed');
+
+/**
+ * Abstract model superclass 
+ * 
+ * defines common methods for class creation
+ * @uses DB 
+ */
 
 abstract class Model {
 	protected $id;
@@ -18,34 +28,47 @@ abstract class Model {
 	}
 
 	/* HELPERS */
-	protected static function querySingle($db, $sql){
-		$res = $db->query($sql);
+	/**
+	 * Creates a new instance from query result
+	 *
+	 * Helper class to create a single instance from a single result
+	 * using the fromArray method.
+	 *
+	 * @param string $sql The sql to use
+	 * @param array $params The params to insert into the sql.
+	 * @return object|null Return an instance of the current class.
+	 */
 
-		if(!$res) {
-			throw new Exception("sql yielded no results: " . $sql . $db->error(), 1);
-			return NULL;
+	protected static function querySingle($sql, $params) {
+		$stmt = DB::prepare($sql);
+		$stmt -> execute($params);
+
+		$result = $stmt -> fetch(PDO::FETCH_ASSOC);
+
+		if($result === false) {
+			return null;
 		} else {
-			$usr = mysql_fetch_array($res);
-			
-			return static::fromArray($usr);
+			return static::fromArray($result);
 		}
 	}
 
-	protected static function queryMultiple($db, $sql) {
-		$res = $db->query($sql);
-		if(!$res) {
-			return NULL;
+	protected static function queryMultiple($sql, $params) {
+		$stmt = DB::prepare($sql);
+
+		$stmt -> execute($params);
+
+		if ($stmt->rowCount() == 0) {
+			return null;
 		} else {
-			$ret = array();
-			while($row = mysql_fetch_array($res)) {
-				$ret[] = static::fromArray($row);
+			$models = array();
+			while ($row = $stmt -> fetch(PDO::FETCH_ASSOC)) {
+				$models[] = static::fromArray($row);
 			}
-			return $ret;
-
+			return $models;
 		}
 	}
 
-	public static function fromArray($arr, $new=false) {
-		return NULL;
+	public static function fromArray($arr, $new = false){
+		return null;
 	}
 }

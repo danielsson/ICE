@@ -1,10 +1,12 @@
 <?php 
 namespace Ice\Models;
 use \Bcrypt;
+use Ice\DB;
 
 defined('SYSINIT') or die('<b>Error:</b> No direct access allowed');
 
 require_once 'Model.php';
+require_once __DIR__ . '/../lib/DB.php';
 
 class User extends Model {
 
@@ -48,30 +50,29 @@ class User extends Model {
 	}
 
 	/* FINDERS */
-	public static function bySession($db) {
+	public static function bySession() {
 		if(isset($_SESSION['uid']) && $_SESSION['uid'] != 0) {
-			return static::byId($db,$_SESSION['uid']);
+			return static::byId($_SESSION['uid']);
 		} else {
 			return NULL;
 		}
 	}
 
-	public static function byUsername($db, $name) {
-		$sql = "SELECT id, username, password, userlevel, keyCardHash FROM ice_users WHERE username='". $db->escape($name) ."' LIMIT 1";
-		return static::querySingle($db, $sql);
+	public static function byUsername($name) {
+		$sql = "SELECT id, username, password, userlevel, keyCardHash FROM ice_users WHERE username=? LIMIT 1";
+		return static::querySingle($sql, array($name));
 	}
 
-	public static function findAll($db) {
+	public static function byId($id) {
+		$sql = "SELECT id, username, password, userlevel, keyCardHash FROM ice_users WHERE id=? LIMIT 1";
+
+		return static::querySingle($sql, array((int) $id));
+	}
+
+	public static function findAll() {
 
 		$sql = "SELECT id, username, password, userlevel, keyCardHash FROM ice_users WHERE 1";
-		return static::queryMultiple($db, $sql);
-	}
-
-	public static function byId($db,$id) {
-		$id = (int) $id;
-		$sql = "SELECT id, username, password, userlevel, keyCardHash FROM ice_users WHERE id='". $id ."' LIMIT 1";
-
-		return static::querySingle($db, $sql);
+		return static::queryMultiple($sql, null);
 	}
 
 	public static function fromArray($arr, $new=false){
@@ -104,34 +105,42 @@ class User extends Model {
 		return $this->keycardhash != NULL and !empty($this->keycardhash);
 	}
 
-	public function save($db) {
+	public function save() {
 		if($this->newItem){
 			$sql = "INSERT INTO ice_users (username,password,userlevel,keyCardHash) VALUES 
-			('{$this->username}','{$this->passwordhash}','{$this->userlevel}','{$this->keycardhash}');";
+			(:username, :passwordhash, :userlevel, :keycardhash);";
 		} else {
 			$sql = "UPDATE ice_users 
-			SET username = '{$this->username}', password = '". $db->escape($this->passwordhash) ."',
-				userlevel = '{$this->userlevel}', keyCardHash = '". $db->escape($this->keycardhash) ."'
-			WHERE id='{$this->id}';";
+			SET username = :username, password = :passwordhash,
+				userlevel = :userlevel, keyCardHash = :keycardhash
+			WHERE id=:id;";
 		}
 
-		$db->query($sql);
-		
-		if($db->error()) {
-			throw new Exception("SQL error: " . $db->error() . $sql, 1);
+		$params = array(
+			':id'			=> $this -> id,
+			':username' 	=> $this -> username,
+			':passwordhash'	=> $this -> passwordhash,
+			':userlevel'	=> $this -> userlevel,
+			':keycardhash'	=> $this -> keycardhash
+		);
+
+		$stmt = DB::prepare($sql);
+		if($stmt->execute($params)) {
+			if($this->newItem) {
+				$this->id = DB::lastInsertId();
+				$this->newItem = false;
+			}
+			return $this->id;
+		} else {
+			//The query had an error
+			throw new Exception("SQL error: " . DB::errorInfo() . $sql, 1);
 		}
-		
-		if($this->newItem) {
-			$this->id = mysql_insert_id();
-			$this->newItem = false;
-		}
-			
-		return $this->id;
 	}
 
-	public function delete($db) {
-		$sql = "DELETE FROM ice_users WHERE id='{$this->id}' LIMIT 1;";
-
-		$db->query($sql);
+	public function delete() {
+		$stmt = DB::prepare("DELETE FROM ice_users WHERE id=? LIMIT 1;");
+		if (!$stmt->execute(array(intval($id)))) {
+			throw new Exception("SQL error: " . DB::errorInfo() . $sql, 1);
+		}
 	}
 }

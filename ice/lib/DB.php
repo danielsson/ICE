@@ -5,6 +5,7 @@
  */
 
 namespace Ice;
+use \PDO;
 
 class DB {
 	protected static $instance;
@@ -20,9 +21,9 @@ class DB {
 		if (self::$instance === null) {
 			try {
 				self::$instance = new PDO(
-					$config['DB_CONNECTION'],
-					$config['DB_USER'],
-					$config['DB_PASS']
+					'mysql:host=localhost;dbname=default', //$config['DB_CONNECTION'],
+					$config['db_username'],
+					$config['db_password']
 				);
 				self::$instance -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -32,6 +33,10 @@ class DB {
 		}
 		
 		return self::$instance;
+	}
+
+	public static function setDB(PDO $pdo){
+		self::$instance = $pdo;
 	}
 
 	public static function __callStatic($method, $args) {
