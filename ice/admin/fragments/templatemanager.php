@@ -1,11 +1,14 @@
 <?php
 	namespace Ice;
 	use \PDO;
+	use Ice\Models\File;
+
 	define('SYSINIT',true);
 
 	require '../../ice-config.php';
 	require '../../lib/DB.php';
 	require '../../lib/Auth.php';
+	require '../../models/File.php';
 	
 	Auth::init(2);
 	
@@ -16,26 +19,20 @@
 			// TODO: THIS IS NOT WORKING
 		}
 		if(!empty($_POST['nicename']) || !empty($_POST['path']) || !empty($_POST['url'])) {
-			$sql = "INSERT INTO ice_files (name, path, url) VALUES ('" . $_POST['nicename'] . "', '" . $_POST['path'] . "', '" . $_POST['url'] . "');";
-			$db->query($sql);
-			$sql = "SELECT id FROM ice_files WHERE name = '" . $_POST['nicename'] . "' LIMIT 1;";
-			$res = $db->query($sql);
-			while($row = mysql_fetch_array($res)) {
-				$nr = $row['id'];
-			}
-			$sql = "INSERT INTO ice_pages (name, tid, url) VALUES ('" . $_POST['nicename'] . "', '" . $nr . "', '" . $_POST['url'] . "');";
-			$db->query($sql);
-			$db->close();
+
+			$file = new File(0, $_POST['nicename'], $_POST['path'], $_POST['url']);
+
+			$file->save();
+
 			die();
 		}
 	}
 	if(!empty($_POST['del'])) {
 		$_POST = Auth::sanitize($_POST);
-		$sql = "DELETE FROM ice_files WHERE id = '" . intval($_POST['id']) . "'; ";
-		$db->query($sql);
-		//$sql = "DELETE FROM ice_pages WHERE tid = '" . intval($_POST['id']) . "'; ";
-		//$db->query($sql);
-		$db->close();
+		$file = File::byId(intval($_POST['id']));
+		if($file !== null) {
+			$file->delete();
+		}
 		die();
 	}
 	
@@ -118,13 +115,15 @@ function templatemanager() {
 <tbody>
 
 	<?php 
-	$sql = "SELECT * FROM ice_files";
-	$res = DB::query($sql);
-	if(!$res) {
+	$files = File::findAll();
+	if($files === null) {
 		echo "No pages";
 	} else {
-		while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
-			echo '<tr><td>', $row['id'], '</td><td>', $row['name'], '</td><td>', $row['path'], '</td><td>', $row['url'], '</td>';
+		foreach ($files as $file) {
+			echo '<tr><td>', $file->getId(),
+			'</td><td>', $file->getName(),
+			'</td><td>', $file->getPath(),
+			'</td><td>', $file->getUrl(), '</td>';
 		}
 	}
 	?>
