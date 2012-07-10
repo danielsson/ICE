@@ -1,20 +1,19 @@
-<?php file_exists('LOCK') and die('You must delete the LOCK-file to run the installer again.');
+<?php 
+	use Ice\DB;
+
+	file_exists('LOCK') and die('You must delete the LOCK-file to run the installer again.');
 	define('SYSINIT', true);
+
 	require ('../ice-config.php');
-	require ('../lib/db.class.php');
-	
+	require ('../lib/DB.php');
 	require ('queries.php');
 	
-	$db->connect();
-	
-	foreach ($queries as $key => $val) {
-		$db->query($val);
-		if(strlen($db->error())>1) break;
+	foreach ($queries as $val) {
+		if(!DB::exec($val)) {
+			throw new Exception('SQL ERROR: ' . DB::errorInfo());
+		}
 	}
-	
-	
-	$err = $db->error();
-	$db->close();
+
 ?>
 
 <!DOCTYPE html>
