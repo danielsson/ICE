@@ -1,10 +1,13 @@
 var ice = {
+	subscriptions: {},
+
 	Manager : {
 		windowsStorage : {},
 		incrementer : 0,
 		displayNoWindowsWarning: true,
 		windowSandbox : {},
 		taskBar : {},
+
 		ready : function() {
 			this.taskBar = $('#taskBar ul');
 			this.windowSandbox = $('#windowSandbox');
@@ -111,6 +114,8 @@ var ice = {
 
 			taskItem.appendTo(this.taskBar);
 			$win.onOpen($win);
+			ice.publish("ice:window/open", [$win]);
+			ice.publish($win.name + ":window/open", [$win]);
 
 		},
 		minimizeWindow : function(name) {
@@ -237,6 +242,8 @@ var ice = {
 					} catch(e) {}
 				});
 			}
+			ice.publish("ice:fragment/load", [fragmentName]);
+			ice.publish(fragmentName + ":fragment/load", [fragmentName]);
 		},
 		get : function(fragmentName, win, postData, callback) {
 			$.post("fragments/" + fragmentName + ".php", postData, function(data) {
@@ -244,7 +251,7 @@ var ice = {
 			});
 		},
 		addCss : function(filename) {
-			if( filename in this.usedCss) {
+			if (filename in this.usedCss) {
 				return false;
 			}
 			var head = document.getElementsByTagName("head")[0], ele = document.createElement('link');
@@ -290,6 +297,7 @@ var ice = {
 					$('#headerText').html('Not logged in.');
 					$('aside').html("");
 					ice.fragment.load('login');
+					ice.publish("ice:auth/logout");
 				});
 			});
 		}
@@ -303,7 +311,7 @@ var ice = {
 				$('#header').animate({height:"100%"},800).css({zIndex:88888});
 				$('#header .center').delay(400).animate({marginTop:100}, 400);
 			}
-			
+			ice.publish("ice:curtain/lower",[now]);
 		},
 		raise : function(now) {
 			if(now===true) {
@@ -316,7 +324,7 @@ var ice = {
 					$(this).css('zIndex', 1);
 				});
 			}
-			
+			ice.publish("ice:curtain/raise", [now]);
 		}
 	}, //End curtain
 	/**
@@ -356,6 +364,37 @@ var ice = {
 
 		return out.join("");
 
+	},
+
+	// PubSub system
+	// Adaption of https://github.com/daniellmb/MinPubSub/
+	publish: function(topic, args){
+		var handlers = this.subscriptions[topic],
+			hlen = handlers ? handlers.length : 0;
+
+		while (hlen--) {
+			handlers[hlen].apply(this, args || []);
+		}
+		console ? console.log("Published " + args + " to " + topic):null;
+	},
+	subscribe: function(topic, callback) {
+		if (!(topic in this.subscriptions)) {
+			this.subscriptions[topic] = [];
+		}
+
+		this.subscriptions[topic].push(callback);
+		return [topic, callback];
+	},
+	unsubscribe: function(handle, callback) {
+		var handlers = this.subscriptions[callback ? handle : handle[0]],
+			callback = callback || handle[1],
+			len = handlers ? handlers.length : 0;
+
+		while(len--) {
+			if(handlers[len] === callback){
+				handlers.splice(len,1);
+			}
+		}
 	}
 };
 //End ice
