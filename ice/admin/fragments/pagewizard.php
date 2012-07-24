@@ -5,29 +5,27 @@
 	define('SYSINIT',true);
 	
 	require '../../ice-config.php';
-	require '../../lib/db.class.php';
+	require '../../lib/DB.php';
 	require '../../lib/Auth.php';
 	require '../../models/Page.php';
 	
 	Auth::init(2);
-	$db->connect();
 	
 	if(!empty($_POST['name'])) {
 		$data = Array('status'=>'ok', 'error'=>'none');
 		$_POST = Auth::sanitize($_POST);
 
 		$tmp = parse_url($config['baseurl'] . $_POST['url']);
-		$url = $db->escape($tmp['path']);
+		$url = $tmp['path'];
 
 		$page = new Page(
 				0,
-				$db->escape($_POST['name']),
+				$_POST['name'],
 				intval($_POST['tid']),
 				$url
 			);
 
-		$page->save($db);
-		$db->close();
+		$page->save();
 
 		die(json_encode($data));
 	}
@@ -147,17 +145,11 @@ function wizCreatePage(name,url,tid, wName) {
 					<tbody>
 						<?php 
 						$sql = "SELECT id, name FROM ice_files";
-						$res = $db->query($sql);
-						if(!$res) {
-							echo "No pages";
-						} else {
-							while ($row = mysql_fetch_array($res)) {
-								$n = $row['name'];
-								$id = $row['id'];
-								echo "<tr><td><input type=\"radio\" name=\"tid\" value=\"$id\" /></td><td>$n</td><td>$id</td></tr>";
-							}
+						foreach(DB::query($sql) as $row) {
+							$n = $row['name'];
+							$id = $row['id'];
+							echo "<tr><td><input type=\"radio\" name=\"tid\" value=\"$id\" /></td><td>$n</td><td>$id</td></tr>";
 						}
-						$db->close();
 						?>
 					</tbody>
 				</table>

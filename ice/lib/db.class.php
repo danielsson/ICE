@@ -1,6 +1,6 @@
 <?php
 namespace Ice;
-
+throw new \DatePeriod;
 final class Database {
 	protected $db;
 	protected $db_host, $db_username, $db_password, $db_name;
@@ -11,7 +11,7 @@ final class Database {
 		$this->db_username = $config['db_username'];
 		$this->db_password = $config['db_password'];
 		$this->db_name = $config['db_name'];
-		unset($config['db_host'], $config['db_username'], $config['db_password'], $config['db_name']);
+		//unset($config['db_host'], $config['db_username'], $config['db_password'], $config['db_name']);
 	}
 
 	public function connect() {

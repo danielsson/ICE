@@ -5,7 +5,7 @@
 	define('SYSINIT',true);
 	
 	require_once '../../ice-config.php';
-	require_once '../../lib/db.class.php';
+	require_once '../../lib/DB.php';
 	require_once '../../lib/Auth.php';
 	require_once '../../models/User.php';
 
@@ -16,9 +16,8 @@
 		$uid = intval($_GET['uid']);
 		$key = $_GET['fk'];
 		($_SESSION['uid'] == $uid) or die('You can only download your own webid');
-		
-		$db->connect();
-		$user = User::byId($db, $uid);
+
+		$user = User::byId($uid);
 		
 		$user->hasKeyCard() or die('You dont have a keycard');
 
@@ -34,13 +33,12 @@
 
 		($_SESSION['uid'] == $uid) or die('{"status":"error", "error":"You can only create a webid for yourself"}');
 
-		$db->connect();
-		$user = User::byId($db,$uid);
+		$user = User::byId($uid);
 
 		($user !== null) or die('{"status":"error", "error":"Unknown user id."}');
 
 		$user->setKeyCardHash($key);
-		$user->save($db);
+		$user->save();
 		die('{"status":"ok", "error":""}');
 	}
 ?>

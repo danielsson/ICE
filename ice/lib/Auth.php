@@ -31,8 +31,8 @@ class Auth {
 		}
 	}
 
-	public static function login(Database $db, $username, $password) {
-		$user = User::byUsername($db, $username);
+	public static function login($username, $password) {
+		$user = User::byUsername($username);
 
 		if(is_null($user)) {
 			return null;

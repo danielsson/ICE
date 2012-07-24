@@ -4,7 +4,6 @@
 	define('SYSINIT',true);
 	
 	require_once '../../ice-config.php';
-	require_once '../../lib/db.class.php';
 	require_once '../../lib/Auth.php';
 	require_once '../../models/User.php';
 
@@ -15,14 +14,11 @@
 			$uname = Auth::sanitize($_POST['username']);
 			$pass = User::hash($_POST['password']);
 			$lvl = (int) $_POST['userlevel'];
-			
-			$db->connect();
 
 			$user = new User(0,$lvl,$uname,$pass);
 
-			$user->save($db);
+			$user->save();
 
-			$db->close();
 			die('{"status":"ok"}');
 
 		} else {

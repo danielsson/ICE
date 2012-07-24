@@ -5,21 +5,20 @@
 	define('SYSINIT',true);
 
 	require '../../ice-config.php';
-	require '../../lib/db.class.php';
+	require '../../lib/DB.php';
 	require '../../lib/Auth.php';
 	require '../../models/Page.php';
 
 	Auth::init(1);
-	$db->connect();
 
 	if(isset($_POST['del']) && $_POST['del'] == "true") {
 		if($_SESSION['userlevel'] < 2) {
 			die('You are not allowed to perform this action');
 		}
 
-		$page = Page::byId($db,intval($_POST['id']));
+		$page = Page::byId(intval($_POST['id']));
 
-		$page->delete($db);
+		$page->delete();
 		
 		die('true');
 	} elseif (isset($_POST['rename']) && $_POST['rename'] == "true") {
@@ -27,9 +26,9 @@
 			die('You are not allowed to perform this action');
 		}
 
-		$page = Page::byId($db,intval($_POST['id']));
-		$page->setName($db->escape($_POST['name']));
-		$page->save($db);
+		$page = Page::byId($_POST['id']);
+		$page->setName($_POST['name']);
+		$page->save();
 
 		die('true');
 	}
@@ -166,7 +165,7 @@
 	<ul class="big_grid">
 		<?php
 
-			$pages = Page::findAll($db);
+			$pages = Page::findAll();
 
 			if ($pages) {
 				foreach ($pages as $i => $page) {
@@ -175,7 +174,6 @@
 			} else {
 				echo 'This was awkward.';
 			}
-			$db->close();
 
 		?>
 

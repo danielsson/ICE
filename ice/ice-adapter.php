@@ -4,9 +4,10 @@
 This is the ICE! cms adapter. Include this file
 on all pages with editable content.
 **********************************************/
+use Ice\DB;
 defined('SYSINIT') or define('SYSINIT', true);
 require_once('ice-config.php');
-require_once('lib/db.class.php');
+require_once('lib/DB.php');
 
 //Globals
 $pageContent = array();
@@ -24,9 +25,10 @@ function iceOBcallback($d) {
 class ICECMS {
 	public $in_editor_mode = false;
 	private $currentPage = "";
+	private $createStmt = null;
 	
 	public function load($page_name, $cache = 'n', $lifetime = 0) {
-		global $config, $db, $pageContent;
+		global $config, $pageContent;
 		if($cache==='n') { $cache = (boolean) $config['use_cache']; }
 		if(defined('ICE_PAGE_OVERRIDE') === true) {
 			$this->currentPage = ICE_PAGE_OVERRIDE;
@@ -105,15 +107,28 @@ class ICECMS {
 
 	}
 	public function createDBrecord($field_name, $type, $placeholder) {
-		global $config, $db, $pageContent;
-		$cp = $this->currentPage;
+		global $config, $pageContent;
+
+
 		if($config['dev_mode']==false) {
 			echo 'Dev-mode off -- Record creation failed';
 			return false;
 		}
-		$sql = 'INSERT IGNORE INTO ' . $config['content_table'] . " (fieldname, content, pagename, fieldtype) VALUES ('$field_name', '$placeholder', '$cp', '$type');";
-		$db->connect();
-		$r = $db->query($sql);
+
+		$params = array(
+			':table' => $config['content_table'],
+			':fieldname' => $field_name,
+			':placeholder' => $placeholder,
+			':cp' => $this->currentPage,
+			':type' => $type
+		);
+
+		if ($this->createStmt === null) {
+			$sql = "INSERT IGNORE INTO {$config['content_table']} (fieldname, content, pagename, fieldtype) VALUES (:fieldname, :placeholder, :cp, :type);";
+			$this->createStmt = DB::prepare($sql);
+		}
+		
+		$r = $this->createStmt->execute($params);
 		if(!$r) {
 			echo 'Database Error ';
 		}
@@ -123,17 +138,17 @@ class ICECMS {
 	
 	public function loadPageData() {
 		//Create the array of page fields
-		global $db, $config, $pageContent;
-		$sql = "SELECT content, fieldname FROM ". $config['content_table'] ." WHERE pagename = '$this->currentPage'";
-		$db->connect();
-		$res = $db->query($sql);
+		global $config, $pageContent;
+		$sql = "SELECT content, fieldname FROM {$config['content_table']} WHERE pagename = ?";
 		
-		if($res) {
-			while($row = mysql_fetch_array($res)) {
+		$stmt = DB::prepare($sql);
+		
+
+		if($stmt->execute(array($this->currentPage))) {
+			while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 				$pageContent[$row['fieldname']] = $row['content'];
 			}
 		}
-		$db->close();
 	}
 	
 	public function is_editing() {

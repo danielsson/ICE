@@ -1,11 +1,13 @@
 <?php 
 
 namespace Ice\Models;
+use Ice\DB;
 
 defined('SYSINIT') or die('<b>Error:</b> No direct access allowed');
 
 require_once 'Model.php';
 require_once 'ContentSet.php';
+require_once __DIR__ . '/../lib/DB.php';
 
 class Page extends Model {
 
@@ -43,20 +45,19 @@ class Page extends Model {
 	}
 
 	/* FINDERS */
-	public static function byId($db, $id) {
-		$id = (int) $id;
-		$sql = "SELECT id, name, tid, url FROM ice_pages WHERE id='$id' LIMIT 1";
-		return static::querySingle($db,$sql);
+	public static function byId($id) {
+		$sql = "SELECT id, name, tid, url FROM ice_pages WHERE id=? LIMIT 1";
+		return static::querySingle($sql, array((int) $id));
 	}
 
-	public static function byPageName($db, $name) {
-		$sql = "SELECT id, name, tid, url FROM ice_pages WHERE name='". $db->escape($name) ."' LIMIT 1";
-		return static::querySingle($db,$sql);
+	public static function byPageName($name) {
+		$sql = "SELECT id, name, tid, url FROM ice_pages WHERE name=? LIMIT 1";
+		return static::querySingle($sql, array($name));
 	}
 
-	public static function findAll($db) {
+	public static function findAll() {
 		$sql = "SELECT `id`, `name`, `tid`, `url` FROM ice_pages WHERE 1";
-		return static::queryMultiple($db,$sql);
+		return static::queryMultiple($sql, null);
 	}
 
 	/* HELPERS */
@@ -73,23 +74,31 @@ class Page extends Model {
 
 	/* METHODS */
 
-	public function getContentSet($db) {
-		return ContentSet::byPageName($db, $this->name);
+	public function getContentSet() {
+		return ContentSet::byPageName($this->name);
 	}
 
-	public function delete($db) {
-		return $db->query("DELETE FROM ice_pages WHERE id = '" . $this->id . "';");
+	public function delete() {
+		$stmt = DB::prepare("DELETE FROM ice_pages WHERE id = ?;");
+		return $stmt->execute(array($this->id));
 	}
 
-	public function save($db) {
+	public function save() {
+		$params = array(
+			':name'	=> $this->name,
+			':tid'	=> $this->tid,
+			':url'	=> $this->url
+		);
 		if($this->newItem){
 			$sql = "INSERT INTO ice_pages (name,tid,url) VALUES 
-			('{$this->name}','{$this->tid}','{$this->url}');";
+			(:name, :tid, :url);";
 		} else {
-			$sql = "UPDATE ice_pages SET name = '{$this->name}', tid = '{$this->tid}', url = '{$this->url}'
-			WHERE id='{$this->id}';";
+			$sql = "UPDATE ice_pages SET name = :name, tid = :tid, url = :url
+			WHERE id = :id;";
+			$params[':id'] = $this->id;
 		}
 
-		$db->query($sql);
+		$stmt = DB::prepare($sql);
+		return $stmt->execute($params);
 	}
 }

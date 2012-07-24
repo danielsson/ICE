@@ -5,7 +5,7 @@ $data = array(
 );
 define('SYSINIT', true);
 require_once('../ice-config.php');
-require_once('../lib/db.class.php');
+require_once('../lib/DB.php');
 require_once('../lib/Auth.php');
 require_once('../lib/image.class.php');
 
@@ -21,10 +21,8 @@ function clean($str) {
 $fieldname = clean($_POST['fieldname']);
 $pagename = clean($_POST['pagename']);
 
-$db->connect();
-
 if(isset($_POST['text'])){
-	$content = $db->escape($_POST['text']);
+	$content = DB::quote($_POST['text']);
 
 	if(empty($pagename)) {
 		$data['status'] = "error";
@@ -50,12 +48,12 @@ if(isset($_POST['text'])){
 	}
 	$data['url'] = $config['baseurl'] . $content;
 
-	$content = $db->escape($content);
+	$content = DB::quote($content);
 }
 
 	$sql = 'UPDATE '. $config['content_table'] ." SET content = '$content' WHERE fieldname = '$fieldname' and pagename = '$pagename';"; 
-	$res = $db->query($sql);
-	if($db->error()) {
+
+	if(!$res = DB::query($sql)) {
 		$data['status'] = 'error';
 		if($config['dev_mode']==true) {
 			$data['error'] = $db->error() . "::" . $sql;
@@ -68,5 +66,4 @@ if(isset($_POST['text'])){
 
 	// Clear the cache
 	foreach(glob('../cache/*.txt') as $v) {	unlink($v); }
-	$db->close();
 ?>

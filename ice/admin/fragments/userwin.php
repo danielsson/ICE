@@ -5,17 +5,16 @@
 	define('SYSINIT',true);
 	
 	require_once '../../ice-config.php';
-	require_once '../../lib/db.class.php';
+	require_once '../../lib/DB.php';
 	require_once '../../lib/Auth.php';
 	require_once '../../models/User.php';
 	
 	Auth::init(3);
 	
 	if(isset($_POST['id']) && !isset($_POST['username'])) {
-		$db->connect();
 		$id = (int) $_POST['id'];
 		
-		$user = User::byId($db, $id);
+		$user = User::byId($id);
 		
 		if($user != NULL) {
 			$arr = $user->getArray();
@@ -24,12 +23,12 @@
 		} else {
 			die ('error');
 		}
+
 	} elseif (isset($_POST['username'])){
 		if(!empty($_POST['username']) && !empty($_POST['id'])) {
-			$db->connect();
 			$uid = (int) $_POST['id'];
 			$ulvl = (int) $_POST['userlevel'];
-			$uname = Auth::sanitize($_POST['username']);
+			$uname = $_POST['username'];
 
 			$user = User::byId($db,$uid);
 			
@@ -40,19 +39,17 @@
 				$user->setPassword($_POST['password']);
 			}
 
-			$user->save($db);
-			$db->close();
+			$user->save();
 		}
 		
 		die('{"status":"ok"}');
 	} elseif (isset($_POST['delete'])) {
 		$uid = intval($_POST['delete']);
-		$db->connect();
 
-		$user = User::byId($db,$uid);
+		$user = User::byId($uid);
 
 		if($user != null) {
-			$user -> delete($db);
+			$user -> delete();
 		}
 		die('{"status":"ok"}');
 	}
