@@ -113,6 +113,7 @@ var ice = {
 			}
 
 			taskItem.appendTo(this.taskBar);
+
 			$win.onOpen($win);
 			ice.publish("ice:window/open", [$win]);
 			ice.publish($win.name + ":window/open", [$win]);
@@ -146,6 +147,11 @@ var ice = {
 			}, 800, function() {
 				$(this).remove();
 			});
+
+			for(var x in $win.handles) {
+				ice.unsubscribe($win.handles[x]);
+			}
+			
 			delete this.windowsStorage[name];
 			return true;
 		},
@@ -186,6 +192,8 @@ var ice = {
 		this.loader = this.element.find('.winLoader');
 		this.contentEndpoint = "";
 		this.allowRefresh = false;
+		this.handles = [];
+
 		this.refresh = function(attrs) {
 			if(this.contentEndpoint === "") {return false;}
 			if(typeof attrs == 'undefined') {
@@ -221,6 +229,9 @@ var ice = {
 		this.beforeClose = function(winObj) {
 		};
 		this.onContentChange = function(winObj) {
+		};
+		this.handle = function(handle) {
+			this.handles.push(handle);
 		};
 	},
 	fragment : {
