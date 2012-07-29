@@ -12,7 +12,7 @@ if(isset($_POST['username'])) {
 	
 	$result = Auth::login($_POST['username'], $_POST['password']);
 
-	if(is_null($result)) {
+	if($result === null) {
 		//Failed
 		die('false');
 	} else {

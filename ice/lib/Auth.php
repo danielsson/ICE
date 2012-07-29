@@ -34,7 +34,7 @@ class Auth {
 	public static function login($username, $password) {
 		$user = User::byUsername($username);
 
-		if(is_null($user)) {
+		if($user === null) {
 			return null;
 		}
 
