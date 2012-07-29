@@ -15,7 +15,7 @@ class User extends Model {
 	private $passwordhash = "";
 	private $keycardhash = NULL;
 
-	public function __construct($i,$ul,$un,$p,$c=NULL, $new=true) {
+	public function __construct($i,$ul,$un,$p=null,$c=null, $new=true) {
 		$this->id = $i;
 		$this->userlevel = $ul;
 		$this->username = $un;

@@ -45,9 +45,7 @@ $queries = array(
  ADD CONSTRAINT FK_pages
  FOREIGN KEY (`tid`) REFERENCES ice_files(`id`)
  ON UPDATE CASCADE
- ON DELETE CASCADE;",
-
-'INSERT IGNORE INTO ice_users (username,password,userlevel) 
- VALUES (\'admin\',\'$2a$12$xqSXcEQv3U.cooRW81nnjOV8dmiUtSsv1o4GdrBO2ZJ/SnfSkNrJG\',\'3\');');
+ ON DELETE CASCADE;"
+ );
 
 ?>
