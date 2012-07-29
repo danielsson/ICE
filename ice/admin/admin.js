@@ -1,6 +1,19 @@
 var ice = {
 	subscriptions: {},
 
+	ready : function() {
+		this.Manager.taskBar = $('#taskBar ul');
+		this.Manager.windowSandbox = $('#windowSandbox');
+		if(!('console' in window)) {
+			window.console = {log:function(m){ice.message(m,'info');}}
+		}
+		if (window.location.hash.indexOf('#!') === 0) {
+			$.map(window.location.hash.substr(2).split(','), function(val, i){
+				ice.fragment.load(val);
+			});
+		}
+	},
+
 	Manager : {
 		windowsStorage : {},
 		incrementer : 0,
@@ -8,13 +21,7 @@ var ice = {
 		windowSandbox : {},
 		taskBar : {},
 
-		ready : function() {
-			this.taskBar = $('#taskBar ul');
-			this.windowSandbox = $('#windowSandbox');
-			if(!'console' in window) {
-				console = {log:function(m){ice.message(m,'warning')}}
-			}
-		},
+		
 		getWindow : function(name) {
 			if( name in this.windowsStorage) {
 				return this.windowsStorage[name];
