@@ -116,7 +116,6 @@ class ICECMS {
 		}
 
 		$params = array(
-			':table' => $config['content_table'],
 			':fieldname' => $field_name,
 			':placeholder' => $placeholder,
 			':cp' => $this->currentPage,
