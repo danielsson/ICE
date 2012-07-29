@@ -49,9 +49,9 @@ function filescanner() {
 				W.loadingOff();
 				$('form', W.contentBox).slideUp();
 				$('p.enlight', W.contentBox).text('The files were added successfully.');
-				try {
-					ice.Manager.getWindow('TMPLMAN').refresh();
-				} catch(e){}
+				
+				ice.publish('ice:template/new');
+				ice.publish('ice:page/new');
 			});
 
 
@@ -78,22 +78,39 @@ function filescanner() {
 	</thead>
 	<tbody>
 		<?php
-
+		//Find all php files in app root folder,
+		//where the string ice-adapter.php exist
+		//in the first five lines.
 		$scanner = new FileScanner("/.php$/");
 		$scanner->get_file_paths(realpath('../../../'));
 		$scanner->filter_files("/ice-adapter.php/", 5);
 		$scanner->make_paths_relative_to_doc_root();
 
-		foreach($scanner->pathlist as $path) {
-			$enc = base64_encode($path);
-			echo '<tr>';
-			echo '<td><input type="checkbox" name="files[]" value="' . $enc . '" /></td>';
-			echo '<td><input type="text" name="'. $enc .'" placeholder="Name this template" /></td>';
-			echo "<td>$path</td>";
-			echo "<td>$path</td>";
-			echo '</tr>';
-		}
+		//Get a list of all existing paths
+		$all_files = IceFile::find();
+		if ($all_files !== null) {
+			$existing_paths = array_map(
+				function($file) {return $file->getPath();},
+				$all_files);
 
+			//Remove already existing entries
+			$scanner->pathlist = array_diff(
+				$scanner->pathlist,
+				$existing_paths);
+		}
+		if (count($scanner->pathlist)) {
+			foreach($scanner->pathlist as $path) {
+				$enc = base64_encode($path);
+				echo '<tr>';
+				echo '<td><input type="checkbox" name="files[]" value="' . $enc . '" /></td>';
+				echo '<td><input type="text" name="'. $enc .'" placeholder="Name this template" /></td>';
+				echo "<td>$path</td>";
+				echo "<td>$path</td>";
+				echo '</tr>';
+			}
+		} else {
+			echo '<tr><td>Nothing found</td></tr>';
+		}
 		?>
 	</tbody>
 </table>

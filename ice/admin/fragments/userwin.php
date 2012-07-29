@@ -30,7 +30,7 @@
 			$ulvl = (int) $_POST['userlevel'];
 			$uname = $_POST['username'];
 
-			$user = User::byId($db,$uid);
+			$user = User::byId($uid);
 			
 			$user->setUserLevel($ulvl);
 			$user->setUsername($uname);
@@ -69,7 +69,7 @@
 			win.loadingOn();
 			$.post('fragments/userwin.php', {id:win.uid}, function(data) {
 				win.loadingOff();
-				if(typeof data.username !== "undefined") {
+				if(data.username != void 0) {
 					win.element.find('[name=username]').val(data.username);
 					win.element.find('[name=userlevel]').val(data.userlevel);
 					win.element.find('input,select').removeAttr('disabled');
@@ -89,7 +89,7 @@
 				win.loadingOn();
 				$.post('fragments/userwin.php', d, function(data) {
 					win.loadingOff();
-					if(typeof data.status !== 'undefined') {
+					if(data.status != void 0) {
 						ice.message('Saved user', 'info');
 						ice.Manager.getWindow('USRMAN').refresh();
 						ice.Manager.removeWindow(win.name);

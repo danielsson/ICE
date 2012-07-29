@@ -72,7 +72,7 @@ function templatemanager() {
 					} else {
 						ice.message('File has been added', 'info');
 						
-						ice.Manager.getWindow("TMPLMAN").refresh();
+						ice.publish('ice:template/new');
 						ice.Manager.removeWindow('AddFileDialog');	
 					}
 				});
@@ -85,7 +85,7 @@ function templatemanager() {
 			if(res !== null && res !== "" && confirm("This will delete all pages using this template, and all their text.")) {
 				$.post("fragments/templatemanager.php", {del: true, id: res}, function() {
 					ice.message('File was deleted', 'info');
-					ice.Manager.getWindow('TMPLMAN').refresh();
+					ice.publish('ice:template/delete');
 				});
 			}	
 		});
@@ -93,6 +93,10 @@ function templatemanager() {
 			ice.fragment.load('filescanner');
 		})
 	}
+
+	W.handle(ice.subscribe('ice:template/new', function() {W.refresh();}));
+	W.handle(ice.subscribe('ice:template/delete', function() {W.refresh();}));
+	
 	W.setContent(document.getElementById('pageFileManager').innerHTML);
 	ice.Manager.addWindow(W);
 }
@@ -115,9 +119,9 @@ function templatemanager() {
 <tbody>
 
 	<?php 
-	$files = File::findAll();
+	$files = File::find();
 	if($files === null) {
-		echo "No pages";
+		echo "<tr><td>No pages</td></tr>";
 	} else {
 		foreach ($files as $file) {
 			echo '<tr><td>', $file->getId(),
