@@ -1,4 +1,7 @@
 <?php
+//TODO: This is a mess
+namespace Ice;
+
 $data = array(
 	'status'=>'success',
 	'error'=>'none'
@@ -8,6 +11,8 @@ require_once('../ice-config.php');
 require_once('../lib/DB.php');
 require_once('../lib/Auth.php');
 require_once('../lib/image.class.php');
+
+Auth::init(0);
 
 if($_SESSION['userlevel'] < 1) {
 	$data['status'] = 'error';
@@ -52,7 +57,7 @@ if(isset($_POST['text'])){
 }
 
 	$sql = 'UPDATE '. $config['content_table'] ." SET content = '$content' WHERE fieldname = '$fieldname' and pagename = '$pagename';"; 
-
+	echo $sql;
 	if(!$res = DB::query($sql)) {
 		$data['status'] = 'error';
 		if($config['dev_mode']==true) {

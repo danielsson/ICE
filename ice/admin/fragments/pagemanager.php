@@ -146,6 +146,12 @@
 			}
 		});
 
+		//Refresh when a new page is created
+		W.handle(ice.subscribe("ice:page/new", function() {
+			W.refresh();
+			console.log("Responded to pub new page");
+		}));
+
 		W.setContent(document.getElementById('pageManager1').innerHTML);
 		ice.Manager.addWindow(W);
 	}

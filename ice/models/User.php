@@ -106,6 +106,14 @@ class User extends Model {
 	}
 
 	public function save() {
+
+		$params = array(
+			':username' 	=> $this -> username,
+			':passwordhash'	=> $this -> passwordhash,
+			':userlevel'	=> $this -> userlevel,
+			':keycardhash'	=> $this -> keycardhash
+		);
+
 		if($this->newItem){
 			$sql = "INSERT INTO ice_users (username,password,userlevel,keyCardHash) VALUES 
 			(:username, :passwordhash, :userlevel, :keycardhash);";
@@ -114,15 +122,8 @@ class User extends Model {
 			SET username = :username, password = :passwordhash,
 				userlevel = :userlevel, keyCardHash = :keycardhash
 			WHERE id=:id;";
+			$params[':id'] = $this->id;
 		}
-
-		$params = array(
-			':id'			=> $this -> id,
-			':username' 	=> $this -> username,
-			':passwordhash'	=> $this -> passwordhash,
-			':userlevel'	=> $this -> userlevel,
-			':keycardhash'	=> $this -> keycardhash
-		);
 
 		$stmt = DB::prepare($sql);
 		if($stmt->execute($params)) {

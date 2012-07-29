@@ -69,7 +69,7 @@ if(isset($_POST['username'])) {
 						ice.fragment.load('sidepanel');
 						ice.Manager.removeWindow('LoginWindow');
 						ice.curtain.raise();
-						
+						ice.publish("ice:auth/login");
 					}
 				});
 			});

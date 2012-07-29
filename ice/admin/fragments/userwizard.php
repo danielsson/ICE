@@ -1,4 +1,5 @@
 <?php
+	namespace Ice;
 	use Ice\Models\User;
 
 	define('SYSINIT',true);
@@ -108,7 +109,7 @@ function wizCreateUser(formdata, wName) {
 			$win.loadingOff();
 			$('.horizSlider', $win.contentBox).animate({marginLeft: 0-(2*418)},500);
 			
-			try{ice.Manager.getWindow('USRMAN').refresh();} catch(e){}
+			ice.publish('ice:user/new', [formdata]);
 		} else {
 			ice.message('Unknown error - ' + data);
 			$win = ice.Manager.getWindow(wName);

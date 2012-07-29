@@ -28,6 +28,11 @@ function usermanager() {
 			ice.fragment.load('userwin', {}, {id:id});
 		});
 	};
+
+	W.handle(ice.subscribe('ice:user/new', function() {
+		W.refresh();
+	}));
+
 	W.setContent(document.getElementById('userManager').innerHTML);
 	ice.Manager.addWindow(W);
 }
