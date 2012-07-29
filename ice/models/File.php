@@ -42,9 +42,9 @@ class File extends Model {
 		return static::querySingle($sql, array($name));
 	}
 
-	public static function findAll() {
-		$sql = "SELECT * FROM ice_files";
-		return static::queryMultiple($sql, null);
+	public static function find($where = 1, $args = null) {
+		$sql = "SELECT * FROM ice_files WHERE $where";
+		return static::queryMultiple($sql, $args);
 	}
 
 	public static function fromArray($arr, $new = false) {
