@@ -9,8 +9,14 @@
 	require ('queries.php');
 	
 	foreach ($queries as $val) {
-		if(!DB::exec($val)) {
-			throw new Exception('SQL ERROR: ' . DB::errorInfo());
+		try {
+			if(DB::exec($val) === false) {
+				throw new Exception('SQL ERROR: ' . print_r(DB::errorInfo(), true));
+			}
+		} catch (Exception $e){
+			echo $e->getMessage();
+			echo $e->getTraceAsString();
+			die();
 		}
 	}
 
