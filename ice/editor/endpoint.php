@@ -6,7 +6,9 @@ $data = array(
 	'status'=>'success',
 	'error'=>'none'
 );
+
 define('SYSINIT', true);
+
 require_once('../ice-config.php');
 require_once('../lib/DB.php');
 require_once('../lib/Auth.php');
@@ -56,8 +58,8 @@ if(isset($_POST['text'])){
 	$content = DB::quote($content);
 }
 
-	$sql = 'UPDATE '. $config['content_table'] ." SET content = '$content' WHERE fieldname = '$fieldname' and pagename = '$pagename';"; 
-	echo $sql;
+	$sql = 'UPDATE '. $config['content_table'] ." SET content = $content WHERE fieldname = '$fieldname' and pagename = '$pagename';"; 
+
 	if(!$res = DB::query($sql)) {
 		$data['status'] = 'error';
 		if($config['dev_mode']==true) {

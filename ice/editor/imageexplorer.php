@@ -1,9 +1,13 @@
 <?php
 //TODO: Make this less shitty.
+namespace Ice;
+
 define('SYSINIT', true);
+
 require '../ice-config.php';
 require '../lib/Auth.php';
 require '../lib/image.class.php';
+
 Auth::init(2);
 
 if (isset($_GET['thumb'])) {

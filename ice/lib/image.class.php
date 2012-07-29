@@ -1,4 +1,7 @@
-<?php defined('SYSINIT') or die('<b>Error:</b> No direct access allowed');
+<?php
+namespace Ice;
+
+defined('SYSINIT') or die('<b>Error:</b> No direct access allowed');
 
 class IceImage {
 	private $name;
@@ -53,7 +56,7 @@ class IceImage {
 				break;
 			
 			case IMAGETYPE_PNG:
-				imagegif($this->image);
+				imagepng($this->image);
 				break;
 				
 			default:
@@ -79,7 +82,7 @@ class IceImage {
 				break;
 			
 			case IMAGETYPE_PNG:
-				imagegif($this->image, $this->cachepath);
+				imagepng($this->image, $this->cachepath);
 				break;
 				
 			default:
@@ -125,7 +128,7 @@ class IceImage {
 			$width = (int) ($targetHeight * $sourceAR);
 		} else {
 			$width = $targetWidth;
-			$height = (int) ( $targetWidth / $sourceAR);
+			$height = (int) ($targetWidth / $sourceAR);
 		}
 		
 		$tmp = imagecreatetruecolor($width, $height);
@@ -164,7 +167,7 @@ class IceImage {
 		
 		$images = array();
 		foreach(glob($patt) as $v) {
-			if(IceImage::isAllowedType($v)) {
+			if(self::isAllowedType($v)) {
 				$images[] = basename($v);
 			}
 		}
