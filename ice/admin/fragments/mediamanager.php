@@ -1,6 +1,5 @@
 <?php 
 	namespace Ice;
-	use \IceImage;
 	
 	define('SYSINIT',true);
 	require_once '../../ice-config.php';

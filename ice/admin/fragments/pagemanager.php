@@ -132,7 +132,7 @@
 					if(confirm('This action will delete the page and all accociated data. Continue?')) {
 						$.post('fragments/pagemanager.php', {del:true, id: id}, function(data) {
 							if(data == 'true') {
-								ice.Manager.getWindow('IcePM').refresh();
+								ice.publish('ice:page/delete', [id]);
 							} else {
 								ice.message(data, 'warning');
 							}
@@ -146,11 +146,9 @@
 			}
 		});
 
-		//Refresh when a new page is created
-		W.handle(ice.subscribe("ice:page/new", function() {
-			W.refresh();
-			console.log("Responded to pub new page");
-		}));
+		//Refresh when a page is altered
+		W.handle(ice.subscribe("ice:page/new", function() {	W.refresh(); }));
+		W.handle(ice.subscribe("ice:page/delete", function() { W.refresh(); }));
 
 		W.setContent(document.getElementById('pageManager1').innerHTML);
 		ice.Manager.addWindow(W);
