@@ -1,4 +1,5 @@
 <?php 
+
 namespace Ice\Models;
 use \Bcrypt;
 use Ice\DB;
