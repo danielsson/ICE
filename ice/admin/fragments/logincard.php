@@ -122,14 +122,11 @@ if(!empty($_POST['userid'])) {
 						function(response,statuscode) {
 							if(statuscode == 'success' && response.status == 'ok') {
 								$('#headerText').html('<a href="#" onclick="ice.logout();"><b>Log out<b></a>');
-								ice.fragment.load('sidepanel');
 								
 								var w = ice.Manager.getWindow('CardLogin');
 								w.beforeClose = function(){};
 								ice.Manager.removeWindow(w.name);
-								
-								ice.curtain.raise();
-								console.log('success');
+								ice.publish('ice:auth/login');
 								return;
 							} else if(statuscode == 'success') {
 								alert(response.error);

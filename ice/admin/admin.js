@@ -1,3 +1,4 @@
+'use strict';
 var ice = {
 	subscriptions: {},
 
@@ -7,11 +8,28 @@ var ice = {
 		if(!('console' in window)) {
 			window.console = {log:function(m){ice.message(m,'info');}}
 		}
-		if (window.location.hash.indexOf('#!') === 0) {
-			$.map(window.location.hash.substr(2).split(','), function(val, i){
-				ice.fragment.load(val);
-			});
-		}
+		
+		ice.subscribe('sidepanel:fragment/load', function() {
+			if (window.location.hash.indexOf('#!') === 0) {
+				$.map(window.location.hash.substr(2).split(','), function(val, i){
+					ice.fragment.load(val);
+				});
+			}
+		});
+
+		ice.subscribe('ice:message/create', function(message, type, loc) {
+			ice.message(message, type, loc);
+		});
+
+		ice.subscribe('ice:auth/login', function() {
+			ice.curtain.raise(false);
+			ice.fragment.load('sidepanel');
+		});
+
+		ice.subscribe('ice:auth/logout', function() {
+			ice.curtain.lower(false);
+		});
+
 	},
 
 	Manager : {
@@ -52,7 +70,7 @@ var ice = {
 			return true;
 		},
 		renderWindow : function(name) {
-			$win = this.getWindow(name);
+			var $win = this.getWindow(name);
 			if($win.closeable === false) {
 				$win.exitBtn.remove();
 			} else {
@@ -139,7 +157,7 @@ var ice = {
 				opacity : 0
 			}, 300, function() {
 				$(this).remove();
-				delete $win;
+				$win = null;
 
 			});
 			var tmp = $('li[data-win-name=' + name + ']', this.taskBar);
@@ -305,6 +323,7 @@ var ice = {
 
 		l.appendTo(target);
 		l.fadeIn();
+		ice.publish('ice:message/new', [message,type,customloc]);
 	}, //End message()
 	logout : function() {
 		if(confirm("You sure you want to log out? All windows will be closed and unsaved work will be lost.")) {

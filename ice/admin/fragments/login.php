@@ -46,7 +46,7 @@ if(isset($_POST['username'])) {
 		lWin.icon = " ";
 		lWin.element.css({zIndex: 99999, boxShadow:'none'});
 		lWin.onOpen = function(win) {
-			ice.curtain.lower(false);
+			//TEMP ice.curtain.lower(false);
 			
 			win.setContent(document.getElementById('loginWindow').innerHTML);
 			var $t = win.element;
@@ -66,9 +66,9 @@ if(isset($_POST['username'])) {
 					} else {
 						ice.Manager.displayNoWindowsWarning = true;
 						$('#headerText').html('<a href="#" onclick="ice.logout();"><b>Log out<b></a>');
-						ice.fragment.load('sidepanel');
+
 						ice.Manager.removeWindow('LoginWindow');
-						ice.curtain.raise();
+
 						ice.publish("ice:auth/login");
 					}
 				});
