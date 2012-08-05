@@ -50,6 +50,7 @@ if(isset($_POST['username'])) {
 			
 			win.setContent(document.getElementById('loginWindow').innerHTML);
 			var $t = win.element;
+
 			$('input[type=submit]', $t).click(function(e) {
 				e.preventDefault();
 				if($('input:text', $t).val() == "" || $('input:password', $t).val() == "") {
@@ -79,6 +80,7 @@ if(isset($_POST['username'])) {
 			});
 
 			win.element.css({top:(window.innerHeight - 332) / 2});
+			$('input:text', $t).focus();
 		};
 		
 		ice.Manager.addWindow(lWin);
