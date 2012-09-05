@@ -33,10 +33,9 @@ $config['allowed_ext'] 	= array('png','gif','jpg','jpeg');
 $config['dev_mode']		= true;
 
 // Database connection information
-$config['db_host']		= 'localhost';
+$config['db_connection']= 'mysql:host=localhost;dbname=default';
 $config['db_username']	= 'default';
 $config['db_password']	= 'default';
-$config['db_name']		= 'default';
 $config['db_prefix']	= '';
 
 $config['content_table']= $config['db_prefix'] . 'ice_content';

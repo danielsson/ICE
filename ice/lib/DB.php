@@ -21,7 +21,7 @@ class DB {
 		if (self::$instance === null) {
 			try {
 				self::$instance = new PDO(
-					'mysql:host=localhost;dbname=default', //$config['DB_CONNECTION'],
+					$config['db_connection'],
 					$config['db_username'],
 					$config['db_password']
 				);
