@@ -10,7 +10,7 @@ Auth::init(1);
 <!DOCTYPE html>
 <html>
 	<head>
-		<script src="../lib/codemirror.js"></script>
+		<script src="../lib/codemirror/codemirror.js"></script>
 		<style>
 			.CodeMirror-line-numbers {
 				background-color: #eee;
@@ -31,11 +31,11 @@ Auth::init(1);
 		var htmlEditor;
 		document._ready = function() {
 			htmlEditor = new CodeMirror(document.getElementById("iceHtmlEditorTarget"), {
-				path : "../lib/",
+				path : "../lib/codemirror/",
 				basefiles : ["codemirror_base.js"],
 				parserfile : ["css_parser.js", "js_parser.js", "xml_parser.js", "htmlmix_parser.js"],
 				lineNumbers : true,
-				stylesheet : "../lib/cm_colors.css",
+				stylesheet : "../lib/codemirror/cm_colors.css",
 				content : document.popup.payload.html,
 				height : "450px"
 			});
