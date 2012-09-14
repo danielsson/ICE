@@ -3,6 +3,9 @@ namespace Ice;
 
 defined('SYSINIT') or die('<b>Error:</b> No direct access allowed');
 
+/**
+ * Class to handle an image and modify it.
+ */
 class IceImage {
 	private $name;
 	private $image;
@@ -70,7 +73,10 @@ class IceImage {
 		$this->cache();
 		readfile($this->cachepath);
 	}
-
+	
+	/**
+	 * Save the image to $this->cachepath
+	 */
 	public function cache() {
 		switch ($this->type) {
 			case IMAGETYPE_JPEG:
@@ -115,6 +121,11 @@ class IceImage {
 		$this->resize($width, $height);
 	}
 	
+	/**
+	 * Resize an image to the specified dimensions. If the source and 
+	 * target aspect-ratio doesn't match, the image will be cropped
+	 * to fill the entire area without stretching.
+	 */
 	public function resizeToFit($targetWidth, $targetHeight) {
 		$sourceWidth = $this->getWidth();
 		$sourceHeight = $this->getHeight();
@@ -157,12 +168,28 @@ class IceImage {
 	public function getCachePath() {
 		return $this->cachepath;
 	}
+	
+	/**
+	 * Checks if the filetype of the specified path is allowed in the
+	 * config.
+	 * @global $config
+	 * @param string $path The path to check
+	 * @return boolean isAllowed
+	 */
 	public static function isAllowedType($path) {
 		global $config;
 		
 		$parts = pathinfo($path);
 		return in_array(strtolower($parts['extension']), $config['allowed_ext']);
 	}
+	
+	/**
+	 * Returns all the images in the specified path which are allowed by
+	 * isAllowedType
+	 * 
+	 * @param string $patt The path to search
+	 * @return string[] Paths to the images
+	 */
 	public static function getImagePaths($patt='../media/*.*') {
 		
 		$images = array();

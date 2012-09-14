@@ -4,7 +4,7 @@
 	define('SYSINIT',true);
 	require_once '../../ice-config.php';
 	require_once '../../lib/Auth.php';
-	require_once '../../lib/image.class.php';
+	require_once '../../lib/IceImage.php';
 	Auth::init(2);
 	
 	
@@ -35,7 +35,6 @@
 		die();
 	}
 	if(!empty($_FILES)) {
-		require_once "../../lib/image.class.php";
 		$targetFile =  realpath('../../media/') . DIRECTORY_SEPARATOR . basename($_FILES['userfile']['name']);
 
 		if (IceImage::isAllowedType($targetFile)) {

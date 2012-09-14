@@ -12,7 +12,7 @@ define('SYSINIT', true);
 require_once('../ice-config.php');
 require_once('../lib/DB.php');
 require_once('../lib/Auth.php');
-require_once('../lib/image.class.php');
+require_once('../lib/IceImage.php');
 
 Auth::init(0);
 

@@ -6,7 +6,7 @@ define('SYSINIT', true);
 
 require '../ice-config.php';
 require '../lib/Auth.php';
-require '../lib/image.class.php';
+require '../lib/IceImage.php';
 
 Auth::init(2);
 
