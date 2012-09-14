@@ -1,7 +1,10 @@
 <?php
 namespace Ice;
 
-
+/**
+ * Tool for searching directories for files filtered
+ * by their contents.
+ */
 class FileScanner {
 	public $mask = "";
 
@@ -10,6 +13,13 @@ class FileScanner {
 	public function __construct($m) {
 		$this->mask = $m;
 	}
+	
+	/**
+	 * Recursively search $dir for filenames matching mask.
+	 * 
+	 * @param string $dir The directory to search
+	 * @return string[] paths
+	 */
 	public function get_file_paths($dir) {
 		$files = scandir($dir);
 		$path = "";
@@ -42,6 +52,16 @@ class FileScanner {
 		}
 		return $this->pathlist;
 	}
+	
+	/**
+	 * Filters the list of found files based on a regex.
+	 * 
+	 * Search all the files found with get_file_paths for
+	 * $regex. $scan_lines number of lines will be scanned.
+	 * 
+	 * @param RegExp $regex The regexp to match
+	 * @param int $scan_lines The number of lines to scan. 0 scans all lines.
+	 */
 	public function filter_files($regex, $scan_lines) {
 		$line = "";
 		$numlines = 0;

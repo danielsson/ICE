@@ -7,7 +7,7 @@ define('SYSINIT',true);
 require_once '../../ice-config.php';
 require_once '../../lib/DB.php';
 require_once '../../lib/Auth.php';
-require_once '../../lib/scanner.php';
+require_once '../../lib/FileScanner.php';
 require_once '../../models/File.php';
 
 Auth::init(3);
