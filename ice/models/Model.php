@@ -77,5 +77,7 @@ abstract class Model {
 		}
 	}
 	
-	public static function fromArray($arr, $new = false);
+	public static function fromArray($arr, $new = false){
+		return null;
+	}
 }
