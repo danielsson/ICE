@@ -8,7 +8,7 @@
 	require_once '../../lib/Auth.php';
 	require_once '../../lib/DB.php';
 	require_once '../../models/User.php';
-	require_once '../../lib/image.class.php';
+	require_once '../../lib/IceImage.php';
 	Auth::init(2);
 ?>
 

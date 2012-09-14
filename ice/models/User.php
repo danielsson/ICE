@@ -8,7 +8,7 @@ defined('SYSINIT') or die('<b>Error:</b> No direct access allowed');
 
 require_once 'Model.php';
 require_once __DIR__ . '/../lib/DB.php';
-require_once __DIR__ . '/../lib/bcrypt.class.php';
+require_once __DIR__ . '/../lib/Bcrypt.php';
 
 /**
  * The user class.
