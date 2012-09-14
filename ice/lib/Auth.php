@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Session management class
+ * 
+ */
 namespace Ice;
 use Ice\Models\User;
 

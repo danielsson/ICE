@@ -8,6 +8,14 @@ defined('SYSINIT') or die('<b>Error:</b> No direct access allowed');
 
 require_once 'Model.php';
 require_once __DIR__ . '/../lib/DB.php';
+require_once __DIR__ . '/../lib/bcrypt.class.php';
+
+/**
+ * The user class.
+ * 
+ * Please use the methods passwordEquals and keyCardEquals
+ * to verify passwords.
+ */
 
 class User extends Model {
 
@@ -87,18 +95,28 @@ class User extends Model {
 			);
 	}
 	public static function hash($str) {
-		require_once(__DIR__ . '/../lib/bcrypt.class.php');
 		return Bcrypt::hash($str);
 	}
 
 	/* METHODS */
+	
+	/**
+	 * Compare $pass to the stored hash.
+	 * 
+	 * @param string $pass the unhashed string to compare to
+	 * @return bool match?
+	 */
 	public function passwordEquals($pass) {
-		require_once(__DIR__ . '/../lib/bcrypt.class.php');
 		return Bcrypt::verify($pass, $this->passwordhash);
 	}
-
+	
+	/**
+	 * Compare $key to the stored hash.
+	 * 
+	 * @param string $key the unhashed string to compare to
+	 * @return bool match?
+	 */
 	public function keyCardHashEquals($key) {
-		require_once(__DIR__ . '/../lib/bcrypt.class.php');
 		return $this->hasKeyCard() and Bcrypt::verify($key,$this->keycardhash);
 	}
 

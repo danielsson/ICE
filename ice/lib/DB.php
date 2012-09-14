@@ -1,7 +1,21 @@
 <?php
 /**
- * Simple PDO helper
+ * Simple magic PDO helper
+ * 
+ * This is a magic singleton: You can treat it as a PDO instance
+ * if you call its members statically. Example:
+ * 
+ *     $pdo = new PDO( ... );
+ *     $stmt = $pdo->prepare( ... ); 
+ * 
+ * Can be written as:
+ * 
+ *     $stmt = DB::prepare( ... )
+ * 
+ * The class connects to the database defined in the global
+ * $config variable.
  *
+ * @global $config
  */
 
 namespace Ice;

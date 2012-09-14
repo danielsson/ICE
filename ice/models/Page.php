@@ -7,7 +7,13 @@ defined('SYSINIT') or die('<b>Error:</b> No direct access allowed');
 
 require_once 'Model.php';
 require_once 'ContentSet.php';
+require_once 'File.php';
 require_once __DIR__ . '/../lib/DB.php';
+
+/**
+ * Straight-forward class representation of a page.
+ * 
+ */
 
 class Page extends Model {
 
@@ -76,6 +82,10 @@ class Page extends Model {
 
 	public function getContentSet() {
 		return ContentSet::byPageName($this->name);
+	}
+	
+	public function getFile() {
+		return File::byId($this->tid);
 	}
 
 	public function delete() {

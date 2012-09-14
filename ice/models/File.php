@@ -7,6 +7,12 @@ require_once 'Model.php';
 require_once 'Page.php';
 require_once __DIR__ . '/../lib/DB.php';
 
+/**
+ * A file is roughly equivalent to a template.
+ * 
+ * The file class manages source files registered as "templates".
+ */
+
 class File extends Model {
 	private $name;
 	private $path;
@@ -88,6 +94,6 @@ class File extends Model {
 	}
 
 	public function delete() {
-		return DB::exec(sprintf('DELETE FROM ice_files WHERE id = %d LIMIT 1', $this->id));
+		return DB::exec(sprintf('DELETE FROM ice_files WHERE id = %d LIMIT 1', intval($this->id,10)));
 	}
 }

@@ -10,7 +10,7 @@ require_once('ice-config.php');
 require_once('lib/DB.php');
 
 //Globals
-$pageContent = array();
+$pageContent = array(); //TODO: Why!?
 
 //Output buffer callback
 function iceOBcallback($d) {

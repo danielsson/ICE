@@ -10,7 +10,7 @@ defined('SYSINIT') or die('<b>Error:</b> No direct access allowed');
 /**
  * Abstract model superclass 
  * 
- * defines common methods for class creation
+ * Defines common methods for class creation
  * @uses DB 
  */
 
@@ -51,7 +51,16 @@ abstract class Model {
 			return static::fromArray($result);
 		}
 	}
-
+	
+	/**
+	 * Creates an array of instances from query result.
+	 * 
+	 * See querySingle above.
+	 * 
+	 * @param string $sql The sql to use
+	 * @param array $params The params to insert into the sql.
+	 * @return object[]|null Return an instance of the current class.
+	 */
 	protected static function queryMultiple($sql, $params) {
 		$stmt = DB::prepare($sql);
 
@@ -67,8 +76,6 @@ abstract class Model {
 			return $models;
 		}
 	}
-
-	public static function fromArray($arr, $new = false){
-		return null;
-	}
+	
+	public static function fromArray($arr, $new = false);
 }
