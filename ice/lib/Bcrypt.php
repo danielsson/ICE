@@ -6,31 +6,37 @@
 // Heavily modified by Robert Kosek, from data at php.net/crypt
 // Slightly modified by Mattias Danielsson
 
-class Bcrypt {
+class Bcrypt
+{
   const rounds = 12;
   const prefix = '';
 
-  public static function hash($input) {
+  public static function hash($input)
+  {
     $hash = crypt($input, self::getSalt());
 
     if(strlen($hash) > 13)
+
       return $hash;
 
     return false;
   }
 
-  public static function verify($input, $existingHash) {
+  public static function verify($input, $existingHash)
+  {
     $hash = crypt($input, $existingHash);
 
     return $hash === $existingHash;
   }
 
-  private static function getSalt() {
+  private static function getSalt()
+  {
     // the base64 function uses +'s and ending ='s; translate the first, and cut out the latter
     return sprintf('$2a$%02d$%s', self::rounds, substr(strtr(base64_encode(self::getBytes()), '+', '.'), 0, 22));
   }
-  
-  private static function getBytes() {
+
+  private static function getBytes()
+  {
     $bytes = '';
 
     if(function_exists('openssl_random_pseudo_bytes') &&
@@ -43,20 +49,18 @@ class Bcrypt {
       $bytes = fread($hRand, 18);
       fclose($hRand);
     }
-    
-    if($bytes === '') {
+
+    if ($bytes === '') {
       $key = uniqid(self::prefix, true);
-      
+
       // 12 rounds of HMAC must be reproduced / created verbatim, no known shortcuts.
       // Salsa20 returns more than enough bytes.
-      for($i = 0; $i < 12; $i++) {
+      for ($i = 0; $i < 12; $i++) {
         $bytes = hash_hmac('salsa20', microtime() . $bytes, $key, true);
         usleep(10);
       }
     }
-    
+
     return $bytes;
   }
 }
-
-?>
