@@ -9,6 +9,9 @@ Auth::init(1); //Userlevel 1 or higher required
 
 class ICECMSEDIT extends \ICECMS {
 	
+	/**
+	 * Extend head function to include the necessary scripts
+	 */
 	public function head($include_jquery = true) {
 		global $config;
 		echo '<script type="text/javascript"> var iceBasePath = "' , $config['baseurl'], $config['sys_folder'], '";';

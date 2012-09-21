@@ -107,7 +107,9 @@ class IceImage
 
         return 0;
     }
-
+	/**
+	 * Simple resizing of the image
+	 */
     public function resize($width, $height)
     {
         $new = imagecreatetruecolor($width, $height);
@@ -122,12 +124,18 @@ class IceImage
         imagedestroy($this -> image);
         $this->image = $new;
     }
-
+	
+	/**
+	 * Resize the width, keeping the aspect ratio
+	 */
     public function resizeWidth($width)
     {
         $height = $this->getHeight() * ($width / $this->getWidth());
         $this->resize($width, $height);
     }
+	/**
+	 * Resize the height, keeping the aspect ratio
+	 */
     public function resizeHeight($height)
     {
         $width = $this->getWidth() * ($height / $this->getHeight());
