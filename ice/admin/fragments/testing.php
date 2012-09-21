@@ -50,19 +50,4 @@
 	</ul>
 	<div style="clear:both" />
 </div>
-<hr />
-<div class="winpadd">
-	<?php
-		$stmt = DB::prepare('SELECT * FROM ice_users WHERE id = :id');
-		//$id = 450344;
-		//$stmt -> bindParam(':id', $id, PDO::PARAM_INT);
-		$stmt -> execute(array(':id' => 1));
-
-		$res = $stmt -> fetchAll(PDO::FETCH_CLASS, 'Ice\Models\User');
-		//print_r($res[0] -> getArray());
-		print($res[0] -> hasKeyCard() === true);
-
-
-	?>
-</div>
 </script>
