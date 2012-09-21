@@ -1,20 +1,24 @@
 <?php
+	namespace Ice;
+	use Ice\Models\Page;
+	
 	define('SYSINIT',true);
-	require '../../ice-config.php';
-	require '../../lib/db.class.php';
-	require '../../lib/auth.class.php';
-	require '../../models/IcePage.php';
 
-	$Auth->init(1);
-	$db->connect();
+	require '../../ice-config.php';
+	require '../../lib/DB.php';
+	require '../../lib/Auth.php';
+	require '../../models/Page.php';
+
+	Auth::init(1);
+
 	if(isset($_POST['del']) && $_POST['del'] == "true") {
 		if($_SESSION['userlevel'] < 2) {
 			die('You are not allowed to perform this action');
 		}
 
-		$page = IcePage::byId($db,intval($_POST['id']));
+		$page = Page::byId(intval($_POST['id']));
 
-		$page->delete($db);
+		$page->delete();
 		
 		die('true');
 	} elseif (isset($_POST['rename']) && $_POST['rename'] == "true") {
@@ -22,9 +26,9 @@
 			die('You are not allowed to perform this action');
 		}
 
-		$page = IcePage::byId($db,intval($_POST['id']));
-		$page->setName($db->escape($_POST['name']));
-		$page->save($db);
+		$page = Page::byId($_POST['id']);
+		$page->setName($_POST['name']);
+		$page->save();
 
 		die('true');
 	}
@@ -32,7 +36,6 @@
 ?>
 <script type="text/javascript">
 	function pagemanager() {
-		ice.fragment.addCss('pagemanager.css');
 		var W = new ice.Window();
 		W.name = "IcePM";
 		W.title = "Manage pages";
@@ -129,7 +132,7 @@
 					if(confirm('This action will delete the page and all accociated data. Continue?')) {
 						$.post('fragments/pagemanager.php', {del:true, id: id}, function(data) {
 							if(data == 'true') {
-								ice.Manager.getWindow('IcePM').refresh();
+								ice.publish('ice:page/delete', [id]);
 							} else {
 								ice.message(data, 'warning');
 							}
@@ -143,6 +146,10 @@
 			}
 		});
 
+		//Refresh when a page is altered
+		W.handle(ice.subscribe("ice:page/new", function() {	W.refresh(); }));
+		W.handle(ice.subscribe("ice:page/delete", function() { W.refresh(); }));
+
 		W.setContent(document.getElementById('pageManager1').innerHTML);
 		ice.Manager.addWindow(W);
 	}
@@ -151,18 +158,18 @@
 <script type="text/template" id="pageManager1">
 <?php endif;?>
 
-<div class="pagemanager">
+<div class="winpadd" style="padding-top:5px;">
 	<div class="toolbar">
 		Click on a page to edit, right click for options.
 		<a href="#" style="float:right;" onclick="ice.fragment.load('pagewizard');">Create new page</a>
 		
 	</div>
-<br />
+	<br />
 	<div style="clear:both;"></div>
 	<ul class="big_grid">
 		<?php
 
-			$pages = IcePage::findAll($db);
+			$pages = Page::findAll();
 
 			if ($pages) {
 				foreach ($pages as $i => $page) {
@@ -171,7 +178,6 @@
 			} else {
 				echo 'This was awkward.';
 			}
-			$db->close();
 
 		?>
 

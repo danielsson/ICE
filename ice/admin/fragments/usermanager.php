@@ -1,11 +1,16 @@
 <?php
+	namespace Ice;
+	use Ice\Models\User;
+
 	define('SYSINIT',true);
+	
 	require_once '../../ice-config.php';
-	require_once '../../lib/db.class.php';
-	require_once '../../lib/auth.class.php';
-	require_once '../../models/IceUser.php';
-	$Auth->init(2);
-	$db->connect();
+	require_once '../../lib/DB.php';
+	require_once '../../lib/Auth.php';
+	require_once '../../models/User.php';
+	
+	Auth::init(2);
+	
 	if(!isset($_POST['refresh'])) :
 ?>
 
@@ -23,6 +28,11 @@ function usermanager() {
 			ice.fragment.load('userwin', {}, {id:id});
 		});
 	};
+
+	W.handle(ice.subscribe('ice:user/new', function() {
+		W.refresh();
+	}));
+
 	W.setContent(document.getElementById('userManager').innerHTML);
 	ice.Manager.addWindow(W);
 }
@@ -50,7 +60,7 @@ function usermanager() {
 <tbody>
 
 	<?php 
-	$users = IceUser::findAll($db);
+	$users = User::findAll();
 
 	foreach($users as $i => $user) {
 		echo '<tr><td>', $user->getId(), '</td><td>',
@@ -59,7 +69,6 @@ function usermanager() {
 			$user->hasKeyCard() ? "Yes":"No" , '</td>';
 	}
 
-	$db->close();
 	?>
 
 </tbody>

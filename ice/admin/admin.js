@@ -1,15 +1,45 @@
+'use strict';
 var ice = {
+	subscriptions: {},
+
+	ready : function() {
+		this.Manager.taskBar = $('#taskBar ul');
+		this.Manager.windowSandbox = $('#windowSandbox');
+		if(!('console' in window)) {
+			window.console = {log:function(m){ice.message(m,'info');}}
+		}
+		
+		ice.subscribe('sidepanel:fragment/load', function() {
+			if (window.location.hash.indexOf('#!') === 0) {
+				$.map(window.location.hash.substr(2).split(','), function(val, i){
+					ice.fragment.load(val);
+				});
+			}
+		});
+
+		ice.subscribe('ice:message/create', function(message, type, loc) {
+			ice.message(message, type, loc);
+		});
+
+		ice.subscribe('ice:auth/login', function() {
+			ice.curtain.raise(false);
+			ice.fragment.load('sidepanel');
+		});
+
+		ice.subscribe('ice:auth/logout', function() {
+			ice.curtain.lower(false);
+		});
+
+	},
+
 	Manager : {
 		windowsStorage : {},
 		incrementer : 0,
 		displayNoWindowsWarning: true,
 		windowSandbox : {},
 		taskBar : {},
-		ready : function() {
-			this.taskBar = $('#taskBar ul');
-			this.windowSandbox = $('#windowSandbox');
 
-		},
+		
 		getWindow : function(name) {
 			if( name in this.windowsStorage) {
 				return this.windowsStorage[name];
@@ -17,7 +47,6 @@ var ice = {
 				return false;
 			}
 		},
-		getall: function() {return this.windowsStorage},
 		addWindow : function(win) {//First argument is a windowClass object.
 			if(this.displayNoWindowsWarning) {
 				this.windowSandbox.find("div:has(img)").html("");
@@ -29,9 +58,11 @@ var ice = {
 				win.name = name;
 			}
 			if( name in this.windowsStorage === false) {//Prevent duplicates.
-				console.log(name);
 				this.windowsStorage[name] = win;
 			} else {
+				//Move requested window to front
+				this.windowsStorage[name].element.css({zIndex:this.maxZindex()});
+				console.log("ID already in use: " + name);
 				return false;
 			}
 
@@ -39,7 +70,7 @@ var ice = {
 			return true;
 		},
 		renderWindow : function(name) {
-			$win = this.getWindow(name);
+			var $win = this.getWindow(name);
 			if($win.closeable === false) {
 				$win.exitBtn.remove();
 			} else {
@@ -107,7 +138,10 @@ var ice = {
 			}
 
 			taskItem.appendTo(this.taskBar);
+
 			$win.onOpen($win);
+			ice.publish("ice:window/open", [$win]);
+			ice.publish($win.name + ":window/open", [$win]);
 
 		},
 		minimizeWindow : function(name) {
@@ -123,7 +157,7 @@ var ice = {
 				opacity : 0
 			}, 300, function() {
 				$(this).remove();
-				delete $win;
+				$win = null;
 
 			});
 			var tmp = $('li[data-win-name=' + name + ']', this.taskBar);
@@ -138,17 +172,23 @@ var ice = {
 			}, 800, function() {
 				$(this).remove();
 			});
+
+			for(var x in $win.handles) {
+				ice.unsubscribe($win.handles[x]);
+			}
+			
 			delete this.windowsStorage[name];
 			return true;
 		},
 		flushWindows : function(callback) {
-			for(n in this.windowsStorage) {
+			for(var n in this.windowsStorage) {
 				if(!this.removeWindow(n)) {
 					return false;
 				}
 			}
-			this.windowsStorage = [];
-			//reset, just in case
+			
+			this.windowsStorage = {};
+			
 			if( typeof callback == 'function') {
 				callback();
 			}
@@ -178,6 +218,8 @@ var ice = {
 		this.loader = this.element.find('.winLoader');
 		this.contentEndpoint = "";
 		this.allowRefresh = false;
+		this.handles = [];
+
 		this.refresh = function(attrs) {
 			if(this.contentEndpoint === "") {return false;}
 			if(typeof attrs == 'undefined') {
@@ -214,6 +256,9 @@ var ice = {
 		};
 		this.onContentChange = function(winObj) {
 		};
+		this.handle = function(handle) {
+			this.handles.push(handle);
+		};
 	},
 	fragment : {
 		usedCss : [],
@@ -234,6 +279,8 @@ var ice = {
 					} catch(e) {}
 				});
 			}
+			ice.publish("ice:fragment/load", [fragmentName]);
+			ice.publish(fragmentName + ":fragment/load", [fragmentName]);
 		},
 		get : function(fragmentName, win, postData, callback) {
 			$.post("fragments/" + fragmentName + ".php", postData, function(data) {
@@ -241,7 +288,7 @@ var ice = {
 			});
 		},
 		addCss : function(filename) {
-			if( filename in this.usedCss) {
+			if (filename in this.usedCss) {
 				return false;
 			}
 			var head = document.getElementsByTagName("head")[0], ele = document.createElement('link');
@@ -277,6 +324,7 @@ var ice = {
 
 		l.appendTo(target);
 		l.fadeIn();
+		ice.publish('ice:message/new', [message,type,customloc]);
 	}, //End message()
 	logout : function() {
 		if(confirm("You sure you want to log out? All windows will be closed and unsaved work will be lost.")) {
@@ -287,6 +335,7 @@ var ice = {
 					$('#headerText').html('Not logged in.');
 					$('aside').html("");
 					ice.fragment.load('login');
+					ice.publish("ice:auth/logout");
 				});
 			});
 		}
@@ -300,7 +349,7 @@ var ice = {
 				$('#header').animate({height:"100%"},800).css({zIndex:88888});
 				$('#header .center').delay(400).animate({marginTop:100}, 400);
 			}
-			
+			ice.publish("ice:curtain/lower",[now]);
 		},
 		raise : function(now) {
 			if(now===true) {
@@ -313,7 +362,7 @@ var ice = {
 					$(this).css('zIndex', 1);
 				});
 			}
-			
+			ice.publish("ice:curtain/raise", [now]);
 		}
 	}, //End curtain
 	/**
@@ -353,6 +402,37 @@ var ice = {
 
 		return out.join("");
 
+	},
+
+	// PubSub system
+	// Adaption of https://github.com/daniellmb/MinPubSub/
+	publish: function(topic, args){
+		var handlers = this.subscriptions[topic],
+			hlen = handlers ? handlers.length : 0;
+
+		while (hlen--) {
+			handlers[hlen].apply(this, args || []);
+		}
+		console ? console.log("Published " + args + " to " + topic):null;
+	},
+	subscribe: function(topic, callback) {
+		if (!(topic in this.subscriptions)) {
+			this.subscriptions[topic] = [];
+		}
+
+		this.subscriptions[topic].push(callback);
+		return [topic, callback];
+	},
+	unsubscribe: function(handle, callback) {
+		var handlers = this.subscriptions[callback ? handle : handle[0]],
+			callback = callback || handle[1],
+			len = handlers ? handlers.length : 0;
+
+		while(len--) {
+			if(handlers[len] === callback){
+				handlers.splice(len,1);
+			}
+		}
 	}
 };
 //End ice

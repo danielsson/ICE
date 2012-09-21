@@ -1,10 +1,14 @@
 <?php
 //TODO: Make this less shitty.
+namespace Ice;
+
 define('SYSINIT', true);
+
 require '../ice-config.php';
-require '../lib/auth.class.php';
-require '../lib/image.class.php';
-$Auth -> init(2);
+require '../lib/Auth.php';
+require '../lib/IceImage.php';
+
+Auth::init(2);
 
 if (isset($_GET['thumb'])) {
 	$path = realpath('../media/' . $_GET['thumb']);

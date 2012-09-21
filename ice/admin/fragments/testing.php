@@ -1,9 +1,15 @@
-<?php 
+<?php
+	namespace Ice;
+	use \PDO;
+	use Ice\Models\User;
+
 	define('SYSINIT',true);
 	require_once '../../ice-config.php';
-	require_once '../../lib/auth.class.php';
-	require_once '../../lib/image.class.php';
-	$Auth->init(2);
+	require_once '../../lib/Auth.php';
+	require_once '../../lib/DB.php';
+	require_once '../../models/User.php';
+	require_once '../../lib/IceImage.php';
+	Auth::init(2);
 ?>
 
 <script type="text/javascript">
@@ -42,16 +48,6 @@
 			<h3>Add pages</h3>
 		</li>
 	</ul>
-	<div style="clear:both" />
-</div>
-<hr />
-<div class="winpadd">
-	<p>Vinyl wayfarers keffiyeh, shoreditch carles cred thundercats occupy fixie pork belly leggings synth organic terry richardson.</p>
-	<input type="text" />
-	<input type="password" />
-	<h3>Wayfarers</h3>
-	<p>Raw denim echo park beard, bushwick swag tofu ethnic next level brunch irony master cleanse.</p>
-	<label>Brunch: <input type="text" /></label>
 	<div style="clear:both" />
 </div>
 </script>

@@ -1,16 +1,20 @@
 <?php
+	namespace Ice;
+	use Ice\Models\User;
+
 	define('SYSINIT',true);
+	
 	require_once '../../ice-config.php';
-	require_once '../../lib/db.class.php';
-	require_once '../../lib/auth.class.php';
-	require_once '../../models/IceUser.php';
-	$Auth->init(3);
+	require_once '../../lib/DB.php';
+	require_once '../../lib/Auth.php';
+	require_once '../../models/User.php';
+	
+	Auth::init(3);
 	
 	if(isset($_POST['id']) && !isset($_POST['username'])) {
-		$db->connect();
 		$id = (int) $_POST['id'];
 		
-		$user = IceUser::byId($db, $id);
+		$user = User::byId($id);
 		
 		if($user != NULL) {
 			$arr = $user->getArray();
@@ -19,14 +23,14 @@
 		} else {
 			die ('error');
 		}
+
 	} elseif (isset($_POST['username'])){
 		if(!empty($_POST['username']) && !empty($_POST['id'])) {
-			$db->connect();
 			$uid = (int) $_POST['id'];
 			$ulvl = (int) $_POST['userlevel'];
-			$uname = $Auth->sanitize($_POST['username']);
+			$uname = $_POST['username'];
 
-			$user = IceUser::byId($db,$uid);
+			$user = User::byId($uid);
 			
 			$user->setUserLevel($ulvl);
 			$user->setUsername($uname);
@@ -35,19 +39,17 @@
 				$user->setPassword($_POST['password']);
 			}
 
-			$user->save($db);
-			$db->close();
+			$user->save();
 		}
 		
 		die('{"status":"ok"}');
 	} elseif (isset($_POST['delete'])) {
 		$uid = intval($_POST['delete']);
-		$db->connect();
 
-		$user = IceUser::byId($db,$uid);
+		$user = User::byId($uid);
 
 		if($user != null) {
-			$user -> delete($db);
+			$user -> delete();
 		}
 		die('{"status":"ok"}');
 	}
@@ -58,6 +60,7 @@
 		if(typeof attrs.id == "undefined") {return false;}
 		var W = new ice.Window();
 		W.width = 400;
+		W.title = "Edit user"
 		W.setContent(document.getElementById('editUsersDialogue').innerHTML);
 		
 		W.element.find('input[name=id]').val(attrs.id);
@@ -66,7 +69,7 @@
 			win.loadingOn();
 			$.post('fragments/userwin.php', {id:win.uid}, function(data) {
 				win.loadingOff();
-				if(typeof data.username !== "undefined") {
+				if(data.username != void 0) {
 					win.element.find('[name=username]').val(data.username);
 					win.element.find('[name=userlevel]').val(data.userlevel);
 					win.element.find('input,select').removeAttr('disabled');
@@ -86,7 +89,7 @@
 				win.loadingOn();
 				$.post('fragments/userwin.php', d, function(data) {
 					win.loadingOff();
-					if(typeof data.status !== 'undefined') {
+					if(data.status != void 0) {
 						ice.message('Saved user', 'info');
 						ice.Manager.getWindow('USRMAN').refresh();
 						ice.Manager.removeWindow(win.name);
@@ -119,22 +122,27 @@
 	}
 </script>
 <script type="text/template" id="editUsersDialogue">
-<div class="winpadd">
+
 
 	<form>
-	<p><b>UserName</b></p>
 	<input type="hidden" name="id"/>
-	<input type="text" name="username" style="width:90%" disabled="disabled"/>
-	<p><b>Userlevel</b></p>
-	<select name="userlevel" disabled="disabled">
-		<option value="1">1</option>
-		<option value="2">2</option>
-		<option value="3">3</option>
-	</select>
-	
-	<br/>
-	<p><b>Password</b></p>
-	<input type="password" name="password" style="width:90%" disabled="disabled"/>
+
+	<dl class="form">
+		<dt><label for="username">Username:</label></dt>
+		<dd><input type="text" name="username" style="width:250px" disabled="disabled"/></dd>
+
+		<dt><label for="userlevel">Userlevel: </label></dt>
+		<dd>
+			<select name="userlevel" disabled="disabled">
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+			</select>
+		</dd>
+		<dt><label for="password">Password:</label></dt>
+		<dd><input type="password" name="password" style="width:250px" disabled="disabled"/></dd>
+	</dl>
+
 	<br style="clear: both" />
 	<!--<input type="button" value="Abort" style="float:left" onclick="ice.Manager.removeWindow($(this).inWindow())"/>-->
 	
@@ -143,6 +151,6 @@
 	<input type="button" value="Delete" style="float:right; color:#F00" id="btnDeleteUser" />
 	</form>
 	<div style="clear:both"></div>
-</div>
+
 
 </script>

@@ -58,7 +58,7 @@
 <?php endif; ?>
 <script type="text/javascript">
 $(document).ready(function() {
-	ice.Manager.ready();
+	ice.ready();
 
 <?php if(! isset($_SESSION['userlevel']) || $_SESSION['userlevel'] == 0) {?>
 	ice.fragment.load('login');

@@ -20,7 +20,9 @@ $ice->load('index', true, 1); // Yes, Im using the same name. This way i can use
     </div>
 </div>
 <div class="divider"></div>
-<?php  element('bigTextBody2','div','area',array('class'=>'center textBlock')); ?>
+	<div class="center textBlock">
+		<?php element('bigTextBody2','div','area'); ?>
+	</div>
 <div class="center">
 
 </div>

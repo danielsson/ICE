@@ -1,7 +1,9 @@
 <?php
+namespace Ice;
+
 define('SYSINIT', true);
-require '../../lib/auth.class.php';
-$Auth -> init(1);
+require '../../lib/Auth.php';
+Auth::init(1);
 
 ?>
 

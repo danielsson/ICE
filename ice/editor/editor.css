@@ -106,10 +106,10 @@ a.iceEditorToolbarButton {
 	width: 16px;
 	display: block;
 	float: left;
-	border-radius: 2px;
-	-moz-border-radius: 2px;
-	-o-border-radius: 2px;
-	-webkit-border-radius: 2px;
+	border-radius: 1px;
+	-moz-border-radius: 1px;
+	-o-border-radius: 1px;
+	-webkit-border-radius: 1px;
 	background: rgba(255,255,255,0.3);
 	cursor: pointer;
 	-moz-box-shadow: 0 0 1px #333;

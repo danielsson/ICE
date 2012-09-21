@@ -1,14 +1,13 @@
 <?php
+
 /**********************************************
 This is the ICE! cms adapter. Include this file
 on all pages with editable content.
 **********************************************/
+use Ice\DB;
 defined('SYSINIT') or define('SYSINIT', true);
 require_once('ice-config.php');
-require_once('lib/db.class.php');
-
-//Globals
-$pageContent = array();
+require_once('lib/DB.php');
 
 //Output buffer callback
 function iceOBcallback($d) {
@@ -20,12 +19,14 @@ function iceOBcallback($d) {
 	return $d;
 }
 
-class ICECMS {
+class IceCms {
 	public $in_editor_mode = false;
 	private $currentPage = "";
+	private $createStmt = null;
+	private $pageContent = array();
 	
 	public function load($page_name, $cache = 'n', $lifetime = 0) {
-		global $config, $db, $pageContent;
+		global $config;
 		if($cache==='n') { $cache = (boolean) $config['use_cache']; }
 		if(defined('ICE_PAGE_OVERRIDE') === true) {
 			$this->currentPage = ICE_PAGE_OVERRIDE;
@@ -51,7 +52,7 @@ class ICECMS {
 	}
 	
 	public function e($field_name, $element, $type = "field", $attrs = array()) {  //Inserts an element into the page. Equal to element().
-		global $config, $pageContent;
+		global $config;
 		switch($type) {
 			case "field":
 				$type = "field"; break;
@@ -70,16 +71,16 @@ class ICECMS {
 			}
 		}
 		echo ">";
-		if(!isset($pageContent[$field_name])) {
+		if(!isset($this->pageContent[$field_name])) {
 			$this->createDBrecord($field_name, $type, "Empty element");
 		}
-		echo $pageContent[$field_name];
+		echo $this->pageContent[$field_name];
 		
 		echo "</", $element, ">";
 	}
 	
 	public function img($field_name, $width=0, $height=0, $attrs = array()) {
-		global $config, $pageContent;
+		global $config;
 
 		if($height != 0){
 			$attrs['height'] = $height;
@@ -89,11 +90,11 @@ class ICECMS {
 		}
 		$field_name = $this->sanitize($field_name);
 
-		if(!isset($pageContent[$field_name])) {
+		if(!isset($this->pageContent[$field_name])) {
 			$this->createDBrecord($field_name, 'img', '//placehold.it/' . $width . "x$height");
 		}
 
-		$attrs['src'] = $pageContent[$field_name];
+		$attrs['src'] = $this->pageContent[$field_name];
 
 		echo '<img ';
 		foreach($attrs as $key => $val) {
@@ -104,35 +105,47 @@ class ICECMS {
 
 	}
 	public function createDBrecord($field_name, $type, $placeholder) {
-		global $config, $db, $pageContent;
-		$cp = $this->currentPage;
+		global $config;
+
+
 		if($config['dev_mode']==false) {
 			echo 'Dev-mode off -- Record creation failed';
 			return false;
 		}
-		$sql = 'INSERT IGNORE INTO ' . $config['content_table'] . " (fieldname, content, pagename, fieldtype) VALUES ('$field_name', '$placeholder', '$cp', '$type');";
-		$db->connect();
-		$r = $db->query($sql);
+
+		$params = array(
+			':fieldname' => $field_name,
+			':placeholder' => $placeholder,
+			':cp' => $this->currentPage,
+			':type' => $type
+		);
+
+		if ($this->createStmt === null) {
+			$sql = "INSERT IGNORE INTO {$config['content_table']} (fieldname, content, pagename, fieldtype) VALUES (:fieldname, :placeholder, :cp, :type);";
+			$this->createStmt = DB::prepare($sql);
+		}
+		
+		$r = $this->createStmt->execute($params);
 		if(!$r) {
 			echo 'Database Error ';
 		}
-		$pageContent[$field_name] = $placeholder;
+		$this->pageContent[$field_name] = $placeholder;
 		return true;
 	}
 	
 	public function loadPageData() {
 		//Create the array of page fields
-		global $db, $config, $pageContent;
-		$sql = "SELECT content, fieldname FROM ". $config['content_table'] ." WHERE pagename = '$this->currentPage'";
-		$db->connect();
-		$res = $db->query($sql);
+		global $config;
+		$sql = "SELECT content, fieldname FROM {$config['content_table']} WHERE pagename = ?";
 		
-		if($res) {
-			while($row = mysql_fetch_array($res)) {
-				$pageContent[$row['fieldname']] = $row['content'];
+		$stmt = DB::prepare($sql);
+		
+
+		if($stmt->execute(array($this->currentPage))) {
+			while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+				$this->pageContent[$row['fieldname']] = $row['content'];
 			}
 		}
-		$db->close();
 	}
 	
 	public function is_editing() {
@@ -147,10 +160,10 @@ class ICECMS {
 
 if(isset($_POST['edit']) && $_POST['edit']=="true") {
 	require_once('editor/editor.php');
-	$ice = new ICECMSEDIT();
+	$ice = new Ice\IceCmsEdit();
 	$ice->in_editor_mode = true;
 } else {
-	$ice = new ICECMS();
+	$ice = new IceCms();
 }
 
 //Shorthand functions below. Enable/disable in config.php

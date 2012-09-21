@@ -1,13 +1,20 @@
 <?php
+//TODO: This is a mess
+namespace Ice;
+
 $data = array(
 	'status'=>'success',
 	'error'=>'none'
 );
+
 define('SYSINIT', true);
+
 require_once('../ice-config.php');
-require_once('../lib/db.class.php');
-require_once('../lib/auth.class.php');
-require_once('../lib/image.class.php');
+require_once('../lib/DB.php');
+require_once('../lib/Auth.php');
+require_once('../lib/IceImage.php');
+
+Auth::init(0);
 
 if($_SESSION['userlevel'] < 1) {
 	$data['status'] = 'error';
@@ -22,7 +29,7 @@ $fieldname = clean($_POST['fieldname']);
 $pagename = clean($_POST['pagename']);
 
 if(isset($_POST['text'])){
-	$content = $db->escape($_POST['text']);
+	$content = DB::quote($_POST['text']);
 
 	if(empty($pagename)) {
 		$data['status'] = "error";
@@ -48,13 +55,12 @@ if(isset($_POST['text'])){
 	}
 	$data['url'] = $config['baseurl'] . $content;
 
-	$content = $db->escape($content);
+	$content = DB::quote($content);
 }
 
-	$sql = 'UPDATE '. $config['content_table'] ." SET content = '$content' WHERE fieldname = '$fieldname' and pagename = '$pagename';"; 
-	$db->connect();
-	$res = $db->query($sql);
-	if($db->error()) {
+	$sql = 'UPDATE '. $config['content_table'] ." SET content = $content WHERE fieldname = '$fieldname' and pagename = '$pagename';"; 
+
+	if(!$res = DB::query($sql)) {
 		$data['status'] = 'error';
 		if($config['dev_mode']==true) {
 			$data['error'] = $db->error() . "::" . $sql;
@@ -67,5 +73,4 @@ if(isset($_POST['text'])){
 
 	// Clear the cache
 	foreach(glob('../cache/*.txt') as $v) {	unlink($v); }
-	$db->close();
 ?>

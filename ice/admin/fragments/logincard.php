@@ -1,4 +1,6 @@
 <?php 
+namespace Ice;
+use Ice\Models\User;
 
 if(!empty($_POST['userid'])) {
 	session_start();
@@ -6,19 +8,17 @@ if(!empty($_POST['userid'])) {
 	define('SYSINIT',true);
 
 	require_once '../../ice-config.php';
-	require_once '../../lib/db.class.php';
-	require_once '../../models/IceUser.php';
+	require_once '../../lib/DB.php';
+	require_once '../../models/User.php';
 
 	$key = $_POST['key'];
 	$uid = intval($_POST['userid']);
 
-	$db->connect();
-	$user = IceUser::byId($db,$uid);
+	$user = User::byId($uid);
 	if($user !== null && $user->keyCardHashEquals($key)) {
 		$_SESSION['username']=$user->getUsername();
 		$_SESSION['userlevel'] = $user->getUserlevel();
 		$_SESSION['uid'] = $user->getId();
-		$db->close();
 		die('{"status":"ok","error":""}');
 	} else {
 		die('{"status":"error","error":"Wrong PIN or unathorized IDd"}');
@@ -122,14 +122,11 @@ if(!empty($_POST['userid'])) {
 						function(response,statuscode) {
 							if(statuscode == 'success' && response.status == 'ok') {
 								$('#headerText').html('<a href="#" onclick="ice.logout();"><b>Log out<b></a>');
-								ice.fragment.load('sidepanel');
 								
 								var w = ice.Manager.getWindow('CardLogin');
 								w.beforeClose = function(){};
 								ice.Manager.removeWindow(w.name);
-								
-								ice.curtain.raise();
-								console.log('success');
+								ice.publish('ice:auth/login');
 								return;
 							} else if(statuscode == 'success') {
 								alert(response.error);
