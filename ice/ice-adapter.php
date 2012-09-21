@@ -9,9 +9,6 @@ defined('SYSINIT') or define('SYSINIT', true);
 require_once('ice-config.php');
 require_once('lib/DB.php');
 
-//Globals
-$pageContent = array(); //TODO: Why!?
-
 //Output buffer callback
 function iceOBcallback($d) {
 	global $config;
@@ -22,13 +19,14 @@ function iceOBcallback($d) {
 	return $d;
 }
 
-class ICECMS {
+class IceCms {
 	public $in_editor_mode = false;
 	private $currentPage = "";
 	private $createStmt = null;
+	private $pageContent = array();
 	
 	public function load($page_name, $cache = 'n', $lifetime = 0) {
-		global $config, $pageContent;
+		global $config;
 		if($cache==='n') { $cache = (boolean) $config['use_cache']; }
 		if(defined('ICE_PAGE_OVERRIDE') === true) {
 			$this->currentPage = ICE_PAGE_OVERRIDE;
@@ -54,7 +52,7 @@ class ICECMS {
 	}
 	
 	public function e($field_name, $element, $type = "field", $attrs = array()) {  //Inserts an element into the page. Equal to element().
-		global $config, $pageContent;
+		global $config;
 		switch($type) {
 			case "field":
 				$type = "field"; break;
@@ -73,16 +71,16 @@ class ICECMS {
 			}
 		}
 		echo ">";
-		if(!isset($pageContent[$field_name])) {
+		if(!isset($this->pageContent[$field_name])) {
 			$this->createDBrecord($field_name, $type, "Empty element");
 		}
-		echo $pageContent[$field_name];
+		echo $this->pageContent[$field_name];
 		
 		echo "</", $element, ">";
 	}
 	
 	public function img($field_name, $width=0, $height=0, $attrs = array()) {
-		global $config, $pageContent;
+		global $config;
 
 		if($height != 0){
 			$attrs['height'] = $height;
@@ -92,11 +90,11 @@ class ICECMS {
 		}
 		$field_name = $this->sanitize($field_name);
 
-		if(!isset($pageContent[$field_name])) {
+		if(!isset($this->pageContent[$field_name])) {
 			$this->createDBrecord($field_name, 'img', '//placehold.it/' . $width . "x$height");
 		}
 
-		$attrs['src'] = $pageContent[$field_name];
+		$attrs['src'] = $this->pageContent[$field_name];
 
 		echo '<img ';
 		foreach($attrs as $key => $val) {
@@ -107,7 +105,7 @@ class ICECMS {
 
 	}
 	public function createDBrecord($field_name, $type, $placeholder) {
-		global $config, $pageContent;
+		global $config;
 
 
 		if($config['dev_mode']==false) {
@@ -131,13 +129,13 @@ class ICECMS {
 		if(!$r) {
 			echo 'Database Error ';
 		}
-		$pageContent[$field_name] = $placeholder;
+		$this->pageContent[$field_name] = $placeholder;
 		return true;
 	}
 	
 	public function loadPageData() {
 		//Create the array of page fields
-		global $config, $pageContent;
+		global $config;
 		$sql = "SELECT content, fieldname FROM {$config['content_table']} WHERE pagename = ?";
 		
 		$stmt = DB::prepare($sql);
@@ -145,7 +143,7 @@ class ICECMS {
 
 		if($stmt->execute(array($this->currentPage))) {
 			while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-				$pageContent[$row['fieldname']] = $row['content'];
+				$this->pageContent[$row['fieldname']] = $row['content'];
 			}
 		}
 	}
@@ -165,7 +163,7 @@ if(isset($_POST['edit']) && $_POST['edit']=="true") {
 	$ice = new Ice\ICECMSEDIT();
 	$ice->in_editor_mode = true;
 } else {
-	$ice = new ICECMS();
+	$ice = new IceCms();
 }
 
 //Shorthand functions below. Enable/disable in config.php

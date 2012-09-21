@@ -7,7 +7,7 @@ require_once(dirname(__FILE__).'/../lib/Auth.php');
 
 Auth::init(1); //Userlevel 1 or higher required
 
-class ICECMSEDIT extends \ICECMS {
+class IceCmsEdit extends \IceCms {
 	
 	/**
 	 * Extend head function to include the necessary scripts
