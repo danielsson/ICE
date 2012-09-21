@@ -160,7 +160,7 @@ class IceCms {
 
 if(isset($_POST['edit']) && $_POST['edit']=="true") {
 	require_once('editor/editor.php');
-	$ice = new Ice\ICECMSEDIT();
+	$ice = new Ice\IceCmsEdit();
 	$ice->in_editor_mode = true;
 } else {
 	$ice = new IceCms();

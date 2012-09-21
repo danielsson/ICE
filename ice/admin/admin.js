@@ -181,13 +181,14 @@ var ice = {
 			return true;
 		},
 		flushWindows : function(callback) {
-			for(n in this.windowsStorage) {
+			for(var n in this.windowsStorage) {
 				if(!this.removeWindow(n)) {
 					return false;
 				}
 			}
+			
 			this.windowsStorage = {};
-			//reset, just in case
+			
 			if( typeof callback == 'function') {
 				callback();
 			}
