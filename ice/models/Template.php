@@ -12,7 +12,7 @@ require_once __DIR__ . '/../lib/DB.php';
  *
  * The file class manages source files registered as "templates".
  */
-class File extends Model
+class Template extends Model
 {
     private $name;
     private $path;

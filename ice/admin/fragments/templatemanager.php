@@ -1,14 +1,14 @@
 <?php
 	namespace Ice;
 	use \PDO;
-	use Ice\Models\File;
+	use Ice\Models\Template;
 
 	define('SYSINIT',true);
 
 	require '../../ice-config.php';
 	require '../../lib/DB.php';
 	require '../../lib/Auth.php';
-	require '../../models/File.php';
+	require '../../models/Template.php';
 	
 	Auth::init(2);
 	
@@ -20,7 +20,7 @@
 		}
 		if(!empty($_POST['nicename']) || !empty($_POST['path']) || !empty($_POST['url'])) {
 
-			$file = new File(0, $_POST['nicename'], $_POST['path'], $_POST['url']);
+			$file = new Template(0, $_POST['nicename'], $_POST['path'], $_POST['url']);
 
 			$file->save();
 
@@ -29,7 +29,7 @@
 	}
 	if(!empty($_POST['del'])) {
 		$_POST = Auth::sanitize($_POST);
-		$file = File::byId(intval($_POST['id']));
+		$file = Template::byId(intval($_POST['id']));
 		if($file !== null) {
 			$file->delete();
 		}
@@ -119,15 +119,15 @@ function templatemanager() {
 <tbody>
 
 	<?php 
-	$files = File::find();
-	if($files === null) {
+	$templates = Template::find();
+	if($templates === null) {
 		echo "<tr><td>No pages</td></tr>";
 	} else {
-		foreach ($files as $file) {
-			echo '<tr><td>', $file->getId(),
-			'</td><td>', $file->getName(),
-			'</td><td>', $file->getPath(),
-			'</td><td>', $file->getUrl(), '</td>';
+		foreach ($templates as $template) {
+			echo '<tr><td>', $template->getId(),
+			'</td><td>', $template->getName(),
+			'</td><td>', $template->getPath(),
+			'</td><td>', $template->getUrl(), '</td>';
 		}
 	}
 	?>

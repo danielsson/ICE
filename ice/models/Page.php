@@ -7,7 +7,7 @@ defined('SYSINIT') or die('<b>Error:</b> No direct access allowed');
 
 require_once 'Model.php';
 require_once 'ContentSet.php';
-require_once 'File.php';
+require_once 'Template.php';
 require_once __DIR__ . '/../lib/DB.php';
 
 /**
@@ -100,7 +100,7 @@ class Page extends Model
 
     public function getFile()
     {
-        return File::byId($this->tid);
+        return Template::byId($this->tid);
     }
 
     public function delete()

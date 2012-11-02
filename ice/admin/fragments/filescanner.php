@@ -1,6 +1,6 @@
 <?php
 namespace Ice;
-use Ice\Models\File as IceFile;
+use Ice\Models\Template;
 
 define('SYSINIT',true);
 
@@ -8,7 +8,7 @@ require_once '../../ice-config.php';
 require_once '../../lib/DB.php';
 require_once '../../lib/Auth.php';
 require_once '../../lib/FileScanner.php';
-require_once '../../models/File.php';
+require_once '../../models/Template.php';
 
 Auth::init(3);
 
@@ -21,7 +21,7 @@ if(isset($_POST['files'])) {
 
 		$name = Auth::sanitize($_POST[$path64]); //The name for the text boxes are simply the encoded path
 
-		$file = new IceFile(0, $name, $path, $url);
+		$file = new Template(0, $name, $path, $url);
 		$file->save();
 	}
 	die('{"status":"ok"}');
@@ -87,7 +87,7 @@ function filescanner() {
 		$scanner->make_paths_relative_to_doc_root();
 
 		//Get a list of all existing paths
-		$all_files = IceFile::find();
+		$all_files = Template::find();
 		if ($all_files !== null) {
 			$existing_paths = array_map(
 				function($file) {return $file->getPath();},
