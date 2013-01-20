@@ -9,7 +9,7 @@ var ice = {
 			window.console = {log:function(m){ice.message(m,'info');}}
 		}
 		
-		ice.subscribe('sidepanel:fragment/load', function() {
+		ice.subscribe('ice:auth/login', function() {
 			if (window.location.hash.indexOf('#!') === 0) {
 				$.map(window.location.hash.substr(2).split(','), function(val, i){
 					ice.fragment.load(val);
@@ -218,6 +218,7 @@ var ice = {
 		this.loader = this.element.find('.winLoader');
 		this.contentEndpoint = "";
 		this.allowRefresh = false;
+		this.template = null;
 		this.handles = [];
 
 		this.refresh = function(attrs) {
@@ -238,9 +239,17 @@ var ice = {
 		}
 		
 		this.setContent = function(c) {
+			
+			if(this.template !== null) {
+				// If there is a registered template, move content there.
+				this.template.innerHTML = c;
+			}
+			
 			this.contentBox.children().remove();
 			this.contentBox.html(c);
+			
 			this.onContentChange(this);
+		
 		};
 		this.loadingOn = function() {
 			this.loader.stop().fadeIn();
