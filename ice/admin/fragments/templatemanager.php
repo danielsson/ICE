@@ -40,7 +40,7 @@
 ?>
 
 <script type="text/javascript">
-function templatemanager() {	
+function templatemanager() {
 	var W = new ice.Window;
 	W.name = "TMPLMAN";
 	W.title = "Page File Manager";
@@ -106,7 +106,7 @@ function templatemanager() {
 <script type="text/template" id="pageFileManager">
 <?php endif; ?>
 
-<p class="enlight">Use this interface to add finished files to the cms. </p>
+<p class="enlight">Use this interface to add templates to the cms. </p>
 <table>
 <thead>
 	<tr>
