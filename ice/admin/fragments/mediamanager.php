@@ -68,6 +68,7 @@ if(!isset($_POST['refresh'])) :
 		
 		W.allowRefresh = true;
 		W.contentEndpoint = "fragments/mediamanager.php";
+		W.template = document.getElementById('mediaManager');
 		
 		W.onOpen = function(W) {
 			W.loadingOff();
@@ -123,7 +124,7 @@ if(!isset($_POST['refresh'])) :
 			});
 		};
 		
-		W.setContent(document.getElementById('mediaManager').innerHTML);
+		W.setContent(W.template.innerHTML);
 		ice.Manager.addWindow(W);
 		
 	}

@@ -47,6 +47,7 @@ function templatemanager() {
 	W.width = 600;
 	W.allowRefresh = true;
 	W.contentEndpoint = "fragments/templatemanager.php";
+	W.template = document.getElementById("pageFileManager");
 	W.onContentChange = function(W) {
 		W.contentBox.find('#addFilesBtn').click(function() {
 			var AFW = new ice.Window;
@@ -97,7 +98,7 @@ function templatemanager() {
 	W.handle(ice.subscribe('ice:template/new', function() {W.refresh();}));
 	W.handle(ice.subscribe('ice:template/delete', function() {W.refresh();}));
 	
-	W.setContent(document.getElementById('pageFileManager').innerHTML);
+	W.setContent(W.template.innerHTML);
 	ice.Manager.addWindow(W);
 }
 

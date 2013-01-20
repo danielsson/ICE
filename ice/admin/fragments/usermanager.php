@@ -22,6 +22,7 @@ function usermanager() {
 	W.width = 600;
 	W.contentEndpoint = "fragments/usermanager.php";
 	W.allowRefresh = true;
+	W.template = document.getElementById("userManager");
 	W.onContentChange = function(win) {
 		$('tbody tr', W.contentBox).click(function() {
 			var id = parseInt($(this).children().eq(0).text());
@@ -33,7 +34,7 @@ function usermanager() {
 		W.refresh();
 	}));
 
-	W.setContent(document.getElementById('userManager').innerHTML);
+	W.setContent(W.template.innerHTML);
 	ice.Manager.addWindow(W);
 }
 

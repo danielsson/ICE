@@ -47,6 +47,7 @@
 		
 		W.allowRefresh = true;
 		W.contentEndpoint = "fragments/pagemanager.php";
+		W.template = document.getElementById("pageManager1");
 		
 		W.onOpen = function(win) {
 			$s = $('<input id="schPages" type="text" style="float: right; margin:0" placeholder="Search" />');
@@ -67,7 +68,7 @@
 		}
 		
 		W.onContentChange = function(W) {
-			if("console" in window) {console.log('Ran onContentChange')}
+
 			$('.big_grid>li', W.contentBox).bind("contextmenu", function() {
 				var $this = $(this), off = $this.offset(), pm = $('#pageManagerMenu');
 				pm
